@@ -1,0 +1,84 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<style>
+    .table-responsive {
+        max-height: 300px;
+    }
+</style>
+<div class="alert alert-warning alert-dismissible fade show" dir="rtl" role="alert">
+  <strong>سلام دوست عزیز!</strong> پورت پیشفرض برای اتصال 1883 میباشد و میتوانید با نام کاربری pub و رمز عبور 123به سرویس اتصال پیدا کنید
+  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+<div class="alert alert-warning alert-dismissible fade show" dir="rtl" role="alert">
+در صورت رفرش کردن صفحه اطلاعات از دست میره!چون ذخیره نمی کنیم  <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
+
+<div class="row" dir="rtl" >
+    <div class="col-md-6 table-responsive">
+        <table class="table" id="MessageTable">
+              <caption>پیام های ورودی</caption>
+            <thead>
+                <tr>
+                    <th scope="col">نام کلاینت</th>
+                    <th scope="col">پیام</th>
+                    <th scope="col">تاریخ</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <div class="col-md-6">
+        <canvas style="width:50px;height:25px " id="myChart"></canvas>
+
+    </div>
+    <div class="row col-md-12">
+        <div class="col-md-6">
+            <table class="table  table-responsive" id="ConnectionTable">
+                              <caption>دستگاه های متصل شده</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">نام کلاینت</th>
+                        <th scope="col">نام کاربری</th>
+                        <th scope="col">نقطه اتصال</th>
+                        <th scope="col">تاریخ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="col-md-6">
+            <table class="table  table-responsive" id="ClientTable">
+                              <caption>موضوعات سابسکرایب شده</caption>
+                <thead>
+                    <tr>
+                        <th scope="col">نام کلاینت</th>
+                        <th scope="col">موضوع </th>
+                        <th scope="col">تاریخ</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+</div>
+
+<script src="~/lib/microsoft/signalr/dist/browser/signalr.min.js"></script>
+<script src="~/js/chart.min.js"></script>
+<script src="~/js/chat.js"></script>
+
