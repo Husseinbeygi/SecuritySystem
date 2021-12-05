@@ -17,8 +17,6 @@ namespace ServiceHost.Pages
         private readonly SubscriptionInterceptorEvent _subscriptionInterceptorEvent;
         private readonly ConnectionInterceptorEvent _connectionInterceptorEvent;
 
-
-
         public IndexModel(ILogger<IndexModel> logger, IHubContext<MessageHub> hub, IWebHostEnvironment webHostEnvironment)
         {
             _logger = logger;
