@@ -1,9 +1,7 @@
-﻿using EventService.ConnectionEvent;
-using EventService.MessageEvent;
-using EventService.SubscriptionEvent;
+﻿using _0_Framework;
 using Microsoft.AspNetCore.SignalR.Client;
 using MudBlazor;
-using System.Text.RegularExpressions;
+using SignalRHubs;
 using UIService.Data;
 
 namespace UIService.Pages
@@ -25,26 +23,14 @@ namespace UIService.Pages
         private int last_index = 0;
 
 
-        private readonly MessageInterceptorEvent _messageInterceptorEvent;
-        private readonly SubscriptionInterceptorEvent _subscriptionInterceptorEvent;
-        private readonly ConnectionInterceptorEvent _connectionInterceptorEvent;
 
         public Index()
         {
-            _messageInterceptorEvent = MessageInterceptorEventFactory.build();
-            _subscriptionInterceptorEvent = SubscriptionInterceptorEventFactory.build();
-            _connectionInterceptorEvent = ConnectionInterceptorEventFactory.build();
         }
 
         protected override async Task OnInitializedAsync()
         {
-            _messageInterceptorEvent.MessageRecevied += new System.EventHandler<MessageInterceptorEventArgs>(_messageInterceptorEvent_MessageRecevied);
-            _subscriptionInterceptorEvent.ClientSubscribed += new System.EventHandler<SubscriptionInterceptorEventArgs>(_subscriptionInterceptorEvent_ClientSubscribed);
-            _connectionInterceptorEvent.ClientConnected += _connectionInterceptorEvent_ClientConnected;
-
-            hubConnection = new HubConnectionBuilder()
-                .WithUrl(NavigationManager.ToAbsoluteUri("/chathub"))
-                .Build();
+            hubConnection = MqttHubs.UseHub("ChatHub");
 
             hubConnection.On("MessageRecevied", (Action<string, string, string>)((user, message, date) =>
             {
@@ -63,32 +49,11 @@ namespace UIService.Pages
                 Message = message,
                 Date = date
             });
-            AddChartData(ConvertStringToInt(message));
+            AddChartData(ConvertData.ConvertStringToInt(message));
             StateHasChanged();
             _loader = false;
         }
 
-        private static int ConvertStringToInt(string message)
-        {
-            var r = new Regex("^[0-9]*$");
-            return r.IsMatch(message) ? Int32.Parse(message) : 0;
-        }
-
-        private void _connectionInterceptorEvent_ClientConnected(object? sender, ConnectionInterceptorEventArgs e)
-        {
-        }
-
-        private void _subscriptionInterceptorEvent_ClientSubscribed(object? sender, SubscriptionInterceptorEventArgs e)
-        {
-        }
-
-        private void _messageInterceptorEvent_MessageRecevied(object? sender, MessageInterceptorEventArgs e)
-        {
-            if (hubConnection is not null)
-            {
-                hubConnection.SendAsync("MessageRecevied", e.ClientId, e.PayLoad, DateTime.Now.ToShortTimeString());
-            }
-        }
 
         public void AddChartData(int data)
         {

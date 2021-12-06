@@ -3,8 +3,8 @@ using MqttService;
 using MqttService.Configuration;
 using MudBlazor.Services;
 using Serilog;
+using SignalRHubs.Hubs;
 using UIService.Data;
-using UIService.Hubs;
 using static MqttService.Bootstrapper;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -21,6 +21,7 @@ builder.Services.AddSingleton<IHostedService>(p => p.GetRequiredService<Bootstra
 builder.Services.AddTransient<ILoggerService, LoggerService>();
 builder.Host.UseSerilog((ctx, lc) => lc
     .WriteTo.Console());
+
 builder.Services.AddResponseCompression(opts =>
 {
     opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
