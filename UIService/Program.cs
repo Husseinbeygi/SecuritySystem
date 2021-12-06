@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.ResponseCompression;
 using MqttService;
 using MqttService.Configuration;
 using MudBlazor.Services;
+using SecuritySystem.Infrastructre;
 using Serilog;
 using UIService.Data;
 using UIService.Hubs;
@@ -19,13 +20,15 @@ builder.Configuration.GetSection("MqttService").Bind(mqttServiceConfiguration);
 builder.Services.AddSingleton(_ => new Bootstrapper(mqttServiceConfiguration, "MqttService"));
 builder.Services.AddSingleton<IHostedService>(p => p.GetRequiredService<Bootstrapper>());
 builder.Services.AddTransient<ILoggerService, LoggerService>();
-builder.Host.UseSerilog((ctx, lc) => lc
-    .WriteTo.Console());
+builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console());
 builder.Services.AddResponseCompression(opts =>
 {
     opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
         new[] { "application/octet-stream" });
 });
+builder.Services.AddAutoMapper(typeof(Program));
+SecuritySystemBootstrapper.Configure(builder.Services, "Data Source=Database.db;Version=3;");
+
 
 var app = builder.Build();
 

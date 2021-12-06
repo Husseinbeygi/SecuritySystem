@@ -11,6 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="AutoMapper.Extensions.Microsoft.DependencyInjection" Version="8.1.1" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.0" />
     <PackageReference Include="MudBlazor" Version="6.0.2" />
   </ItemGroup>
@@ -18,6 +19,7 @@
   <ItemGroup>
     <ProjectReference Include="..\EventService\EventService.csproj" />
     <ProjectReference Include="..\MqttService\MqttService.csproj" />
+    <ProjectReference Include="..\SecurityService.Infrastructre\SecuritySystem.Infrastructre.csproj" />
   </ItemGroup>
 
   <ItemGroup>
