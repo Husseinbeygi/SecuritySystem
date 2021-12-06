@@ -11,8 +11,8 @@
     <PackageReference Include="Serilog.AspNetCore" Version="4.1.0" />  </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\DeviceManagment.Domain\DeviceManagment.Domain.csproj" />
     <ProjectReference Include="..\EventService\EventService.csproj" />
+    <ProjectReference Include="..\SecurityService.Domain\SecuritySystem.Domain.csproj" />
   </ItemGroup>
 
 </Project>

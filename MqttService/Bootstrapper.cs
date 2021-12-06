@@ -1,10 +1,10 @@
-﻿using DeviceManagment.Domain.Device;
-using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.Hosting;
 using MQTTnet;
 using MQTTnet.Protocol;
 using MQTTnet.Server;
 using MqttService.Configuration;
 using MqttService.Logger;
+using SecuritySystem.Domain.Device;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -109,8 +109,8 @@ namespace MqttService
         {
             return v =>
             {
-                var UsersList = new List<User>();
-                UsersList.Add(new User("pub", "123"));
+                var UsersList = new List<Device>();
+                UsersList.Add(new Device("pub", "123"));
 
                 var CurrentUser = UsersList.FirstOrDefault(x => x.UserName == v.Username);
                 if (CurrentUser == null)
