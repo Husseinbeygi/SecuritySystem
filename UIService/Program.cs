@@ -1,12 +1,9 @@
 using Microsoft.AspNetCore.ResponseCompression;
 using MqttService;
-using MqttService.Configuration;
 using MudBlazor.Services;
 using SecuritySystem.Infrastructre;
 using Serilog;
-using UIService.Data;
 using UIService.Hubs;
-using static MqttService.Bootstrapper;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -14,12 +11,8 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
 builder.Services.AddMudServices();
-builder.Services.AddSingleton<WeatherForecastService>();
-MqttConfiguration mqttServiceConfiguration = new();
-builder.Configuration.GetSection("MqttService").Bind(mqttServiceConfiguration);
-builder.Services.AddSingleton(_ => new Bootstrapper(mqttServiceConfiguration, "MqttService"));
-builder.Services.AddSingleton<IHostedService>(p => p.GetRequiredService<Bootstrapper>());
-builder.Services.AddTransient<ILoggerService, LoggerService>();
+builder.Services.AddTransient<IMqttActions, MqttActions>();
+builder.Services.AddHostedService<MqttBootstrapper>();
 builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console());
 builder.Services.AddResponseCompression(opts =>
 {
@@ -27,7 +20,7 @@ builder.Services.AddResponseCompression(opts =>
         new[] { "application/octet-stream" });
 });
 builder.Services.AddAutoMapper(typeof(Program));
-SecuritySystemBootstrapper.Configure(builder.Services, "Data Source=Database.db;Version=3;");
+SecuritySystemBootstrapper.Configure(builder.Services, "Data Source=Database.db");
 
 
 var app = builder.Build();

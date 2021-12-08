@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SecuritySystem.Domain.Device;
+using SecuritySystem.Infrastructre.Maps;
 
 namespace SecuritySystem.Infrastructre
 {
@@ -9,5 +10,15 @@ namespace SecuritySystem.Infrastructre
         public Context(DbContextOptions<Context> options) : base(options)
         {
         }
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+
+            var assambly = typeof(DeviceMap).Assembly;
+            modelBuilder.ApplyConfigurationsFromAssembly(assambly);
+
+            base.OnModelCreating(modelBuilder);
+        }
+
     }
 }

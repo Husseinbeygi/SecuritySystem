@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using _0_Framework.Application;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using SecurityService.Application.Service.Dtos.Devices;
 using SecuritySystem.Application;
@@ -12,9 +13,9 @@ namespace SecuritySystem.Infrastructre
 
         public static void Configure(IServiceCollection _service, string connstring)
         {
-            _service.AddTransient<IDeviceRepository, DeviceRepository>();
+            _service.AddTransient<IClientRepository, ClientRepository>();
             _service.AddTransient<IDeviceApplication, DeviceApplication>();
-
+            _service.AddTransient<IPasswordHasher, PasswordHasher>();
 
 
             _service.AddDbContext<Context>(x => x.UseSqlite(connstring));

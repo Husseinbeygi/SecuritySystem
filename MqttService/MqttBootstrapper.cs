@@ -2,30 +2,28 @@
 using MQTTnet;
 using MQTTnet.Protocol;
 using MQTTnet.Server;
+using MqttService.Actions;
 using MqttService.Configuration;
-using MqttService.Logger;
-using SecuritySystem.Domain.Device;
+using SecurityService.Application.Service.Dtos.Devices;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 
 namespace MqttService
 {
-    public partial class Bootstrapper : BackgroundService
+    public class MqttBootstrapper : BackgroundService
     {
 
-        private readonly ILoggerService _logger;
-        private readonly MqttConfiguration _mqttConfiguration;
-        private static double ByteToKB => 1048576.0;
+        private readonly IMqttActions _action;
         private readonly string serviceName;
 
-        public Bootstrapper(MqttConfiguration mqttConfiguration, string serviceName)
+       //private readonly IDeviceApplication _application;
+
+        public MqttBootstrapper()// IDeviceApplication application)
         {
-            _mqttConfiguration = mqttConfiguration;
-            this.serviceName = serviceName;
-            _logger = LoggerServiceFactory.LoggerService();
+            this.serviceName = "MqttService";
+            _action = LoggerServiceFactory.LoggerService();
+            //_application = application;
         }
         protected override async Task ExecuteAsync(CancellationToken cancellationToken)
         {
@@ -44,7 +42,7 @@ namespace MqttService
         private async Task LogHealthMonitor(CancellationToken cancellationToken)
         {
             this.LogMemoryInformation();
-            await Task.Delay(_mqttConfiguration.DelayInMilliSeconds, cancellationToken);
+            await Task.Delay(MqttConfiguration.DelayInMilliSeconds, cancellationToken);
         }
 
         public override async Task StartAsync(CancellationToken cancellationToken)
@@ -58,7 +56,7 @@ namespace MqttService
 
         private void GuardForInvalidMqttConfiguration()
         {
-            if (!_mqttConfiguration.IsValid())
+            if (!MqttConfiguration.IsValid())
             {
                 throw new Exception("The Configuration is not Vaild.");
             }
@@ -73,8 +71,8 @@ namespace MqttService
         {
             var options = new MqttServerOptionsBuilder()
                 .WithDefaultEndpoint()
-                .WithDefaultEndpointPort(_mqttConfiguration.Port)
-                .WithEncryptedEndpointPort(_mqttConfiguration.TlsPort)
+                .WithDefaultEndpointPort(MqttConfiguration.Port)
+                .WithEncryptedEndpointPort(MqttConfiguration.TlsPort)
                 .WithConnectionValidator(ClientValidator())
                 .WithSubscriptionInterceptor(SubscriptionInterceptor())
                 .WithApplicationMessageInterceptor(ApplicationMessageInterceptor());
@@ -89,7 +87,7 @@ namespace MqttService
             return a =>
             {
                 a.AcceptPublish = true;
-                _logger.LogMessage(a);
+                _action.MessageAction(a);
 
 
             };
@@ -100,7 +98,7 @@ namespace MqttService
             return s =>
             {
                 s.AcceptSubscription = true;
-                _logger.LogMessage(s, false);
+                _action.SubscriptionAction(s, false);
 
             };
         }
@@ -109,30 +107,14 @@ namespace MqttService
         {
             return v =>
             {
-                var UsersList = new List<Device>();
-                UsersList.Add(new Device("pub", "123"));
-
-                var CurrentUser = UsersList.FirstOrDefault(x => x.UserName == v.Username);
-                if (CurrentUser == null)
+                //var _isDeviceValidate = _application.IsClientValidate(v.ClientId, v.Username, v.Password);
+                if (!_isDeviceValidate)
                 {
                     BadUseNameorPassword(v);
                     return;
                 }
-
-                if (v.Username != CurrentUser.UserName)
-                {
-
-                    if (v.Password != CurrentUser.Password)
-                    {
-                        BadUseNameorPassword(v);
-                        return;
-                    }
-                    BadUseNameorPassword(v);
-                    return;
-                }
-
                 v.ReasonCode = MqttConnectReasonCode.Success;
-                _logger.LogMessage(v, false);
+                _action.ClientValidatorAction(v, false);
 
             };
         }
@@ -140,13 +122,13 @@ namespace MqttService
         private void BadUseNameorPassword(MqttConnectionValidatorContext v)
         {
             v.ReasonCode = MqttConnectReasonCode.BadUserNameOrPassword;
-            _logger.LogMessage(v, true);
+            _action.ClientValidatorAction(v, true);
         }
 
         private void LogMemoryInformation()
         {
 
-            _logger.LogMemoryInformation(this.serviceName);
+            _action.LogMemoryInformation(this.serviceName);
         }
 
     }

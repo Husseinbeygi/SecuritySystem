@@ -2,13 +2,13 @@
 
 namespace MqttService.Configuration
 {
-    public class MqttConfiguration
+    public static class MqttConfiguration
     {
-        public int Port { get; set; } = 1883;
-        public int DelayInMilliSeconds { get; set; } = 2000;
-        public int TlsPort { get; set; } = 8883;
+        public static int Port { get; set; } = 1883;
+        public static int DelayInMilliSeconds { get; set; } = 2000;
+        public static int TlsPort { get; set; } = 8883;
 
-        public bool IsValid()
+        public static bool IsValid()
         {
 
             if (Port is <= 0 or > 65535)

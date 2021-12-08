@@ -7,12 +7,12 @@ namespace SecuritySystem.Domain.Device
     {
         public Device(string deviceId, string userName, string password)
         {
-            DeviceId = deviceId;
+            ClientId = deviceId;
             UserName = userName;
             Password = password;
         }
 
-        public string DeviceId { get; private set; }
+        public string ClientId { get; private set; }
         public string UserName { get; private set; }
         public string Password { get; private set; }
 

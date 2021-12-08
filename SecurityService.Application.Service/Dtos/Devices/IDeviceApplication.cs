@@ -1,10 +1,9 @@
-﻿using SecuritySystem.Application.Dtos.Devices;
-
-namespace SecurityService.Application.Service.Dtos.Devices
+﻿namespace SecurityService.Application.Service.Dtos.Devices
 {
     public interface IDeviceApplication
     {
-        void CreateDevice(CreateDevice command);
-        List<DeviceViewModel> Search(DeviceSearchModel command);
+        void Create(CreateClient command);
+        List<ClientViewModel> Search(ClientSearchModel command);
+        bool IsClientValidate(string clientId, string username, string password);
     }
 }
