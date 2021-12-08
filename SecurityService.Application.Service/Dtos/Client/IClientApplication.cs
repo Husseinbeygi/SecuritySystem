@@ -1,6 +1,6 @@
-﻿namespace SecurityService.Application.Service.Dtos.Devices
+﻿namespace SecurityService.Application.Service.Dtos.Client
 {
-    public interface IDeviceApplication
+    public interface IClientApplication
     {
         void Create(CreateClient command);
         List<ClientViewModel> Search(ClientSearchModel command);

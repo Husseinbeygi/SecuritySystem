@@ -1,10 +1,11 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 using MQTTnet;
 using MQTTnet.Protocol;
 using MQTTnet.Server;
 using MqttService.Actions;
 using MqttService.Configuration;
-using SecurityService.Application.Service.Dtos.Devices;
+using SecurityService.Application.Service.Dtos.Client;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
@@ -17,13 +18,12 @@ namespace MqttService
         private readonly IMqttActions _action;
         private readonly string serviceName;
 
-       //private readonly IDeviceApplication _application;
-
-        public MqttBootstrapper()// IDeviceApplication application)
+        private readonly IServiceProvider _serviceProvider;
+        public MqttBootstrapper(IServiceProvider serviceProvider)
         {
             this.serviceName = "MqttService";
             _action = LoggerServiceFactory.LoggerService();
-            //_application = application;
+            _serviceProvider = serviceProvider;
         }
         protected override async Task ExecuteAsync(CancellationToken cancellationToken)
         {
@@ -105,9 +105,13 @@ namespace MqttService
 
         private Action<MqttConnectionValidatorContext> ClientValidator()
         {
+          var scope = _serviceProvider.CreateScope();
+
+           var _application = scope.ServiceProvider.GetRequiredService<IClientApplication>();
+            
             return v =>
             {
-                //var _isDeviceValidate = _application.IsClientValidate(v.ClientId, v.Username, v.Password);
+                var _isDeviceValidate = _application.IsClientValidate(v.ClientId, v.Username, v.Password);
                 if (!_isDeviceValidate)
                 {
                     BadUseNameorPassword(v);

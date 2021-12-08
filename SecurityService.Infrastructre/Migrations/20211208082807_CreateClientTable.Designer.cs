@@ -11,29 +11,29 @@ using SecuritySystem.Infrastructre;
 namespace SecuritySystem.Infrastructre.Migrations
 {
     [DbContext(typeof(Context))]
-    [Migration("20211207081243_AddDeviceTable")]
-    partial class AddDeviceTable
+    [Migration("20211208082807_CreateClientTable")]
+    partial class CreateClientTable
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
 
-            modelBuilder.Entity("SecuritySystem.Domain.Device.Device", b =>
+            modelBuilder.Entity("SecuritySystem.Domain.Client.Client", b =>
                 {
                     b.Property<long>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("ClientId")
+                        .HasMaxLength(100)
+                        .HasColumnType("TEXT");
+
                     b.Property<DateTime>("CreationDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<string>("DeviceId")
-                        .HasMaxLength(100)
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Password")
-                        .HasMaxLength(100)
+                        .HasMaxLength(300)
                         .HasColumnType("TEXT");
 
                     b.Property<string>("UserName")
@@ -42,7 +42,7 @@ namespace SecuritySystem.Infrastructre.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Devices", (string)null);
+                    b.ToTable("Client", (string)null);
                 });
 #pragma warning restore 612, 618
         }

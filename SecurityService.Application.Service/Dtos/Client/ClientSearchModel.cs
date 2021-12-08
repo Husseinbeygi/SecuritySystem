@@ -1,4 +1,4 @@
-﻿namespace SecurityService.Application.Service.Dtos.Devices
+﻿namespace SecurityService.Application.Service.Dtos.Client
 {
     public class ClientSearchModel
     {

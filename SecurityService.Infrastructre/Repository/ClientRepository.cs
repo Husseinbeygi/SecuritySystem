@@ -1,10 +1,10 @@
 ﻿using _0_Framework.Infrastructure;
-using SecurityService.Application.Service.Dtos.Devices;
-using SecuritySystem.Domain.Device;
+using SecurityService.Application.Service.Dtos.Client;
+using SecuritySystem.Domain.Client;
 
 namespace SecuritySystem.Infrastructre.Repository
 {
-    public class ClientRepository : RepositoryBase<long, Device>, IClientRepository
+    public class ClientRepository : RepositoryBase<long, Client>, IClientRepository
     {
         private readonly Context _context;
         public ClientRepository(Context context) : base(context)
@@ -14,7 +14,7 @@ namespace SecuritySystem.Infrastructre.Repository
 
         public ClientValidation GetClientCredentials(string clientId)
         {
-            return _context.Device.Select(x => new ClientValidation
+            return _context.Client.Select(x => new ClientValidation
             {
                 ClientId = x.ClientId,
                 Id = x.Id,
@@ -25,7 +25,7 @@ namespace SecuritySystem.Infrastructre.Repository
 
         public List<ClientViewModel> Search(ClientSearchModel command)
         {
-            var query = _context.Device.Select(x => new ClientViewModel
+            var query = _context.Client.Select(x => new ClientViewModel
             {
                    CreationDate = x.CreationDate,
                    ClientId = x.ClientId,

@@ -1,12 +1,12 @@
-﻿using SecuritySystem.Domain.Device;
+﻿using SecuritySystem.Domain.Client;
 
 namespace MqttService.Helper
 {
     public class UserValidator
     {
-        private readonly Device _user;
+        private readonly Client _user;
 
-        public UserValidator(Device user)
+        public UserValidator(Client user)
         {
             _user = user;
         }

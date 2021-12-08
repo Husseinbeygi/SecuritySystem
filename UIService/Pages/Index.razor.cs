@@ -1,103 +1,75 @@
-﻿using EventService.ConnectionEvent;
+﻿using _0_Framework.Application;
+using EventService.ConnectionEvent;
 using EventService.MessageEvent;
 using EventService.SubscriptionEvent;
 using Microsoft.AspNetCore.SignalR.Client;
 using MudBlazor;
 using System.Text.RegularExpressions;
-using UIService.Data;
+using UIService.Dto;
 
 namespace UIService.Pages
 {
     public partial class Index
     {
-        private int Index_data = -1;
-        List<ChartSeries> Series = new List<ChartSeries>(){
-            new ChartSeries() { Name = "Sensor 1", Data = new double[50] },
-        };
-        private List<MessageReceviedDataStructure> messages = new List<MessageReceviedDataStructure>();
-
-        public string[] XAxisLabels = { };
-        //List<string> XAxisLabelsList = new List<string>();
-
+        public List<ClientSubscribedDto> clients = new();
         private HubConnection? hubConnection;
-
+        public string Connection_Id = string.Empty;
         private bool _loader = false;
-        private int last_index = 0;
 
 
-        private readonly MessageInterceptorEvent _messageInterceptorEvent;
+
         private readonly SubscriptionInterceptorEvent _subscriptionInterceptorEvent;
-        private readonly ConnectionInterceptorEvent _connectionInterceptorEvent;
 
         public Index()
         {
-            _messageInterceptorEvent = MessageInterceptorEventFactory.build();
             _subscriptionInterceptorEvent = SubscriptionInterceptorEventFactory.build();
-            _connectionInterceptorEvent = ConnectionInterceptorEventFactory.build();
         }
 
         protected override async Task OnInitializedAsync()
         {
-            _messageInterceptorEvent.MessageRecevied += new System.EventHandler<MessageInterceptorEventArgs>(_messageInterceptorEvent_MessageRecevied);
             _subscriptionInterceptorEvent.ClientSubscribed += new System.EventHandler<SubscriptionInterceptorEventArgs>(_subscriptionInterceptorEvent_ClientSubscribed);
-            _connectionInterceptorEvent.ClientConnected += _connectionInterceptorEvent_ClientConnected;
 
             hubConnection = new HubConnectionBuilder()
-                .WithUrl(NavigationManager.ToAbsoluteUri("/chathub"))
+                .WithUrl(NavigationManager.ToAbsoluteUri("/clienthub"))
                 .Build();
 
-            hubConnection.On("MessageRecevied", (Action<string, string, string>)((user, message, date) =>
+            await hubConnection.StartAsync();
+            hubConnection.On("ClientSubscribed", (Action<string, string, string, bool, string>)((clientid, topic, qos,retain,date) =>
             {
-                AddNewMessage(user, message, date);
+                AddClient(clientid, topic, qos, retain, date);
             }));
 
-            await hubConnection.StartAsync();
+            Connection_Id = hubConnection.ConnectionId;
         }
 
-        private void AddNewMessage(string user, string message, string date)
+        private void AddClient(string clientid, string topic, string qos, bool retain, string date)
         {
             _loader = true;
-            messages.Add(new MessageReceviedDataStructure
+            clients.Add(new ClientSubscribedDto
             {
-                Name = user,
-                Message = message,
-                Date = date
+                ClientId = clientid,
+                LastConnectedDate = date,
+                QualityOfServiceLevel = qos,
+                Retian = retain,
+                Topic = topic,
             });
-            AddChartData(ConvertStringToInt(message));
+
             StateHasChanged();
             _loader = false;
         }
 
-        private static int ConvertStringToInt(string message)
-        {
-            var r = new Regex("^[0-9]*$");
-            return r.IsMatch(message) ? Int32.Parse(message) : 0;
-        }
 
-        private void _connectionInterceptorEvent_ClientConnected(object? sender, ConnectionInterceptorEventArgs e)
-        {
-        }
 
         private void _subscriptionInterceptorEvent_ClientSubscribed(object? sender, SubscriptionInterceptorEventArgs e)
         {
-        }
-
-        private void _messageInterceptorEvent_MessageRecevied(object? sender, MessageInterceptorEventArgs e)
-        {
             if (hubConnection is not null)
             {
-                hubConnection.SendAsync("MessageRecevied", e.ClientId, e.PayLoad, DateTime.Now.ToShortTimeString());
+                hubConnection.SendAsync("ClientSubscribed", e.ClientId, e.TopicFilter.Topic
+                    ,e.TopicFilter.QualityOfServiceLevel.ToString()
+                    ,e.TopicFilter.RetainAsPublished.ToString()
+                    , DateTime.Now.ToFarsi());
             }
-        }
 
-        public void AddChartData(int data)
-        {
-            Series[0].Data[last_index] = data;
-            //XAxisLabelsList.Add(DateTime.Now.ToShortTimeString());
-
-            //XAxisLabels = XAxisLabelsList.ToArray();
-            last_index++;
-            StateHasChanged();
         }
 
 

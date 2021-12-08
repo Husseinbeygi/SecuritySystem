@@ -40,7 +40,7 @@ app.UseStaticFiles();
 app.UseRouting();
 
 app.MapBlazorHub();
-app.MapHub<MessageHub>("/chathub");
+app.MapHub<ClientHub>("/clienthub");
 app.MapFallbackToPage("/_Host");
 
 app.Run();

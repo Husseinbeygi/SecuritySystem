@@ -1,13 +1,13 @@
 ﻿using _0_Framework.Domain;
 using System;
 
-namespace SecuritySystem.Domain.Device
+namespace SecuritySystem.Domain.Client
 {
-    public class Device : EntityBase
+    public class Client : EntityBase
     {
-        public Device(string deviceId, string userName, string password)
+        public Client(string clientId, string userName, string password)
         {
-            ClientId = deviceId;
+            ClientId = clientId;
             UserName = userName;
             Password = password;
         }

@@ -1,14 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using SecuritySystem.Domain.Device;
+using SecuritySystem.Domain.Client;
 
 namespace SecuritySystem.Infrastructre.Maps
 {
-    internal class DeviceMap : IEntityTypeConfiguration<Device>
+    internal class ClientMap : IEntityTypeConfiguration<Client>
     {
-        public void Configure(EntityTypeBuilder<Device> builder)
+        public void Configure(EntityTypeBuilder<Client> builder)
         {
-            builder.ToTable("Devices");
+            builder.ToTable("Client");
             builder.HasKey(x => x.Id);
 
             builder.Property(x => x.UserName).HasMaxLength(100);

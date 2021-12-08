@@ -1,18 +1,20 @@
 ﻿using _0_Framework.Application;
 using AutoMapper;
-using SecurityService.Application.Service.Dtos.Devices;
-using SecuritySystem.Domain.Device;
+using SecurityService.Application.Service.Dtos.Client;
+using SecuritySystem.Domain.Client;
 
 namespace SecuritySystem.Application
 {
-    public class DeviceApplication : IDeviceApplication
+    public class ClientApplication : IClientApplication
     {
         private readonly IClientRepository _repository;
         private readonly IMapper _mapper;
         private readonly IPasswordHasher _passwordhasher;
-        public DeviceApplication(IClientRepository repository)
+        public ClientApplication(IClientRepository repository, IPasswordHasher passwordhasher, IMapper mapper)
         {
             _repository = repository;
+            _passwordhasher = passwordhasher;
+            _mapper = mapper;
         }
 
         public void Create(CreateClient command)
@@ -21,20 +23,20 @@ namespace SecuritySystem.Application
             {
                 return;
             }
-            var _create = _mapper.Map<Device>(command);
+            var _create = _mapper.Map<Client>(command);
             _repository.Create(_create);
             _repository.SaveChanges();
         }
 
         public bool IsClientValidate(string clientId, string username, string password)
         {
-           ClientValidation _device = _repository.GetClientCredentials(clientId);
-            if (_device == null)
+           ClientValidation _client = _repository.GetClientCredentials(clientId);
+            if (_client == null)
                 return false;
-            
-            if(_device.UserName == username)
+
+            if (_client.UserName == username)
             {
-                if (_device.Password == _passwordhasher.Hash(password))
+                if (_client.Password == password)
                 {
                     return true;
                 }

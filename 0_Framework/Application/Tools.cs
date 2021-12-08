@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace _0_Framework.Application
 {
@@ -110,5 +111,11 @@ namespace _0_Framework.Application
         {
             return $"{date.Year:0000}-{date.Month:00}-{date.Day:00}-{date.Hour:00}-{date.Minute:00}-{date.Second:00}";
         }
+        public static int ConvertStringToInt(string message)
+        {
+            var r = new Regex("^[0-9]*$");
+            return r.IsMatch(message) ? Int32.Parse(message) : 0;
+        }
+
     }
 }
