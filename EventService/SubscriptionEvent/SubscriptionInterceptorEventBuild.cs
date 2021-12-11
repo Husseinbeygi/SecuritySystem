@@ -1,9 +1,9 @@
 ﻿namespace EventService.SubscriptionEvent
 {
-    public class SubscriptionInterceptorEventFactory
+    public class SubscriptionInterceptorEventBuild
     {
         private static SubscriptionInterceptorEvent _instance;
-        public static SubscriptionInterceptorEvent build()
+        public static SubscriptionInterceptorEvent Build()
         {
             if (_instance == null)
             {

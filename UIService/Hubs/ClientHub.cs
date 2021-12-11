@@ -11,7 +11,7 @@ namespace UIService.Hubs
         }
         public async Task ClientSubscribed(string clientid, string topic, string qos, bool retain, string date)
         {
-            await Clients.All.SendAsync("ClientSubscribed", clientid, topic, qos, retain, date);
+            await Clients.All.SendAsync("clientsubscribed", clientid, topic, qos, retain, date);
         }
 
         public async Task ClientConnected(string user, string message)

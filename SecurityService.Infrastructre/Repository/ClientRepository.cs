@@ -1,4 +1,5 @@
-﻿using _0_Framework.Infrastructure;
+﻿using _0_Framework.Application;
+using _0_Framework.Infrastructure;
 using SecurityService.Application.Service.Dtos.Client;
 using SecuritySystem.Domain.Client;
 
@@ -27,7 +28,7 @@ namespace SecuritySystem.Infrastructre.Repository
         {
             var query = _context.Client.Select(x => new ClientViewModel
             {
-                   CreationDate = x.CreationDate,
+                   CreationDate = x.CreationDate.ToFarsi(),
                    ClientId = x.ClientId,
                    Id = x.Id,
                    UserName = x.UserName
@@ -39,7 +40,7 @@ namespace SecuritySystem.Infrastructre.Repository
 
             }
 
-            return query.OrderByDescending(x => x.Id).ToList();
+            return query.ToList();
         }
     }
 }

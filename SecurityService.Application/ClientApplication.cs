@@ -8,13 +8,11 @@ namespace SecuritySystem.Application
     public class ClientApplication : IClientApplication
     {
         private readonly IClientRepository _repository;
-        private readonly IMapper _mapper;
         private readonly IPasswordHasher _passwordhasher;
-        public ClientApplication(IClientRepository repository, IPasswordHasher passwordhasher, IMapper mapper)
+        public ClientApplication(IClientRepository repository, IPasswordHasher passwordhasher)
         {
             _repository = repository;
             _passwordhasher = passwordhasher;
-            _mapper = mapper;
         }
 
         public void Create(CreateClient command)
@@ -23,7 +21,7 @@ namespace SecuritySystem.Application
             {
                 return;
             }
-            var _create = _mapper.Map<Client>(command);
+            var _create = new Client(command.ClientId, command.UserName, command.Password);
             _repository.Create(_create);
             _repository.SaveChanges();
         }

@@ -5,6 +5,7 @@ using MQTTnet.Protocol;
 using MQTTnet.Server;
 using MqttService.Actions;
 using MqttService.Configuration;
+using MqttService.Handlers;
 using SecurityService.Application.Service.Dtos.Client;
 using System;
 using System.Threading;
@@ -19,11 +20,14 @@ namespace MqttService
         private readonly string serviceName;
 
         private readonly IServiceProvider _serviceProvider;
-        public MqttBootstrapper(IServiceProvider serviceProvider)
+        private readonly MessageHandler _messageHandler;
+
+        public MqttBootstrapper(IServiceProvider serviceProvider, MessageHandler messageHandler)
         {
             this.serviceName = "MqttService";
             _action = LoggerServiceFactory.LoggerService();
             _serviceProvider = serviceProvider;
+            _messageHandler = messageHandler;
         }
         protected override async Task ExecuteAsync(CancellationToken cancellationToken)
         {
@@ -51,6 +55,7 @@ namespace MqttService
 
             ConfigAndStartMqttService();
 
+            
             await base.StartAsync(cancellationToken);
         }
 

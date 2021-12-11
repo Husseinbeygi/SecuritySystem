@@ -1,30 +1,40 @@
 ﻿@page "/"
+@using MqttService.Clients
 @inject NavigationManager NavigationManager
-@implements IAsyncDisposable
 
-        <div class="col-md-12" >
-            <div dir="ltr">
-                    ConntionId: @Connection_Id
-            </div>
-       <MudTable Items="@clients" FixedHeader="true" Height="400px" Loading="@_loader" Bordered="true" Striped="true">
-            <HeaderContent>
-                <MudTh>کد کلاینت</MudTh>
-                <MudTh>موضوع</MudTh>
-                <MudTh>QOS</MudTh>
-                <MudTh>Retain</MudTh>
-                <MudTh>تاریخ اتصال</MudTh>
+<div class="col-md-12">
+    <Table dir="rtl" Bordered="true"
+                    Striped="true" 
+                    FixedHeader
+                    FixedHeaderTableHeight="400px" 
+                    Resizable 
+                    ResizeMode="TableResizeMode.Columns">
+        <TableHeader>
+            <TableRow>
+                <TableHeaderCell>کد کلاینت</TableHeaderCell>
+                <TableHeaderCell>Endpoint</TableHeaderCell>
+                <TableHeaderCell>CleanSession</TableHeaderCell>
+                <TableHeaderCell>UserName</TableHeaderCell>
+                <TableHeaderCell>تاریخ اتصال</TableHeaderCell>
+                <TableHeaderCell>عملیات</TableHeaderCell>
+            </TableRow>
+        </TableHeader>
+        <TableBody>
+            @foreach (var item in ConnectedClients.GetClients())
+            {
 
-            </HeaderContent>
-            <RowTemplate>
-                <MudTd DataLabel="Name">@context.ClientId</MudTd>
-                <MudTd DataLabel="Message">@context.Topic</MudTd>
-                <MudTd DataLabel="Date">@context.QualityOfServiceLevel</MudTd>
-                <MudTd DataLabel="Date">@context.Retian</MudTd>
-                <MudTd DataLabel="Date">@context.LastConnectedDate</MudTd>
+                <TableRow>
+                    <TableRowCell>@item.ClientId</TableRowCell>
+                    <TableRowCell>@item.Endpoint</TableRowCell>
+                    <TableRowCell>@item.CleanSession</TableRowCell>
+                    <TableRowCell>@item.UserName</TableRowCell>
+                    <TableRowCell>@item.LastConnectedDate</TableRowCell>
+                    <TableRowCell>
+                            <Button Color="Color.Primary" Outline>پنل دستگاه</Button>
+                    </TableRowCell>
+                </TableRow>
 
-            </RowTemplate>
-            <PagerContent>
-                <MudTablePager dir="ltr" PageSizeOptions="new int[]{50, 100}" />
-            </PagerContent>
-        </MudTable>
-      </div>
+            }
+        </TableBody>
+    </Table>
+</div>

@@ -1,9 +1,9 @@
 ﻿namespace EventService.MessageEvent
 {
-    public static class MessageInterceptorEventFactory
+    public static class MessageInterceptorEventBuild
     {
         private static MessageInterceptorEvent _instance;
-        public static MessageInterceptorEvent build()
+        public static MessageInterceptorEvent Build()
         {
             if (_instance == null)
             {

@@ -5,7 +5,7 @@ namespace MqttService.Configuration
     public static class MqttConfiguration
     {
         public static int Port { get; set; } = 1883;
-        public static int DelayInMilliSeconds { get; set; } = 2000;
+        public static int DelayInMilliSeconds { get; set; } = 20000;
         public static int TlsPort { get; set; } = 8883;
 
         public static bool IsValid()

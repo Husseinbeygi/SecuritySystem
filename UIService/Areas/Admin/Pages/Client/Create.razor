@@ -1,0 +1,28 @@
+﻿@page "/admin/client/create"
+@using SecurityService.Application.Service.Dtos.Client
+@inject IClientApplication _application
+@inject NavigationManager NavManager
+
+<h3>CreateClient</h3>
+<Div Class="container">
+    <EditForm Model="@_createClient" OnValidSubmit="@HandleValidSubmit">
+      <div class="row">
+        <div class="form-group col-md-4">
+          <label for="inputEmail4">نام کلاینت</label>
+          <InputText type="text" class="form-control" @bind-Value="_createClient.ClientId" />
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputPassword4">نام کاربری</label>
+          <InputText type="text" class="form-control"  @bind-Value="_createClient.UserName"/>
+        </div>
+  
+      <div class="form-group col-md-4">
+        <label for="inputAddress">رمز عبور</label>
+        <InputText type="text" class="form-control"  @bind-Value="_createClient.Password" />
+      </div>
+    </div>
+    <br />
+    <Button Type="ButtonType.Submit" Color="Color.Primary">ثبت دستگاه</Button>
+      <a class="btn btn-danger" href="/admin/client">بازگشت</a>    
+    </EditForm>
+</Div>

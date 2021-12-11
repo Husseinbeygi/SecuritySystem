@@ -1,86 +1,47 @@
 ﻿using _0_Framework.Application;
 using EventService.ConnectionEvent;
+using EventService.HandlerEvent;
 using EventService.MessageEvent;
-using EventService.SubscriptionEvent;
-using Microsoft.AspNetCore.SignalR.Client;
-using MudBlazor;
-using System.Text.RegularExpressions;
-using UIService.Dto;
+using MqttService.Clients;
+using MqttService.Clients.Dto;
+using MqttService.Handlers;
 
 namespace UIService.Pages
 {
     public partial class Index
     {
-        public List<ClientSubscribedDto> clients = new();
-        private HubConnection? hubConnection;
-        public string Connection_Id = string.Empty;
-        private bool _loader = false;
-
-
-
-        private readonly SubscriptionInterceptorEvent _subscriptionInterceptorEvent;
+        private readonly ConnectionInterceptorEvent _connectionInterceptorEvent;
+        private readonly HandlerInterceptorEvent _handlerInterceptorEvent;
 
         public Index()
         {
-            _subscriptionInterceptorEvent = SubscriptionInterceptorEventFactory.build();
+            _connectionInterceptorEvent = ConnectionInterceptorEventBuild.Build();
+            _handlerInterceptorEvent = HandlerInterceptorEventBuild.Build();
+
         }
 
-        protected override async Task OnInitializedAsync()
+        protected override void OnInitialized()
         {
-            _subscriptionInterceptorEvent.ClientSubscribed += new System.EventHandler<SubscriptionInterceptorEventArgs>(_subscriptionInterceptorEvent_ClientSubscribed);
+            _connectionInterceptorEvent.ClientConnected += new System.EventHandler<ConnectionInterceptorEventArgs>(_connectionInterceptorEvent_ClientConnected);
+            _handlerInterceptorEvent.HandleIncoming += new System.EventHandler<HandlerInterceptorEventArgs>(_handlerInterceptorEvent_MessageRecevied);
 
-            hubConnection = new HubConnectionBuilder()
-                .WithUrl(NavigationManager.ToAbsoluteUri("/clienthub"))
-                .Build();
-
-            await hubConnection.StartAsync();
-            hubConnection.On("ClientSubscribed", (Action<string, string, string, bool, string>)((clientid, topic, qos,retain,date) =>
-            {
-                AddClient(clientid, topic, qos, retain, date);
-            }));
-
-            Connection_Id = hubConnection.ConnectionId;
         }
-
-        private void AddClient(string clientid, string topic, string qos, bool retain, string date)
+        protected override bool ShouldRender()
         {
-            _loader = true;
-            clients.Add(new ClientSubscribedDto
-            {
-                ClientId = clientid,
-                LastConnectedDate = date,
-                QualityOfServiceLevel = qos,
-                Retian = retain,
-                Topic = topic,
-            });
-
-            StateHasChanged();
-            _loader = false;
+            return base.ShouldRender();
         }
 
-
-
-        private void _subscriptionInterceptorEvent_ClientSubscribed(object? sender, SubscriptionInterceptorEventArgs e)
+        private void _handlerInterceptorEvent_MessageRecevied(object? sender, HandlerInterceptorEventArgs e)
         {
-            if (hubConnection is not null)
-            {
-                hubConnection.SendAsync("ClientSubscribed", e.ClientId, e.TopicFilter.Topic
-                    ,e.TopicFilter.QualityOfServiceLevel.ToString()
-                    ,e.TopicFilter.RetainAsPublished.ToString()
-                    , DateTime.Now.ToFarsi());
-            }
+            this.InvokeAsync(() => this.StateHasChanged());
 
         }
-
-
-        public async ValueTask DisposeAsync()
+        private void _connectionInterceptorEvent_ClientConnected(object? sender, ConnectionInterceptorEventArgs e)
         {
-            if (hubConnection is not null)
-            {
-                await hubConnection.DisposeAsync();
-            }
-        }
+            ConnectedClients.AddClient(e.ClientId, e.Endpoint, e.Username, e.CleanSession.ToString(), DateTime.Now.ToFarsi());
+            this.InvokeAsync(() => this.StateHasChanged());
 
+        }
 
     }
 }

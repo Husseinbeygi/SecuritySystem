@@ -1,9 +1,9 @@
 ﻿namespace EventService.ConnectionEvent
 {
-    public class ConnectionInterceptorEventFactory
+    public class ConnectionInterceptorEventBuild
     {
         private static ConnectionInterceptorEvent _instance;
-        public static ConnectionInterceptorEvent build()
+        public static ConnectionInterceptorEvent Build()
         {
             if (_instance == null)
             {
