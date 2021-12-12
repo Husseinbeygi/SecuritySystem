@@ -21,15 +21,14 @@ builder.Services.AddResponseCompression(opts =>
     opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
         new[] { "application/octet-stream" });
 });
-
 SecuritySystemBootstrapper.Configure(builder.Services, "Data Source=Database.db");
-
 builder.Services.AddBlazorise(options =>
        {
            options.ChangeTextOnKeyPress = true; // optional
        })
       .AddBootstrapProviders()
       .AddFontAwesomeIcons();
+
 builder.Services.AddTransient<MessageHandler>();
 
 var app = builder.Build();

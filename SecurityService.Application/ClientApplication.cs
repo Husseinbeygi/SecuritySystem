@@ -26,6 +26,23 @@ namespace SecuritySystem.Application
             _repository.SaveChanges();
         }
 
+        public void Edit(EditClient editClient)
+        {
+            var _c = _repository.Get(editClient.Id);
+            if (_repository.Exists(x => x.ClientId == editClient.ClientId && x.Id != editClient.Id))
+            {
+                return;
+            }
+            _c.Edit(editClient.ClientId, editClient.UserName);
+            _repository.SaveChanges();
+
+        }
+
+        public EditClient GetDetails(long id)
+        {
+            return _repository.GetDetails(id);
+        }
+
         public bool IsClientValidate(string clientId, string username, string password)
         {
            ClientValidation _client = _repository.GetClientCredentials(clientId);
@@ -40,6 +57,13 @@ namespace SecuritySystem.Application
                 }
             }
             return false;
+        }
+
+        public void Remove(long id)
+        {
+            _repository.Remove(id);
+            _repository.SaveChanges();
+
         }
 
         public List<ClientViewModel> Search(ClientSearchModel command)

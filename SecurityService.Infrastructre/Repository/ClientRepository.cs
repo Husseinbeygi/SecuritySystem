@@ -24,6 +24,26 @@ namespace SecuritySystem.Infrastructre.Repository
             }).FirstOrDefault(x => x.ClientId == clientId);
         }
 
+        public EditClient GetDetails(long id)
+        {
+            return _context.Client.Select(x => new EditClient
+            {
+                ClientId = x.ClientId,
+                Id = x.Id,
+                UserName = x.UserName,
+                Password = x.Password,
+            }).FirstOrDefault(x => x.Id == id);
+        }
+
+        public void Remove(long id)
+        {
+            var client = _context.Client.FirstOrDefault(x => x.Id == id);
+            if (client != null)
+            {
+                _context.Remove(client);
+            }
+        }
+
         public List<ClientViewModel> Search(ClientSearchModel command)
         {
             var query = _context.Client.Select(x => new ClientViewModel
@@ -34,9 +54,9 @@ namespace SecuritySystem.Infrastructre.Repository
                    UserName = x.UserName
             });
 
-            if (command.ClientId != null)
+            if (!string.IsNullOrWhiteSpace(command.ClientId))
             {
-                query = query.Where(x => x.ClientId == command.ClientId);
+                query = query.Where(x => x.ClientId.Contains(command.ClientId));
 
             }
 

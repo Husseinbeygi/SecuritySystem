@@ -8,5 +8,7 @@ namespace SecuritySystem.Domain.Client
     {
         List<ClientViewModel> Search(ClientSearchModel command);
         ClientValidation GetClientCredentials(string clientId);
+        void Remove(long id);
+        EditClient GetDetails(long id);
     }
 }

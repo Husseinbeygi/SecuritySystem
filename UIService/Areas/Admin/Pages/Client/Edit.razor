@@ -1,0 +1,24 @@
+﻿@page "/admin/client/edit/{id:long}"
+@using SecurityService.Application.Service.Dtos.Client
+@inject IClientApplication _application
+@inject NavigationManager NavManager
+
+<h3>ثبت کلاینت جدید</h3>
+<Div Class="container">
+    <EditForm Model="@_editClient" OnValidSubmit="@HandleValidSubmit">
+      <div class="row">
+        <div class="form-group col-md-4">
+          <label for="inputEmail4">نام کلاینت</label>
+          <InputText type="text" class="form-control" @bind-Value="_editClient.ClientId" />
+        </div>
+        <div class="form-group col-md-4">
+          <label for="inputPassword4">نام کاربری</label>
+          <InputText type="text" class="form-control"  @bind-Value="_editClient.UserName"/>
+        </div>
+  
+    </div>
+    <br />
+    <Button Type="ButtonType.Submit" Color="Color.Primary">ویرایش دستگاه</Button>
+      <a class="btn btn-danger" href="/admin/client">بازگشت</a>    
+    </EditForm>
+</Div>

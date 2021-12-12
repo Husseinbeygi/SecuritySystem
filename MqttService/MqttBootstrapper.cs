@@ -121,9 +121,11 @@ namespace MqttService
                 {
                     BadUseNameorPassword(v);
                     return;
-                }
+                }else {
+
                 v.ReasonCode = MqttConnectReasonCode.Success;
                 _action.ClientValidatorAction(v, false);
+                }
 
             };
         }
@@ -131,7 +133,6 @@ namespace MqttService
         private void BadUseNameorPassword(MqttConnectionValidatorContext v)
         {
             v.ReasonCode = MqttConnectReasonCode.BadUserNameOrPassword;
-            _action.ClientValidatorAction(v, true);
         }
 
         private void LogMemoryInformation()

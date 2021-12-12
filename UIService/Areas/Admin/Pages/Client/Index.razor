@@ -3,8 +3,17 @@
 @inject IClientApplication _application
 
 <div class="col-md-12">
+     <div class="form-group col-md-4">
+     <label for="inputEmail4">جستجو بر اساس :نام کلاینت</label>
+     <input @bind="_searchModel.ClientId" @bind:event="oninput" type="text" class="form-control" />
+     </div>
+    <br />
+    <br />
+
     <a class="btn btn-primary" href="/admin/client/create">ثبت کلاینت جدید</a>
     <br />
+        <br />
+
     <Table dir="rtl" Bordered="true"
            Striped="true"
            FixedHeader
@@ -14,24 +23,23 @@
         <TableHeader>
             <TableRow>
                 <TableHeaderCell>#</TableHeaderCell>
-                <TableHeaderCell>کد کلاینت</TableHeaderCell>
+                <TableHeaderCell>نام کلاینت</TableHeaderCell>
                 <TableHeaderCell>نام کاربری</TableHeaderCell>
                 <TableHeaderCell>تاریخ ثبت</TableHeaderCell>
                 <TableHeaderCell>عملیات</TableHeaderCell>
             </TableRow>
         </TableHeader>
         <TableBody>
-            @foreach (var item in _application.Search(new ClientSearchModel { ClientId = null }))
+            @foreach (var item in _application.Search(_searchModel))
             {
-
-
                 <TableRow>
                     <TableRowCell>@item.Id</TableRowCell>
                     <TableRowCell>@item.ClientId</TableRowCell>
                     <TableRowCell>@item.UserName</TableRowCell>
                     <TableRowCell>@item.CreationDate</TableRowCell>
                     <TableRowCell>
-                        <Button Color="Color.Primary" Outline>پنل دستگاه</Button>
+                        <a class="btn btn-secondary" href="admin/client/Edit/@item.Id">ویرایش</a>
+                        <a class="btn btn-danger"  @onclick="@(() => OnDeleteClient(item.Id))">حذف</a>
                     </TableRowCell>
                 </TableRow>
             }
