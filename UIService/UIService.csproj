@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\EventService\EventService.csproj" />
+    <ProjectReference Include="..\FFmpegService\FFmpegService.csproj" />
     <ProjectReference Include="..\MqttService\MqttService.csproj" />
     <ProjectReference Include="..\SecurityService.Infrastructre\SecuritySystem.Infrastructre.csproj" />
   </ItemGroup>

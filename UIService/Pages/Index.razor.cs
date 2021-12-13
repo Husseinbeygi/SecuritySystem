@@ -1,10 +1,7 @@
 ﻿using _0_Framework.Application;
 using EventService.ConnectionEvent;
 using EventService.HandlerEvent;
-using EventService.MessageEvent;
 using MqttService.Clients;
-using MqttService.Clients.Dto;
-using MqttService.Handlers;
 
 namespace UIService.Pages
 {
@@ -19,12 +16,11 @@ namespace UIService.Pages
             _handlerInterceptorEvent = HandlerInterceptorEventBuild.Build();
 
         }
-
         protected override void OnInitialized()
         {
             _connectionInterceptorEvent.ClientConnected += new System.EventHandler<ConnectionInterceptorEventArgs>(_connectionInterceptorEvent_ClientConnected);
             _handlerInterceptorEvent.HandleIncoming += new System.EventHandler<HandlerInterceptorEventArgs>(_handlerInterceptorEvent_MessageRecevied);
-
+            // await DiscoverCamera.OnvifCamera();
         }
         protected override bool ShouldRender()
         {

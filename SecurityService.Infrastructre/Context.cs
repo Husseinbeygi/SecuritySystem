@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SecuritySystem.Domain.Camera;
 using SecuritySystem.Domain.Client;
 using SecuritySystem.Infrastructre.Maps;
 
@@ -7,6 +8,7 @@ namespace SecuritySystem.Infrastructre
     public class Context : DbContext
     {
         public DbSet<Client> Client { get; set; }
+        public DbSet<IPCamera> IPCamera { get; set; }
         public Context(DbContextOptions<Context> options) : base(options)
         {
         }

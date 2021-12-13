@@ -1,0 +1,36 @@
+﻿@page "/admin/camera/discover"
+@using FFmpegService
+@using OnvifDiscovery.Models
+<div class="col-md-12">
+    <Table dir="rtl"  FixedHeaderTableHeight="400px">
+           
+        <TableBody>
+            @foreach (var item in _cameraList)
+            {
+                <TableRow>
+                    <TableRowCell>@item.Address</TableRowCell>
+                    <TableRowCell>@item.Model</TableRowCell>
+                    <TableRowCell>@item.Mfr</TableRowCell>
+                    @foreach (var xitem in item.XAdresses)
+                    {
+                         <TableRowCell>@xitem</TableRowCell>
+
+                    }
+                    <TableRowCell>
+                        <a class="btn btn-secondary" href="admin/client/Edit/@item">ثبت</a>
+                    </TableRowCell>
+                </TableRow>
+            }
+        </TableBody>
+    </Table>
+</div>
+
+@code {
+    public IEnumerable<DiscoveryDevice> _cameraList { get; set; }
+    protected override async Task OnInitializedAsync()
+    {
+        _cameraList = new List<DiscoveryDevice>();
+        _cameraList = await DiscoverCamera.OnvifCamera();
+        
+    }
+}

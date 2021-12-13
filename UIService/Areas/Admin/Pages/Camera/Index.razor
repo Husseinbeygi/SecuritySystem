@@ -1,0 +1,40 @@
+﻿@page "/admin/camera"
+
+<div class="col-md-12">
+    <a class="btn btn-primary" href="/admin/camera/discover">ثبت دوربین جدید</a>
+    <br />
+        <br />
+
+    <Table dir="rtl" Bordered="true"
+           Striped="true"
+           FixedHeader
+           FixedHeaderTableHeight="400px"
+           Resizable
+           ResizeMode="TableResizeMode.Columns">
+        <TableHeader>
+            <TableRow>
+                <TableHeaderCell>#</TableHeaderCell>
+                <TableHeaderCell>نام کلاینت</TableHeaderCell>
+                <TableHeaderCell>نام کاربری</TableHeaderCell>
+                <TableHeaderCell>تاریخ ثبت</TableHeaderCell>
+                <TableHeaderCell>عملیات</TableHeaderCell>
+            </TableRow>
+        </TableHeader>
+        <TableBody>
+                <TableRow>
+                    <TableRowCell></TableRowCell>
+                    <TableRowCell></TableRowCell>
+                    <TableRowCell></TableRowCell>
+                    <TableRowCell></TableRowCell>
+                    <TableRowCell>
+                        <a class="btn btn-secondary">ویرایش</a>
+                        <a class="btn btn-danger"  >حذف</a>
+                    </TableRowCell>
+                </TableRow>
+        </TableBody>
+    </Table>
+</div>
+
+@code {
+
+}

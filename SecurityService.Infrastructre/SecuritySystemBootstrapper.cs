@@ -1,8 +1,10 @@
 ﻿using _0_Framework.Application;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using SecurityService.Application.Service.Dtos.Camera.IPCamera;
 using SecurityService.Application.Service.Dtos.Client;
 using SecuritySystem.Application;
+using SecuritySystem.Domain.Camera;
 using SecuritySystem.Domain.Client;
 using SecuritySystem.Infrastructre.Repository;
 
@@ -17,6 +19,8 @@ namespace SecuritySystem.Infrastructre
             _service.AddTransient<IClientApplication, ClientApplication>();
             _service.AddTransient<IPasswordHasher, PasswordHasher>();
 
+            _service.AddTransient<IIPCameraRepository, IPCameraRepository>();
+            _service.AddTransient<IIPCameraApplication, IPCameraApplication>();
 
             _service.AddDbContext<Context>(x => x.UseSqlite(connstring));
         }
