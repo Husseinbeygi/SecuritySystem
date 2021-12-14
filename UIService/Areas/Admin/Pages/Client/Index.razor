@@ -38,8 +38,8 @@
                     <TableRowCell>@item.UserName</TableRowCell>
                     <TableRowCell>@item.CreationDate</TableRowCell>
                     <TableRowCell>
-                        <a class="btn btn-secondary" href="admin/client/Edit/@item.Id">ویرایش</a>
-                        <a class="btn btn-danger"  @onclick="@(() => OnDeleteClient(item.Id))">حذف</a>
+                        <a class="btn btn-outline-secondary" href="admin/client/Edit/@item.Id">ویرایش</a>
+                        <a class="btn btn-outline-danger"  @onclick="@(() => OnDeleteClient(item.Id))">حذف</a>
                     </TableRowCell>
                 </TableRow>
             }

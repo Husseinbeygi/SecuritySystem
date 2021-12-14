@@ -1,9 +1,15 @@
 ﻿@page "/admin/camera"
+@using SecurityService.Application.Service.Dtos.Camera.IPCamera
+@inject IIPCameraApplication _application
+
 
 <div class="col-md-12">
-    <a class="btn btn-primary" href="/admin/camera/create">ثبت دوربین جدید</a>
-    <br />
-        <br />
+    <div class="form-group col-md-4">
+    <label for="inputEmail4">جستجو بر اساس :آدرس دستگاه </label>
+     <input @bind="searchModel.HostAddress" @bind:event="oninput" type="text" class="form-control" />
+    </div><br /><br />
+
+    <a class="btn btn-primary" href="/admin/camera/create">ثبت دستگاه جدید</a><br /><br />
 
     <Table dir="rtl" Bordered="true"
            Striped="true"
@@ -14,23 +20,30 @@
         <TableHeader>
             <TableRow>
                 <TableHeaderCell>#</TableHeaderCell>
-                <TableHeaderCell>نام کلاینت</TableHeaderCell>
+                <TableHeaderCell>آدرس  دستگاه</TableHeaderCell>
+                <TableHeaderCell>آدرس تصویر</TableHeaderCell>
                 <TableHeaderCell>نام کاربری</TableHeaderCell>
-                <TableHeaderCell>تاریخ ثبت</TableHeaderCell>
+                <TableHeaderCell>رمز عبور</TableHeaderCell>
                 <TableHeaderCell>عملیات</TableHeaderCell>
             </TableRow>
         </TableHeader>
         <TableBody>
-                <TableRow>
-                    <TableRowCell></TableRowCell>
-                    <TableRowCell></TableRowCell>
-                    <TableRowCell></TableRowCell>
-                    <TableRowCell></TableRowCell>
+            @foreach (var item in _application.Search(searchModel))
+            {
+                
+            <TableRow>
+                    <TableRowCell>@item.Id</TableRowCell>
+                    <TableRowCell>@item.HostAddress</TableRowCell>
+                    <TableRowCell>@item.StreamAddress</TableRowCell>
+                    <TableRowCell>@item.UserName</TableRowCell>
+                     <TableRowCell>@item.Password</TableRowCell>
                     <TableRowCell>
-                        <a class="btn btn-secondary">ویرایش</a>
-                        <a class="btn btn-danger"  >حذف</a>
+                        <Button Color="Blazorise.Color.Primary" >پنل دستگاه</Button>
+                        <a class="btn btn-outline-secondary" >ویرایش</a>
+                        <a class="btn btn-outline-danger"  >حذف</a>
                     </TableRowCell>
                 </TableRow>
+            }
         </TableBody>
     </Table>
 </div>
