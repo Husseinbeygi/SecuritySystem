@@ -7,12 +7,14 @@ using MqttService.Handlers;
 using SecuritySystem.Infrastructre;
 using Serilog;
 using UIService.Hubs;
+using MudBlazor.Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
+builder.Services.AddMudServices();
 builder.Services.AddTransient<IMqttActions, MqttActions>();
 builder.Services.AddHostedService<MqttBootstrapper>();
 builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console());
