@@ -1,4 +1,10 @@
-﻿
+﻿body {
+    background: #2d2c3e;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    overflow: hidden;
+    z-index: -1;
+}
 
 .container {
     display: table;

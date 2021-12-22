@@ -1,0 +1,18 @@
+﻿@page "/videos"
+@using SecurityService.Application.Service.Dtos.Camera.IPCamera
+@using UIService.Components
+@inject IIPCameraApplication _camApplication
+
+
+<h3>CameraVideos</h3>
+
+<div class="row">
+  <div class="col">
+    <CameraStream Camera=cam></CameraStream>
+
+  </div>
+  <div class="col">
+    <CameraStream Camera=cam></CameraStream>
+
+  </div>
+</div>
