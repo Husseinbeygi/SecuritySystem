@@ -1,0 +1,91 @@
+﻿@page "/admin/camera/edit/{id:long}"
+@using FFmpegService
+@using OnvifDiscovery.Models
+@using SecurityService.Application.Service.Dtos.Camera.IPCamera
+@using _0_Framework.Helper
+@inject IIPCameraApplication _application
+@inject NavigationManager navigationmanager
+@inject IRtspUrlGenerator _rtspgenerator
+
+
+<h3>ویرایش دوربین جدید</h3>
+<Div Class="container">
+    <EditForm Model="@editIPcamera" OnValidSubmit="@HandleValidSubmit">
+
+
+        <div class="row">
+            <div class="form-group col-md-3"></div>
+
+            <div class="form-group col-md-6">
+                <div class="form-group col-md-12">
+                    <label for="inputEmail4">نام کلاینت</label>
+                    <MudAutocomplete T="string" @bind-Value="editIPcamera.HostAddress" Margin="MudBlazor.Margin.Dense" SearchFunc="@Search" Dense="true" Variant="Variant.Outlined" />
+                </div>
+                <div class="form-group col-md-12">
+                    <label for="inputPassword4">نام کاربری</label>
+                    <InputText type="text" class="form-control" @bind-Value="editIPcamera.UserName" />
+                </div>
+                <div class="form-group col-md-12">
+                    <label for="inputAddress">رمز عبور</label>
+                    <InputText type="text" class="form-control" @bind-Value="editIPcamera.Password" />
+                </div>
+                <div class="form-group col-md-12">
+                    <label for="inputAddress">آدرس تصویر زنده(RTSP)</label>
+                    <MudAutocomplete T="string" @bind-Value="editIPcamera.StreamAddress" Margin="MudBlazor.Margin.Dense" SearchFunc="@GetRTSPAddressAsync" Dense="true" Variant="Variant.Outlined" />
+                    <label for="inputAddress">آدرس  پیشنهادی تصویر زنده(RTSP)</label>
+                    <div class="alert alert-warning" style="text-align:center">
+                        <Span>@GenerateRTSPUrl()</Span>
+
+                    </div>
+                </div>
+                <div class="form-group col-md-3"></div>
+                <br />
+                <Blazorise.Button Type="Blazorise.ButtonType.Submit" Color="Blazorise.Color.Primary">ویرایش دستگاه</Blazorise.Button>
+                <a class="btn btn-danger" href="/admin/camera">بازگشت</a>
+            </div>
+        </div>
+    </EditForm>
+</Div>
+
+@code {
+    [Parameter]
+    public long id { get; set; }
+    public EditIPCamera editIPcamera { get; set; }
+    public IEnumerable<DiscoveryDevice> cameraList { get; set; }
+
+    protected override void OnInitialized()
+    {
+        editIPcamera = _application.GetDetails(id);
+    }
+
+    protected override async Task OnParametersSetAsync()
+    {
+        cameraList = new List<DiscoveryDevice>();
+        cameraList = await DiscoverCamera.OnvifCamera();
+    }
+
+    public void HandleValidSubmit()
+    {
+        _application.Edit(editIPcamera);
+        navigationmanager.NavigateTo("/admin/camera");
+    }
+    private async Task<IEnumerable<string>> Search(string value)
+    {
+        // if text is null or empty, show complete list
+        if (string.IsNullOrEmpty(value))
+            return cameraList.Select(u => u.Address);
+
+        return cameraList.Where(x => x.Address.Contains(value)).Select(u => u.Address);
+    }
+    public async Task<IEnumerable<string>> GetRTSPAddressAsync(string value)
+    {
+        return _rtspgenerator.returnlist();
+    }
+
+    public string GenerateRTSPUrl()
+    {
+        return _rtspgenerator.GenerateUrl(editIPcamera.HostAddress, editIPcamera.UserName, editIPcamera.Password, editIPcamera.StreamAddress);
+    }
+
+
+}

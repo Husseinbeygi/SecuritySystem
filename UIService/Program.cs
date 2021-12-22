@@ -8,6 +8,8 @@ using SecuritySystem.Infrastructre;
 using Serilog;
 using UIService.Hubs;
 using MudBlazor.Services;
+using _0_Framework.Helper;
+using Microsoft.AspNetCore.StaticFiles;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -32,7 +34,7 @@ builder.Services.AddBlazorise(options =>
       .AddFontAwesomeIcons();
 
 builder.Services.AddTransient<MessageHandler>();
-
+builder.Services.AddTransient<IRtspUrlGenerator, RtspUrlGenerator>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -44,6 +46,15 @@ if (!app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+var provider = new FileExtensionContentTypeProvider();
+provider.Mappings[".m3u8"] = "application/x-mpegURL";
+
+
+app.UseStaticFiles(new StaticFileOptions
+{
+    ServeUnknownFileTypes = true
+});
 
 app.UseStaticFiles();
 

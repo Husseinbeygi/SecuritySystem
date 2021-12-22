@@ -1,40 +1,49 @@
 ﻿@page "/admin/camera/create"
 @using SecurityService.Application.Service.Dtos.Camera.IPCamera
-@inject IIPCameraApplication _application;
+@using _0_Framework.Helper
+@inject IIPCameraApplication _application
+@inject IRtspUrlGenerator _rtspgenerator
+@inject NavigationManager navigationmanager
+
 
 <h3>ثبت دوربین جدید</h3>
 <Div Class="container">
+
     <EditForm Model="@createIPcamera" OnValidSubmit="@HandleValidSubmit">
-        <div class="col">
-            <div Class="row">
-                <div class="form-group col-md-4">
+        <div class="row">
+            <div class="form-group col-md-3"></div>
+
+            <div class="form-group col-md-6">
+
+                <div class="form-group col-md-12">
                     <label for="inputEmail4">نام کلاینت</label>
-                    <MudAutocomplete T="string" @bind-Value="createIPcamera.HostAddress" Margin="MudBlazor.Margin.Dense" SearchFunc="@Search" Dense="true" Variant="Variant.Outlined" />
+                    <MudAutocomplete T="string" @bind-Value="createIPcamera.HostAddress" Margin="MudBlazor.Margin.Dense" SearchFunc="@SearchAsync" Dense="true" Variant="Variant.Outlined" />
                 </div>
-                @if (loader)
-                {
-                    <div class="spinner-border" style="margin-top:25px;margin-right:10px" role="status">
-                        <span class="sr-only">Loading...</span>
+                <div class="form-group col-md-12">
+                    <label for="inputPassword4">نام کاربری</label>
+                    <InputText type="text" class="form-control" @bind-Value="createIPcamera.UserName" />
+                </div>
+                <div class="form-group col-md-12">
+                    <label for="inputAddress">رمز عبور</label>
+                    <InputText type="text" class="form-control" @bind-Value="createIPcamera.Password" />
+                </div>
+                <div class="form-group col-md-12">
+                    <label for="inputAddress">آدرس تصویر زنده(RTSP)</label>
+                    <MudAutocomplete T="string" @bind-Value="createIPcamera.StreamAddress" Margin="MudBlazor.Margin.Dense" SearchFunc="@GetRTSPAddressAsync" Dense="true" Variant="Variant.Outlined" />
+
+
+                    <label for="inputAddress">آدرس  پیشنهادی تصویر زنده(RTSP)</label>
+                    <div class="alert alert-warning" style="text-align:center">
+                        <Span>@GenerateRTSPUrl()</Span>
+
                     </div>
-                }
+                </div>
+                <br />
+                <Blazorise.Button Type="Blazorise.ButtonType.Submit" Color="Blazorise.Color.Primary">ثبت دستگاه</Blazorise.Button>
+                <a class="btn btn-danger" href="/admin/camera">بازگشت</a>
             </div>
-            <div class="form-group col-md-4">
-                <label for="inputPassword4">نام کاربری</label>
-                <InputText type="text" class="form-control" @bind-Value="createIPcamera.UserName" />
-            </div>
-
-            <div class="form-group col-md-4">
-                <label for="inputAddress">رمز عبور</label>
-                <InputText type="text" class="form-control" @bind-Value="createIPcamera.Password" />
-            </div>
-            <div class="form-group col-md-4">
-                <label for="inputAddress">آدرس تصویر زنده(RTSP)</label>
-                <InputText type="text" class="form-control" @bind-Value="createIPcamera.StreamAddress" />
-            </div>
-
         </div>
-        <br />
-        <Blazorise.Button Type="Blazorise.ButtonType.Submit" Color="Blazorise.Color.Primary">ثبت دستگاه</Blazorise.Button>
-        <a class="btn btn-danger" href="/admin/client">بازگشت</a>
     </EditForm>
+
+
 </Div>

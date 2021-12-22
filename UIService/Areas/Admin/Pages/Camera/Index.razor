@@ -38,9 +38,9 @@
                     <TableRowCell>@item.UserName</TableRowCell>
                      <TableRowCell>@item.Password</TableRowCell>
                     <TableRowCell>
-                        <Button Color="Blazorise.Color.Primary" >پنل دستگاه</Button>
-                        <a class="btn btn-outline-secondary" >ویرایش</a>
-                        <a class="btn btn-outline-danger"  >حذف</a>
+                        <a class="btn btn-primary" href="/admin/camera/panel/@item.Id">پنل دستگاه</a>
+                        <a class="btn btn-outline-secondary" href="/admin/camera/edit/@item.Id">ویرایش</a>
+                        <a class="btn btn-outline-danger"  @onclick="@(() => OnDeleteIPCamera(item.Id))">حذف</a>
                     </TableRowCell>
                 </TableRow>
             }

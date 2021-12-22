@@ -7,6 +7,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="Blazored.Video" Version="1.0.0" />
     <PackageReference Include="Blazorise.Bootstrap" Version="0.9.5.2" />
     <PackageReference Include="Blazorise.Icons.FontAwesome" Version="0.9.5.2" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.0" />
@@ -20,6 +21,8 @@
   <ItemGroup>
     <ProjectReference Include="..\EventService\EventService.csproj" />
     <ProjectReference Include="..\FFmpegService\FFmpegService.csproj" />
+    <ProjectReference Include="..\FrameDecoderCore\FrameDecoderCore.csproj" />
+    <ProjectReference Include="..\IPCameraClient\IPCameraClient.csproj" />
     <ProjectReference Include="..\MqttService\MqttService.csproj" />
     <ProjectReference Include="..\SecurityService.Infrastructre\SecuritySystem.Infrastructre.csproj" />
   </ItemGroup>
@@ -30,6 +33,57 @@
     </None>
     <None Update="ffprobe.exe">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="libs\ffmpeg\avcodec-53.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="libs\ffmpeg\avdevice-53.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="libs\ffmpeg\avfilter-2.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="libs\ffmpeg\avformat-53.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="libs\ffmpeg\avutil-51.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="libs\ffmpeg\libffmpeghelper.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="libs\ffmpeg\libffmpeghelper.so">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="libs\ffmpeg\postproc-52.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="libs\ffmpeg\postproc-55.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="libs\ffmpeg\README.txt">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="libs\ffmpeg\swresample-0.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="libs\ffmpeg\swresample-3.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="libs\ffmpeg\swscale-2.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="libs\ffmpeg\swscale-5.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="postproc-55.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="swresample-3.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Update="swscale-5.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
   </ItemGroup>
 

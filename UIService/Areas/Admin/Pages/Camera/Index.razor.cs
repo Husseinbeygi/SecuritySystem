@@ -10,5 +10,11 @@ namespace UIService.Areas.Admin.Pages.Camera
         public Index()
         {
         }
+
+        public void OnDeleteIPCamera(long id)
+        {
+            _application.Remove(id);
+
+        }
     }
 }
