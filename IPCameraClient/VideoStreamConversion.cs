@@ -19,12 +19,16 @@ namespace IPCameraClient
             urlToCamera = url;
         }
 
-        public async Task RecordStream()
+        public async Task RecordStream(string dir,string filename)
         {
 
             RecordcancellationToken = new CancellationTokenSource();
-
-            await TakeVideo("out.mp4", RecordcancellationToken.Token);
+            if (!Directory.Exists(dir))
+            {
+                Directory.CreateDirectory(dir);
+            }
+            var _recPath = Path.Combine(dir, filename + ".mp4"); 
+            await TakeVideo(_recPath, RecordcancellationToken.Token);
 
         }
         private async Task TakeVideo(string filename, CancellationToken token)
@@ -33,7 +37,7 @@ namespace IPCameraClient
         }
         private void OpencvRecord(string filename)
         {
-            OpenCvSharp.Size dsize = new OpenCvSharp.Size(streamWidth, streamHeight);
+            OpenCvSharp.Size dsize = new Size(streamWidth, streamHeight);
 
             using (VideoCapture capture = new VideoCapture(urlToCamera))
             using (VideoWriter writer = new VideoWriter(filename, FourCC.MP4V, capture.Fps, dsize))

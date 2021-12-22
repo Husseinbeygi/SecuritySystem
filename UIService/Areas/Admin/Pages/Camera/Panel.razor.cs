@@ -1,4 +1,5 @@
-﻿using FrameDecoderCore;
+﻿using _0_Framework.Application;
+using FrameDecoderCore;
 using IPCameraClient;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
@@ -30,17 +31,17 @@ namespace UIService.Areas.Admin.Pages.Camera
         private byte[] ByteData = { };
         private Bitmap bitmapFrame;
         VideoStreamConversion videoStream;
+        string CameraVideoPath;
         protected override void OnInitialized()
         {
             base.OnInitialized();
             cam = _camApplication.GetDetails(id);
             var camUrl = _rtspgenerator.GenerateUrl(cam.HostAddress, cam.UserName, cam.Password, cam.StreamAddress);
-            var rootPath = _webHostEnvironment.WebRootPath;
+            CameraVideoPath = Path.Combine(_webHostEnvironment.WebRootPath, "livevideos", cam.HostAddress);
             urlToCamera = camUrl;
             videoStream = new(camUrl, streamWidth, streamHeight);
 
             var serverUri = new Uri(urlToCamera);
-            //var credentials = new NetworkCredential("admin", "admin12345678");
 
             var connectionParameters = new ConnectionParameters(serverUri/*, credentials*/);
             ConnectToCamera(connectionParameters);
@@ -138,7 +139,8 @@ namespace UIService.Areas.Admin.Pages.Camera
             {
                 using (videoStream)
                 {
-                    await videoStream.RecordStream();
+                    var filename = DateTime.Now.ToFarsiWithoutSlash();
+                    await videoStream.RecordStream(CameraVideoPath,filename.Trim());
                 }
             }
         }
