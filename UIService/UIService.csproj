@@ -28,12 +28,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <None Update="ffmpeg.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
-    <None Update="ffprobe.exe">
-      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
-    </None>
     <None Update="libs\ffmpeg\avcodec-53.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

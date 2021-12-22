@@ -54,9 +54,6 @@
     <None Update="avutil-56.dll">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
-    <None Update="libffmpeghelper.dll">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </None>
     <None Update="liblibffmpeghelper.a">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
