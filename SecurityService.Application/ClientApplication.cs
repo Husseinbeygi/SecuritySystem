@@ -21,7 +21,8 @@ namespace SecuritySystem.Application
             {
                 return;
             }
-            var _create = new Client(command.ClientId, command.UserName, command.Password);
+           var hashedPass =  _passwordhasher.Hash(command.Password); 
+            var _create = new Client(command.ClientId, command.UserName, hashedPass);
             _repository.Create(_create);
             _repository.SaveChanges();
         }
@@ -51,7 +52,8 @@ namespace SecuritySystem.Application
 
             if (_client.UserName == username)
             {
-                if (_client.Password == password)
+                (bool Verified, bool NeedsUpgrade) result = _passwordhasher.Check(_client.Password, password);
+                if (result.Verified)
                 {
                     return true;
                 }
