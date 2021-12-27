@@ -6,7 +6,7 @@ using MQTTnet.Server;
 using MqttService.Actions;
 using MqttService.Configuration;
 using MqttService.Handlers;
-using SecurityService.Application.Service.Dtos.Client;
+using SecurityService.Application.Service.Client;
 using System;
 using System.Threading;
 using System.Threading.Tasks;

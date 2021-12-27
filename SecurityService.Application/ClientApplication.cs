@@ -1,6 +1,6 @@
 ﻿using _0_Framework.Application;
 using AutoMapper;
-using SecurityService.Application.Service.Dtos.Client;
+using SecurityService.Application.Service.Client;
 using SecuritySystem.Domain.Client;
 
 namespace SecuritySystem.Application
@@ -15,27 +15,32 @@ namespace SecuritySystem.Application
             _passwordhasher = passwordhasher;
         }
 
-        public void Create(CreateClient command)
+        public OperationResult Create(CreateClient command)
         {
+            var result = new OperationResult();
             if (_repository.Exists(x => x.ClientId == command.ClientId))
             {
-                return;
+                return result.Failed(ApplicationMessages.DuplicatedRecord);
             }
            var hashedPass =  _passwordhasher.Hash(command.Password); 
             var _create = new Client(command.ClientId, command.UserName, hashedPass);
             _repository.Create(_create);
             _repository.SaveChanges();
+            return result.Succedded();
         }
 
-        public void Edit(EditClient editClient)
+        public OperationResult Edit(EditClient editClient)
         {
+            var result = new OperationResult();
             var _c = _repository.Get(editClient.Id);
             if (_repository.Exists(x => x.ClientId == editClient.ClientId && x.Id != editClient.Id))
             {
-                return;
+                return result.Failed(ApplicationMessages.DuplicatedRecord);
             }
             _c.Edit(editClient.ClientId, editClient.UserName);
             _repository.SaveChanges();
+            return result.Succedded();
+
 
         }
 
@@ -61,10 +66,17 @@ namespace SecuritySystem.Application
             return false;
         }
 
-        public void Remove(long id)
+        public OperationResult Remove(long id)
         {
-            _repository.Remove(id);
-            _repository.SaveChanges();
+            var result = new OperationResult();
+            var _c = _repository.Get(id);
+            if (_repository.Exists(x => _c.Id == id))
+            {
+                _repository.Remove(id);
+                _repository.SaveChanges();
+                return result.Succedded();
+            }
+            return result.Failed(ApplicationMessages.RecordNotFound);
 
         }
 

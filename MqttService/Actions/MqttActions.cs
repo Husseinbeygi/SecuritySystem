@@ -9,7 +9,7 @@ using System;
 using System.Text;
 
 
-namespace MqttService
+namespace MqttService.Actions
 {
     public class MqttActions : IMqttActions
     {
@@ -111,8 +111,8 @@ namespace MqttService
             Log.Information(
                 "Heartbeat for service {ServiceName}: Total {Total}, heap size: {HeapSize}," +
                 " memory load: {MemoryLoad}.",
-                serviceName, $"{(totalMemory / divider):N3}", $"{(memoryInfo.HeapSizeBytes / divider):N3}",
-                $"{(memoryInfo.MemoryLoadBytes / divider):N3}");
+                serviceName, $"{totalMemory / divider:N3}", $"{memoryInfo.HeapSizeBytes / divider:N3}",
+                $"{memoryInfo.MemoryLoadBytes / divider:N3}");
         }
 
 

@@ -1,4 +1,4 @@
-﻿namespace SecurityService.Application.Service.Dtos.Client
+﻿namespace SecurityService.Application.Service.Client
 {
     public class ClientViewModel
     {

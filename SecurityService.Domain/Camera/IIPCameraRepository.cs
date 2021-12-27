@@ -1,5 +1,5 @@
 ﻿using _0_Framework.Domain;
-using SecurityService.Application.Service.Dtos.Camera.IPCamera;
+using SecurityService.Application.Service.Camera.IPCamera;
 using System.Collections.Generic;
 
 namespace SecuritySystem.Domain.Camera

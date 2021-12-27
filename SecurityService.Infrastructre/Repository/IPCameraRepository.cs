@@ -1,6 +1,6 @@
 ﻿using _0_Framework.Infrastructure;
 using Microsoft.EntityFrameworkCore;
-using SecurityService.Application.Service.Dtos.Camera.IPCamera;
+using SecurityService.Application.Service.Camera.IPCamera;
 using SecuritySystem.Domain.Camera;
 using System;
 using System.Collections.Generic;

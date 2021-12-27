@@ -1,6 +1,6 @@
 ﻿using MQTTnet.Server;
 
-namespace MqttService
+namespace MqttService.Actions
 {
 
     public interface IMqttActions

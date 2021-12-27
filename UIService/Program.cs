@@ -10,6 +10,7 @@ using UIService.Hubs;
 using MudBlazor.Services;
 using _0_Framework.Helper;
 using Microsoft.AspNetCore.StaticFiles;
+using MqttService.Actions;
 
 var builder = WebApplication.CreateBuilder(args);
 

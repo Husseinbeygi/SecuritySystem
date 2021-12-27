@@ -1,8 +1,8 @@
 ﻿@page "/admin/camera/edit/{id:long}"
+@using SecurityService.Application.Service.Camera.IPCamera
+@using _0_Framework.Helper
 @using FFmpegService
 @using OnvifDiscovery.Models
-@using SecurityService.Application.Service.Dtos.Camera.IPCamera
-@using _0_Framework.Helper
 @inject IIPCameraApplication _application
 @inject NavigationManager navigationmanager
 @inject IRtspUrlGenerator _rtspgenerator

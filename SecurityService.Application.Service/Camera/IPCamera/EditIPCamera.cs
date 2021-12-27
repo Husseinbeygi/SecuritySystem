@@ -1,4 +1,4 @@
-﻿namespace SecurityService.Application.Service.Dtos.Camera.IPCamera
+﻿namespace SecurityService.Application.Service.Camera.IPCamera
 {
     public class EditIPCamera : CreateIPCamera
     {

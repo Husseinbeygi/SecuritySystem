@@ -1,6 +1,6 @@
 ﻿using _0_Framework.Application;
 using _0_Framework.Infrastructure;
-using SecurityService.Application.Service.Dtos.Client;
+using SecurityService.Application.Service.Client;
 using SecuritySystem.Domain.Client;
 
 namespace SecuritySystem.Infrastructre.Repository

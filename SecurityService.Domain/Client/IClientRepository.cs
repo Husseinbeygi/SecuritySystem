@@ -1,5 +1,5 @@
 ﻿using _0_Framework.Domain;
-using SecurityService.Application.Service.Dtos.Client;
+using SecurityService.Application.Service.Client;
 using System.Collections.Generic;
 
 namespace SecuritySystem.Domain.Client

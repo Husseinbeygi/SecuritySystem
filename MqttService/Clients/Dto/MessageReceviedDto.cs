@@ -1,4 +1,4 @@
-﻿namespace UIService.Dto
+﻿namespace MqttService.Clients.Dto
 {
     public class MessageReceviedDto
     {

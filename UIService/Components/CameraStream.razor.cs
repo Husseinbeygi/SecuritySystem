@@ -6,7 +6,7 @@ using RtspClientCore;
 using RtspClientCore.RawFrames;
 using RtspClientCore.RawFrames.Video;
 using RtspClientCore.Rtsp;
-using SecurityService.Application.Service.Dtos.Camera.IPCamera;
+using SecurityService.Application.Service.Camera.IPCamera;
 using System.Drawing;
 
 namespace UIService.Components

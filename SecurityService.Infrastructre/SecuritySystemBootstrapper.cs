@@ -1,8 +1,8 @@
 ﻿using _0_Framework.Application;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using SecurityService.Application.Service.Dtos.Camera.IPCamera;
-using SecurityService.Application.Service.Dtos.Client;
+using SecurityService.Application.Service.Camera.IPCamera;
+using SecurityService.Application.Service.Client;
 using SecuritySystem.Application;
 using SecuritySystem.Domain.Camera;
 using SecuritySystem.Domain.Client;

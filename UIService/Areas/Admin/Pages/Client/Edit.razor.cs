@@ -1,5 +1,5 @@
 ﻿using Microsoft.AspNetCore.Components;
-using SecurityService.Application.Service.Dtos.Client;
+using SecurityService.Application.Service.Client;
 
 namespace UIService.Areas.Admin.Pages.Client
 {

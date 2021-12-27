@@ -1,6 +1,6 @@
 ﻿using FFmpegService;
 using OnvifDiscovery.Models;
-using SecurityService.Application.Service.Dtos.Camera.IPCamera;
+using SecurityService.Application.Service.Camera.IPCamera;
 
 namespace UIService.Areas.Admin.Pages.Camera
 {
