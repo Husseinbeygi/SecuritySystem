@@ -11,7 +11,5 @@ namespace UIService.Areas.Admin.Pages.Camera
             cam = _camApplication.GetDetails(4);
 
         }
-
-
     }
 }

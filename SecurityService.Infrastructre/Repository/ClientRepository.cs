@@ -32,6 +32,8 @@ namespace SecuritySystem.Infrastructre.Repository
                 Id = x.Id,
                 UserName = x.UserName,
                 Password = x.Password,
+           
+                
             }).FirstOrDefault(x => x.Id == id);
         }
 

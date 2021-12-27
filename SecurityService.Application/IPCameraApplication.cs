@@ -18,7 +18,7 @@ namespace SecuritySystem.Application
             {
                 return;
             }
-            var _create = new IPCamera(command.HostAddress, command.UserName, command.Password,command.StreamAddress);
+            var _create = new IPCamera(command.HostAddress, command.UserName, command.Password,command.StreamAddress,command.CameraName);
             _repository.Create(_create);
             _repository.SaveChanges();
         }
@@ -30,7 +30,7 @@ namespace SecuritySystem.Application
             {
                 return;
             }
-            _c.Edit(editIpc.HostAddress, editIpc.UserName, editIpc.Password, editIpc.StreamAddress);
+            _c.Edit(editIpc.HostAddress, editIpc.UserName, editIpc.Password, editIpc.StreamAddress,editIpc.CameraName);
             _repository.SaveChanges();
         }
 

@@ -15,7 +15,7 @@ namespace SecuritySystem.Infrastructre.Maps
             builder.Property(x => x.UserName).HasMaxLength(100);
             builder.Property(x => x.Password).HasMaxLength(100);
             builder.Property(x => x.StreamAddress).HasMaxLength(1000);
-
+            builder.Property(x => x.CameraName).HasMaxLength(100);
 
         }
     }

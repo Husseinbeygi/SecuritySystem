@@ -17,25 +17,27 @@ namespace UIService.Components
         [Parameter]
         public EditIPCamera Camera { get; set; } = new();
 
-        private string urlToCamera;
+        private string urlToCamera = String.Empty;
         private const int streamWidth = 1280;
         private const int streamHeight = 720;
 
         private static readonly FrameDecoderCore.FrameDecoder FrameDecoder = new FrameDecoderCore.FrameDecoder();
         private static readonly FrameDecoderCore.FrameTransformer FrameTransformer = new FrameDecoderCore.FrameTransformer(streamWidth, streamHeight);
         private Task? connectTask;
-        private CancellationTokenSource cancellationTokenSource;
+        private CancellationTokenSource? cancellationTokenSource;
         private byte[] ByteData = { };
-        private Bitmap bitmapFrame;
-        VideoStreamConversion videoStream;
-        string CameraVideoPath;
+        private Bitmap? bitmapFrame;
+        VideoStreamConversion? videoStream;
+        string CameraVideoPath = String.Empty;
+        string CameraImagePath = String.Empty;
 
 
         protected override void OnInitialized()
         {
             base.OnInitialized();
             var camUrl = _rtspgenerator.GenerateUrl(Camera.HostAddress, Camera.UserName, Camera.Password, Camera.StreamAddress);
-            CameraVideoPath = Path.Combine(_webHostEnvironment.WebRootPath, "livevideos", Camera.HostAddress);
+            CameraVideoPath = Path.Combine(_webHostEnvironment.WebRootPath, "Livevideos", Camera.HostAddress);
+            CameraImagePath = Path.Combine(_webHostEnvironment.WebRootPath, "pictures", Camera.HostAddress);
             urlToCamera = camUrl;
             videoStream = new(camUrl, streamWidth, streamHeight);
 
@@ -45,8 +47,6 @@ namespace UIService.Components
             ConnectToCamera(connectionParameters);
 
         }
-
-
         private void ConnectToCamera(ConnectionParameters connectionParameters)
         {
             cancellationTokenSource = new CancellationTokenSource();
@@ -103,11 +103,25 @@ namespace UIService.Components
                 return;
 
             bitmapFrame = FrameTransformer.TransformToBitmap(decodedFrame);
-            ShowFrameInPage();
+            PutTextOnByteArray();
+            PutImageOnByteArray();
+            ConvertBitmapToShowOnHtml();
             StateHasChanged();
 
         }
-        private void ShowFrameInPage()
+
+        private void PutImageOnByteArray()
+        {
+            Image watermark = Image.FromFile(@"D:\Projects\Dotnet\DotnetProjects\SecuritySystem\UIService\wwwroot\logo.png");
+            bitmapFrame = bitmapFrame.PutImage(watermark, 100,100,100,100);
+        }
+
+        private void PutTextOnByteArray()
+        {
+            bitmapFrame = bitmapFrame.PutText("Copyright © 2022 Eram",new Font("TimeNewsRoman",40,FontStyle.Bold), bitmapFrame.Width /2 , (bitmapFrame.Height - bitmapFrame.Height / 6));
+        }
+
+        private void ConvertBitmapToShowOnHtml()
         {
             using MemoryStream stream = new MemoryStream();
             bitmapFrame.Save(stream, System.Drawing.Imaging.ImageFormat.Jpeg);
@@ -117,9 +131,23 @@ namespace UIService.Components
         {
             Console.WriteLine("TakeImage!");
             var filename = DateTime.Now.ToString();
+            SaveImageOnServer(filename);
+            SaveImageOnClient(filename);
+
+        }
+        private void SaveImageOnClient(string filename)
+        {
             var a = String.Format("data:image/png;base64,{0}", Convert.ToBase64String(ByteData));
             jsruntime.InvokeVoidAsync("downloadFile", "image/jpeg", a, filename);
-
+        }
+        private void SaveImageOnServer(string filename)
+        {
+            MemoryStream stream = new MemoryStream();
+            bitmapFrame.Save(PathPictures(filename), System.Drawing.Imaging.ImageFormat.Jpeg);
+        }
+        private string PathPictures(string filename)
+        {
+            return Path.Combine(CameraImagePath, filename, ".jpg");
         }
         public async Task TakeVideoAsync()
         {

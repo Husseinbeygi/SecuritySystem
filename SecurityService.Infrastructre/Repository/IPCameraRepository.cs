@@ -27,7 +27,8 @@ namespace SecuritySystem.Infrastructre.Repository
                 Id = x.Id,
                 Password = x.Password,
                 StreamAddress = x.StreamAddress,
-                UserName = x.UserName
+                UserName = x.UserName,
+                CameraName = x.CameraName
             }).FirstOrDefault(x => x.Id == id);
         }
 
@@ -48,12 +49,17 @@ namespace SecuritySystem.Infrastructre.Repository
                 Id = x.Id,
                 Password = x.Password,
                 StreamAddress = x.StreamAddress,
-                UserName = x.UserName
+                UserName = x.UserName,
+                CameraName = x.CameraName
             });
 
             if (!string.IsNullOrWhiteSpace(command.HostAddress))
             {
                 query = query.Where(x => x.HostAddress.Contains(command.HostAddress));
+            }
+            if (!string.IsNullOrWhiteSpace(command.CameraName))
+            {
+                query = query.Where(x => x.CameraName.Contains(command.CameraName));
             }
 
             return query.ToList();

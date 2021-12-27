@@ -4,10 +4,20 @@
 
 
 <div class="col-md-12">
+    <div class="row">
+
+
     <div class="form-group col-md-4">
     <label for="inputEmail4">جستجو بر اساس :آدرس دستگاه </label>
      <input @bind="searchModel.HostAddress" @bind:event="oninput" type="text" class="form-control" />
+
     </div><br /><br />
+        <div class="form-group col-md-4">
+    <label for="inputEmail4">جستجو بر اساس :نام دستگاه </label>
+     <input @bind="searchModel.CameraName" @bind:event="oninput" type="text" class="form-control" />
+
+    </div><br /><br />
+   </div>
 
     <a class="btn btn-primary" href="/admin/camera/create">ثبت دستگاه جدید</a><br /><br />
 
@@ -20,6 +30,7 @@
         <TableHeader>
             <TableRow>
                 <TableHeaderCell>#</TableHeaderCell>
+                 <TableHeaderCell>نام  دستگاه</TableHeaderCell>
                 <TableHeaderCell>آدرس  دستگاه</TableHeaderCell>
                 <TableHeaderCell>آدرس تصویر</TableHeaderCell>
                 <TableHeaderCell>نام کاربری</TableHeaderCell>
@@ -33,6 +44,7 @@
                 
             <TableRow>
                     <TableRowCell>@item.Id</TableRowCell>
+                    <TableRowCell>@item.CameraName</TableRowCell>
                     <TableRowCell>@item.HostAddress</TableRowCell>
                     <TableRowCell>@item.StreamAddress</TableRowCell>
                     <TableRowCell>@item.UserName</TableRowCell>
