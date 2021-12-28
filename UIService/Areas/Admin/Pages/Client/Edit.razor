@@ -6,7 +6,7 @@
 <h3>ثبت کلاینت جدید</h3>
 <Div Class="container">
     <EditForm Model="@_editClient" OnValidSubmit="@HandleValidSubmit">
-      <div class="row">
+      <div class="row input-group input-group-outline">
         <div class="form-group col-md-4">
           <label for="inputEmail4">نام کلاینت</label>
           <InputText type="text" class="form-control" @bind-Value="_editClient.ClientId" />

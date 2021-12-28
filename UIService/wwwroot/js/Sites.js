@@ -2,6 +2,13 @@
 ////    return false;
 ////});
 
+var win = navigator.platform.indexOf('Win') > -1;
+if (win && document.querySelector('#sidenav-scrollbar')) {
+    var options = {
+        damping: '0.5'
+    }
+    Scrollbar.init(document.querySelector('#sidenav-scrollbar'), options);
+}
 
 
 function downloadFile(mimeType, base64String, fileName) {

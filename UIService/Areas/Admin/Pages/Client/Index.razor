@@ -2,17 +2,19 @@
 @using SecurityService.Application.Service.Client
 @inject IClientApplication _application
 
-<div class="col-md-12">
-     <div class="form-group col-md-4">
-     <label for="inputEmail4">جستجو بر اساس :نام کلاینت</label>
-     <input @bind="_searchModel.ClientId" @bind:event="oninput" type="text" class="form-control" />
-     </div>
+<div class="col-md-12 ">
+    <div class="input-group input-group-outline">
+        <div class="form-group col-md-4">
+            <label for="inputEmail4">جستجو بر اساس :نام کلاینت</label>
+            <input @bind="_searchModel.ClientId" @bind:event="oninput" type="text" class="form-control" />
+        </div>
+    </div>
     <br />
     <br />
 
     <a class="btn btn-primary" href="/admin/client/create">ثبت کلاینت جدید</a>
     <br />
-        <br />
+    <br />
 
     <Table dir="rtl" Bordered="true"
            Striped="true"
@@ -39,7 +41,7 @@
                     <TableRowCell>@item.CreationDate</TableRowCell>
                     <TableRowCell>
                         <a class="btn btn-outline-secondary" href="admin/client/Edit/@item.Id">ویرایش</a>
-                        <a class="btn btn-outline-danger"  @onclick="@(() => OnDeleteClient(item.Id))">حذف</a>
+                        <a class="btn btn-outline-danger" @onclick="@(() => OnDeleteClient(item.Id))">حذف</a>
                     </TableRowCell>
                 </TableRow>
             }

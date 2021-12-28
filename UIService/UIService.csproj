@@ -7,6 +7,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Include="wwwroot\js\plugins\bootstrap-notify.js" />
+    <None Include="wwwroot\js\plugins\Chart.extension.js" />
+    <None Include="wwwroot\js\plugins\chartjs.min.js" />
+    <None Include="wwwroot\js\plugins\perfect-scrollbar.min.js" />
+    <None Include="wwwroot\js\plugins\smooth-scrollbar.min.js" />
+    <None Include="wwwroot\js\plugins\world.js" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Blazored.Video" Version="1.0.0" />
     <PackageReference Include="Blazorise.Bootstrap" Version="0.9.5.2" />
     <PackageReference Include="Blazorise.Icons.FontAwesome" Version="0.9.5.2" />
