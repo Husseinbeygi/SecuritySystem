@@ -5,7 +5,6 @@ using MQTTnet.Protocol;
 using MQTTnet.Server;
 using MqttService.Actions;
 using MqttService.Configuration;
-using MqttService.Handlers;
 using SecurityService.Application.Service.Client;
 using System;
 using System.Threading;
@@ -20,14 +19,12 @@ namespace MqttService
         private readonly string serviceName;
 
         private readonly IServiceProvider _serviceProvider;
-        private readonly MessageHandler _messageHandler;
 
-        public MqttBootstrapper(IServiceProvider serviceProvider, MessageHandler messageHandler)
+        public MqttBootstrapper(IServiceProvider serviceProvider)
         {
             this.serviceName = "MqttService";
             _action = LoggerServiceFactory.LoggerService();
             _serviceProvider = serviceProvider;
-            _messageHandler = messageHandler;
         }
         protected override async Task ExecuteAsync(CancellationToken cancellationToken)
         {
@@ -55,7 +52,7 @@ namespace MqttService
 
             ConfigAndStartMqttService();
 
-            
+
             await base.StartAsync(cancellationToken);
         }
 
@@ -110,10 +107,10 @@ namespace MqttService
 
         private Action<MqttConnectionValidatorContext> ClientValidator()
         {
-          var scope = _serviceProvider.CreateScope();
+            var scope = _serviceProvider.CreateScope();
 
-           var _application = scope.ServiceProvider.GetRequiredService<IClientApplication>();
-            
+            var _application = scope.ServiceProvider.GetRequiredService<IClientApplication>();
+
             return v =>
             {
                 var _isDeviceValidate = _application.IsClientValidate(v.ClientId, v.Username, v.Password);
@@ -121,10 +118,12 @@ namespace MqttService
                 {
                     BadUseNameorPassword(v);
                     return;
-                }else {
+                }
+                else
+                {
 
-                v.ReasonCode = MqttConnectReasonCode.Success;
-                _action.ClientValidatorAction(v, false);
+                    v.ReasonCode = MqttConnectReasonCode.Success;
+                    _action.ClientValidatorAction(v, false);
                 }
 
             };

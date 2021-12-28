@@ -69,6 +69,7 @@ namespace MqttService.Actions
 
         public void ClientValidatorAction(MqttConnectionValidatorContext context, bool showPassword)
         {
+
             _connectionInterceptorEvent.SendClientData(context);
             if (showPassword)
             {

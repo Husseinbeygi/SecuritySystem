@@ -1,5 +1,4 @@
 ﻿using _0_Framework.Application;
-using AutoMapper;
 using SecurityService.Application.Service.Client;
 using SecuritySystem.Domain.Client;
 
@@ -22,7 +21,7 @@ namespace SecuritySystem.Application
             {
                 return result.Failed(ApplicationMessages.DuplicatedRecord);
             }
-           var hashedPass =  _passwordhasher.Hash(command.Password); 
+            var hashedPass = _passwordhasher.Hash(command.Password);
             var _create = new Client(command.ClientId, command.UserName, hashedPass);
             _repository.Create(_create);
             _repository.SaveChanges();
@@ -51,7 +50,7 @@ namespace SecuritySystem.Application
 
         public bool IsClientValidate(string clientId, string username, string password)
         {
-           ClientValidation _client = _repository.GetClientCredentials(clientId);
+            ClientValidation _client = _repository.GetClientCredentials(clientId);
             if (_client == null)
                 return false;
 

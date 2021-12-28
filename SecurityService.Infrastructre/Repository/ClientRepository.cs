@@ -32,8 +32,8 @@ namespace SecuritySystem.Infrastructre.Repository
                 Id = x.Id,
                 UserName = x.UserName,
                 Password = x.Password,
-           
-                
+
+
             }).FirstOrDefault(x => x.Id == id);
         }
 
@@ -50,10 +50,10 @@ namespace SecuritySystem.Infrastructre.Repository
         {
             var query = _context.Client.Select(x => new ClientViewModel
             {
-                   CreationDate = x.CreationDate.ToFarsi(),
-                   ClientId = x.ClientId,
-                   Id = x.Id,
-                   UserName = x.UserName
+                CreationDate = x.CreationDate.ToFarsi(),
+                ClientId = x.ClientId,
+                Id = x.Id,
+                UserName = x.UserName
             });
 
             if (!string.IsNullOrWhiteSpace(command.ClientId))

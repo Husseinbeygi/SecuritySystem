@@ -1,7 +1,7 @@
-﻿using System.Drawing;
+﻿using FrameDecoderCore.DecodedFrames;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
-using FrameDecoderCore.DecodedFrames;
 
 namespace FrameDecoderCore
 {

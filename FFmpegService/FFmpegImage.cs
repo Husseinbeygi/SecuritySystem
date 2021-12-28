@@ -3,7 +3,7 @@
     public static class FFmpegImage
     {
 
-        public static void TakeImage(string IpCameraRtspUrl,string Outputpath)
+        public static void TakeImage(string IpCameraRtspUrl, string Outputpath)
         {
 
             if (FFmpegDownloaderHelper.DownloadTheFFmpegOfficial().Status == TaskStatus.RanToCompletion)

@@ -1,12 +1,9 @@
-﻿using System;
+﻿using FrameDecoderCore.DecodedFrames;
+using RtspClientCore.RawFrames.Video;
+using System;
 using System.Collections.Generic;
-using System.Drawing;
-using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices;
-using FrameDecoderCore.DecodedFrames;
-using RtspClientCore.RawFrames.Video;
-using RtspClientCore.RawFrames;
 
 namespace FrameDecoderCore.FFmpeg
 {
@@ -80,11 +77,11 @@ namespace FrameDecoderCore.FFmpeg
                         {
                             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                             {
-                                resultCode = FFmpegVideoPInvokeWin.SetVideoDecoderExtraData(_decoderHandle,(IntPtr) initDataPtr, _extraData.Length);
+                                resultCode = FFmpegVideoPInvokeWin.SetVideoDecoderExtraData(_decoderHandle, (IntPtr)initDataPtr, _extraData.Length);
                             }
                             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                             {
-                                resultCode = FFmpegVideoPInvokeLinux.SetVideoDecoderExtraData(_decoderHandle,(IntPtr) initDataPtr, _extraData.Length);
+                                resultCode = FFmpegVideoPInvokeLinux.SetVideoDecoderExtraData(_decoderHandle, (IntPtr)initDataPtr, _extraData.Length);
                             }
                             else
                             {
@@ -102,13 +99,13 @@ namespace FrameDecoderCore.FFmpeg
                 int width, height;
                 if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
                 {
-                    resultCode = FFmpegVideoPInvokeWin.DecodeFrame(_decoderHandle, (IntPtr) rawBufferPtr,
-                        rawVideoFrame.FrameSegment.Count, out  width, out height,
+                    resultCode = FFmpegVideoPInvokeWin.DecodeFrame(_decoderHandle, (IntPtr)rawBufferPtr,
+                        rawVideoFrame.FrameSegment.Count, out width, out height,
                         out pixelFormat);
                 }
-                else  if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
+                else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
                 {
-                    resultCode = FFmpegVideoPInvokeLinux.DecodeFrame(_decoderHandle, (IntPtr) rawBufferPtr,
+                    resultCode = FFmpegVideoPInvokeLinux.DecodeFrame(_decoderHandle, (IntPtr)rawBufferPtr,
                         rawVideoFrame.FrameSegment.Count, out width, out height,
                         out pixelFormat);
                 }
@@ -131,7 +128,7 @@ namespace FrameDecoderCore.FFmpeg
             }
         }
 
-      
+
         public void Dispose()
         {
             if (_disposed)
@@ -174,11 +171,11 @@ namespace FrameDecoderCore.FFmpeg
             int resultCode;
             if (RuntimeInformation.IsOSPlatform(OSPlatform.Windows))
             {
-                resultCode = FFmpegVideoPInvokeWin.ScaleDecodedVideoFrame(_decoderHandle, videoScaler.Handle, buffer,bufferStride);
+                resultCode = FFmpegVideoPInvokeWin.ScaleDecodedVideoFrame(_decoderHandle, videoScaler.Handle, buffer, bufferStride);
             }
             else if (RuntimeInformation.IsOSPlatform(OSPlatform.Linux))
             {
-                resultCode = FFmpegVideoPInvokeLinux.ScaleDecodedVideoFrame(_decoderHandle, videoScaler.Handle, buffer,bufferStride);
+                resultCode = FFmpegVideoPInvokeLinux.ScaleDecodedVideoFrame(_decoderHandle, videoScaler.Handle, buffer, bufferStride);
             }
             else
             {

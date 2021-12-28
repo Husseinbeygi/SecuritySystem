@@ -1,9 +1,9 @@
-﻿using System;
+﻿using FrameDecoderCore.DecodedFrames;
+using RtspClientCore.RawFrames.Audio;
+using System;
 using System.Diagnostics;
 using System.Linq;
 using System.Runtime.InteropServices;
-using FrameDecoderCore.DecodedFrames;
-using RtspClientCore.RawFrames.Audio;
 
 namespace FrameDecoderCore.FFmpeg
 {

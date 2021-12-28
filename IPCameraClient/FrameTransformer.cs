@@ -1,8 +1,8 @@
-﻿using System.Drawing;
+﻿using FrameDecoderCore;
+using FrameDecoderCore.DecodedFrames;
+using System.Drawing;
 using System.Drawing.Imaging;
 using System.Runtime.InteropServices;
-using FrameDecoderCore;
-using FrameDecoderCore.DecodedFrames;
 
 namespace IPCameraClient
 {

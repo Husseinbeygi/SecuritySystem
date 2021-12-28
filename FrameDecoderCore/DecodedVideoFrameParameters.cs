@@ -27,7 +27,7 @@ namespace FrameDecoderCore
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != GetType()) return false;
-            return Equals((DecodedVideoFrameParameters) obj);
+            return Equals((DecodedVideoFrameParameters)obj);
         }
 
         public override int GetHashCode()
@@ -36,7 +36,7 @@ namespace FrameDecoderCore
             {
                 var hashCode = Width;
                 hashCode = (hashCode * 397) ^ Height;
-                hashCode = (hashCode * 397) ^ (int) PixelFormat;
+                hashCode = (hashCode * 397) ^ (int)PixelFormat;
                 return hashCode;
             }
         }

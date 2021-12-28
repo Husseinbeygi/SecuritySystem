@@ -113,12 +113,12 @@ namespace UIService.Components
         private void PutImageOnByteArray()
         {
             Image watermark = Image.FromFile(@"D:\Projects\Dotnet\DotnetProjects\SecuritySystem\UIService\wwwroot\logo.png");
-            bitmapFrame = bitmapFrame.PutImage(watermark, 100,100,100,100);
+            bitmapFrame = bitmapFrame.PutImage(watermark, 100, 100, 100, 100);
         }
 
         private void PutTextOnByteArray()
         {
-            bitmapFrame = bitmapFrame.PutText("Copyright © 2022 Eram",new Font("TimeNewsRoman",40,FontStyle.Bold), bitmapFrame.Width /2 , (bitmapFrame.Height - bitmapFrame.Height / 6));
+            bitmapFrame = bitmapFrame.PutText("Copyright © 2022 Eram", new Font("TimeNewsRoman", 40, FontStyle.Bold), bitmapFrame.Width / 2, (bitmapFrame.Height - bitmapFrame.Height / 6));
         }
 
         private void ConvertBitmapToShowOnHtml()

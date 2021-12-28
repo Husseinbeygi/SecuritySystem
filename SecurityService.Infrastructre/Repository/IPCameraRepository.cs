@@ -1,12 +1,6 @@
 ﻿using _0_Framework.Infrastructure;
-using Microsoft.EntityFrameworkCore;
 using SecurityService.Application.Service.Camera.IPCamera;
 using SecuritySystem.Domain.Camera;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace SecuritySystem.Infrastructre.Repository
 {

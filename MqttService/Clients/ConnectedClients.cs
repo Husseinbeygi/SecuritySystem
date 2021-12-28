@@ -9,7 +9,7 @@ namespace MqttService.Clients
     {
         private static List<ClientConnectedDto> clients = new();
 
-      
+
         public static void AddClient(string clientid, string endpoint, string username, string cleansession, string date)
         {
             if (clients.FirstOrDefault(x => x.UserName == username) == null)
@@ -40,7 +40,7 @@ namespace MqttService.Clients
             }
 
         }
-   
+
         public static List<ClientConnectedDto> GetClients()
         {
             return clients;

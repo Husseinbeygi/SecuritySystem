@@ -1,6 +1,6 @@
-﻿using System;
+﻿using RtspClientCore.Rtsp;
+using System;
 using System.Net;
-using RtspClientCore.Rtsp;
 
 namespace RtspClientCore
 {

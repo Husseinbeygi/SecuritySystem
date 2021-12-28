@@ -1,10 +1,8 @@
-﻿using Xabe.FFmpeg;
-
-namespace FFmpegService
+﻿namespace FFmpegService
 {
     public static class FFmpegVideo
     {
-        public async static void TakeVideo(string IpCameraRtspUrl,string FilePath)
+        public async static void TakeVideo(string IpCameraRtspUrl, string FilePath)
         {
 
             if (FFmpegDownloaderHelper.DownloadTheFFmpegOfficial().Status == TaskStatus.RanToCompletion)

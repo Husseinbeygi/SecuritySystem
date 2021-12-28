@@ -4,7 +4,7 @@ using System.Collections.Generic;
 
 namespace SecuritySystem.Domain.Camera
 {
-    public interface IIPCameraRepository : IRepository<long,IPCamera>
+    public interface IIPCameraRepository : IRepository<long, IPCamera>
     {
         List<IPCameraViewModel> Search(IPCameraSearchModel command);
         void Remove(long id);

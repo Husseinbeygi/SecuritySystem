@@ -4,7 +4,7 @@ using System.Runtime.InteropServices;
 namespace FrameDecoderCore.FFmpeg
 {
     static class FFmpegVideoPInvokeWin
-    {        
+    {
 
         private const string LibraryName = "libs\\ffmpeg\\libffmpeghelper.dll";
 

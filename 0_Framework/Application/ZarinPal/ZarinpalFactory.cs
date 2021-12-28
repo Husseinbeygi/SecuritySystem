@@ -9,13 +9,13 @@ namespace _0_Framework.Application.ZarinPal
         private readonly IConfiguration _configuration;
 
         public string Prefix { get; set; }
-        private string MerchantId { get;}
+        private string MerchantId { get; }
 
         public ZarinPalFactory(IConfiguration configuration)
         {
             _configuration = configuration;
             Prefix = _configuration.GetSection("payment")["method"];
-            MerchantId= _configuration.GetSection("payment")["merchant"];
+            MerchantId = _configuration.GetSection("payment")["merchant"];
         }
 
         public PaymentResponse CreatePaymentRequest(string amount, string mobile, string email, string description,

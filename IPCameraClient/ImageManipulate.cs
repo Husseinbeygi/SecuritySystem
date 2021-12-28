@@ -1,13 +1,12 @@
 ﻿using System.Drawing;
 using System.Drawing.Drawing2D;
-using System.Drawing.Imaging;
 
 namespace IPCameraClient
 {
     public static class ImageManipulate
     {
 
-        public static Bitmap PutText(this Bitmap img, string Text,Font font,int x,int y)
+        public static Bitmap PutText(this Bitmap img, string Text, Font font, int x, int y)
         {
             Graphics grPhoto = Graphics.FromImage(img);
 
@@ -41,7 +40,7 @@ namespace IPCameraClient
 
 
 
-        public static Bitmap PutImage(this Bitmap img, Image waterMark, int x, int y,int watermarkwidth,int watermarkheight)
+        public static Bitmap PutImage(this Bitmap img, Image waterMark, int x, int y, int watermarkwidth, int watermarkheight)
         {
             using (var gr = Graphics.FromImage(img))
             {

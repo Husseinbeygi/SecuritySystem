@@ -6,7 +6,7 @@
         public const string SystemUser = "2";
         public const string ContentUploader = "3";
         public const string ColleagueUser = "10002";
-        
+
         public static string GetRoleBy(long id)
         {
             switch (id)

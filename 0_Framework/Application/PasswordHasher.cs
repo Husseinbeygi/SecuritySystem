@@ -1,7 +1,7 @@
-﻿using System;
+﻿using Microsoft.Extensions.Options;
+using System;
 using System.Linq;
 using System.Security.Cryptography;
-using Microsoft.Extensions.Options;
 
 namespace _0_Framework.Application
 {

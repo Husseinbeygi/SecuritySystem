@@ -1,11 +1,11 @@
-﻿using System;
+﻿using RtspClientCore.RawFrames;
+using RtspClientCore.Rtsp;
+using RtspClientCore.Utils;
+using System;
 using System.Net;
 using System.Security.Authentication;
 using System.Threading;
 using System.Threading.Tasks;
-using RtspClientCore.RawFrames;
-using RtspClientCore.Rtsp;
-using RtspClientCore.Utils;
 
 namespace RtspClientCore
 {

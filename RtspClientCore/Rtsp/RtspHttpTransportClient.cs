@@ -1,4 +1,6 @@
-﻿using System;
+﻿using RtspClientCore.Rtsp.Authentication;
+using RtspClientCore.Utils;
+using System;
 using System.Collections.Specialized;
 using System.Diagnostics;
 using System.IO;
@@ -8,9 +10,6 @@ using System.Net.Sockets;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using RtspClientCore;
-using RtspClientCore.Rtsp.Authentication;
-using RtspClientCore.Utils;
 
 namespace RtspClientCore.Rtsp
 {

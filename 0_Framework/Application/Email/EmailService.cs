@@ -1,5 +1,5 @@
-﻿using MimeKit;
-using MailKit.Net.Smtp;
+﻿using MailKit.Net.Smtp;
+using MimeKit;
 
 namespace _0_Framework.Application.Email
 {

@@ -1,5 +1,5 @@
-﻿using System;
-using RtspClientCore.RawFrames;
+﻿using RtspClientCore.RawFrames;
+using System;
 
 namespace RtspClientCore.MediaParsers
 {

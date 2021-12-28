@@ -1,5 +1,4 @@
 ﻿using MQTTnet.Server;
-using System;
 
 namespace EventService.MessageEvent
 {

@@ -20,7 +20,6 @@ namespace UIService.Pages
         {
             _connectionInterceptorEvent.ClientConnected += new System.EventHandler<ConnectionInterceptorEventArgs>(_connectionInterceptorEvent_ClientConnected);
             _handlerInterceptorEvent.HandleIncoming += new System.EventHandler<HandlerInterceptorEventArgs>(_handlerInterceptorEvent_MessageRecevied);
-            // await DiscoverCamera.OnvifCamera();
         }
         protected override bool ShouldRender()
         {

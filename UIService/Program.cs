@@ -1,41 +1,44 @@
+using _0_Framework.Helper;
 using Blazorise;
 using Blazorise.Bootstrap;
 using Blazorise.Icons.FontAwesome;
-using Microsoft.AspNetCore.ResponseCompression;
+using Microsoft.AspNetCore.StaticFiles;
 using MqttService;
+using MqttService.Actions;
 using MqttService.Handlers;
+using MudBlazor.Services;
 using SecuritySystem.Infrastructre;
 using Serilog;
 using UIService.Hubs;
-using MudBlazor.Services;
-using _0_Framework.Helper;
-using Microsoft.AspNetCore.StaticFiles;
-using MqttService.Actions;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddRazorPages();
 builder.Services.AddServerSideBlazor();
-builder.Services.AddMudServices();
+builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console());
+
+SecuritySystemBootstrapper.Configure(builder.Services, "Data Source=Database.db");
+
+#region MqttServices
 builder.Services.AddTransient<IMqttActions, MqttActions>();
 builder.Services.AddHostedService<MqttBootstrapper>();
-builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console());
-builder.Services.AddResponseCompression(opts =>
-{
-    opts.MimeTypes = ResponseCompressionDefaults.MimeTypes.Concat(
-        new[] { "application/octet-stream" });
-});
-SecuritySystemBootstrapper.Configure(builder.Services, "Data Source=Database.db");
+#endregion
+
+#region UIKitServices
+builder.Services.AddMudServices();
 builder.Services.AddBlazorise(options =>
        {
            options.ChangeTextOnKeyPress = true; // optional
        })
       .AddBootstrapProviders()
       .AddFontAwesomeIcons();
+#endregion
+
 
 builder.Services.AddTransient<MessageHandler>();
 builder.Services.AddTransient<IRtspUrlGenerator, RtspUrlGenerator>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

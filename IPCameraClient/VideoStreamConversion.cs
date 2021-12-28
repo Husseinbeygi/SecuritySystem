@@ -19,7 +19,7 @@ namespace IPCameraClient
             urlToCamera = url;
         }
 
-        public async Task RecordStream(string dir,string filename)
+        public async Task RecordStream(string dir, string filename)
         {
 
             RecordcancellationToken = new CancellationTokenSource();
@@ -27,7 +27,7 @@ namespace IPCameraClient
             {
                 Directory.CreateDirectory(dir);
             }
-            var _recPath = Path.Combine(dir, filename + ".mp4"); 
+            var _recPath = Path.Combine(dir, filename + ".mp4");
             await TakeVideo(_recPath, RecordcancellationToken.Token);
 
         }

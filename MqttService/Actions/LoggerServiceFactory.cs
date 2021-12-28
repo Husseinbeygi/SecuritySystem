@@ -1,5 +1,4 @@
 ﻿using Serilog;
-using static MqttService.MqttBootstrapper;
 
 namespace MqttService.Actions
 {

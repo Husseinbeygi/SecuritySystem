@@ -1,8 +1,8 @@
-﻿using System;
+﻿using Microsoft.Extensions.Configuration;
+using SmsIrRestful;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.Extensions.Configuration;
-using SmsIrRestful;
 
 namespace _0_Framework.Application.Sms
 {
@@ -26,12 +26,12 @@ namespace _0_Framework.Application.Sms
             {
                 Messages = new List<string>
                     {message}.ToArray(),
-                MobileNumbers = new List<string> {number}.ToArray(),
+                MobileNumbers = new List<string> { number }.ToArray(),
                 LineNumber = line,
                 SendDateTime = DateTime.Now,
                 CanContinueInCaseOfError = true
             };
-            var messageSendResponseObject = 
+            var messageSendResponseObject =
                 new MessageSend().Send(token, data);
 
             if (messageSendResponseObject.IsSuccessful) return;

@@ -1,5 +1,4 @@
 ﻿using EventService.HandlerEvent;
-using EventService.MessageEvent;
 
 namespace MqttService.Handlers
 {

@@ -2,7 +2,6 @@
 {
     public class ConnectionInterceptorEventArgs
     {
-
         public string ClientId { get; set; }
         public string Endpoint { get; set; }
         public string Username { get; set; }

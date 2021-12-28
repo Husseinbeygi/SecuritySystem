@@ -1,6 +1,4 @@
-﻿using Microsoft.JSInterop;
-
-namespace UIService.Shared
+﻿namespace UIService.Shared
 {
     public partial class MainLayout
     {

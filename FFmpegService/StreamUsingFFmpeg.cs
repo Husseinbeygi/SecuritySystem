@@ -3,7 +3,7 @@
     public class FFmpegStream
     {
 
-        public System.Diagnostics.Process StreamVideo(string IpCameraRTSPUrl,string outputPath)
+        public System.Diagnostics.Process StreamVideo(string IpCameraRTSPUrl, string outputPath)
         {
             if (FFmpegDownloaderHelper.DownloadTheFFmpegOfficial().Status == TaskStatus.RanToCompletion)
             {

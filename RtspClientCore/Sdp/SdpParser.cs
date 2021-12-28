@@ -1,15 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using RtspClientCore.Codecs;
+﻿using RtspClientCore.Codecs;
 using RtspClientCore.Codecs.Audio;
 using RtspClientCore.Codecs.Video;
 using RtspClientCore.RawFrames.Video;
 using RtspClientCore.Utils;
-using RtspClientCore.Codecs.Video;
-using RtspClientCore.Sdp;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
+using System.Linq;
 
 namespace RtspClientCore.Sdp
 {

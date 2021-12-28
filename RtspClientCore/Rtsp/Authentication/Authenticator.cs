@@ -1,5 +1,4 @@
-﻿using RtspClientCore.Rtsp.Authentication;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Net;
 

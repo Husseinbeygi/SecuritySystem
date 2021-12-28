@@ -1,6 +1,5 @@
 ﻿
 using EventService.HandlerEvent;
-using EventService.MessageEvent;
 
 namespace MqttService.Handlers
 {
@@ -23,7 +22,7 @@ namespace MqttService.Handlers
 
         public void HandleMessage(HandlerInterceptorEventArgs e)
         {
-           _handler.Handle(e);
+            _handler.Handle(e);
         }
 
 

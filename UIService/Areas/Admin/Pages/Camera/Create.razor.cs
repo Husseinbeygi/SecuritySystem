@@ -12,11 +12,11 @@ namespace UIService.Areas.Admin.Pages.Camera
 
         public CreateIPCamera createIPcamera { get; set; } = new();
         public IEnumerable<DiscoveryDevice> cameraList { get; set; }
-    
+
         protected override async Task OnParametersSetAsync()
-        {           
+        {
             cameraList = new List<DiscoveryDevice>();
-            cameraList = await DiscoverCamera.OnvifCamera();  
+            cameraList = await DiscoverCamera.OnvifCamera();
 
         }
 
@@ -30,9 +30,9 @@ namespace UIService.Areas.Admin.Pages.Camera
         private async Task<IEnumerable<string>> SearchAsync(string value)
         {
             if (string.IsNullOrEmpty(value))
-                return cameraList.Select( u => u.Address);
+                return cameraList.Select(u => u.Address);
 
-            return cameraList.Where(x => x.Address.Contains(value)).Select( u=> u.Address);
+            return cameraList.Where(x => x.Address.Contains(value)).Select(u => u.Address);
         }
 
 

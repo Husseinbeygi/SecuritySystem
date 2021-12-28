@@ -10,7 +10,7 @@ using SecuritySystem.Infrastructre.Repository;
 
 namespace SecuritySystem.Infrastructre
 {
-    public static class  SecuritySystemBootstrapper
+    public static class SecuritySystemBootstrapper
     {
 
         public static void Configure(IServiceCollection _service, string connstring)

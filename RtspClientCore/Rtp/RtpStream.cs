@@ -1,5 +1,5 @@
-﻿using System;
-using RtspClientCore.MediaParsers;
+﻿using RtspClientCore.MediaParsers;
+using System;
 
 namespace RtspClientCore.Rtp
 {

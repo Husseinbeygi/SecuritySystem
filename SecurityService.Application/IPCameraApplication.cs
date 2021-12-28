@@ -15,12 +15,12 @@ namespace SecuritySystem.Application
 
         public OperationResult Create(CreateIPCamera command)
         {
-            var result = new OperationResult(); 
+            var result = new OperationResult();
             if (_repository.Exists(x => x.HostAddress == command.HostAddress))
             {
                 return result.Failed(ApplicationMessages.RecordNotFound);
             }
-            var _create = new IPCamera(command.HostAddress, command.UserName, command.Password,command.StreamAddress,command.CameraName);
+            var _create = new IPCamera(command.HostAddress, command.UserName, command.Password, command.StreamAddress, command.CameraName);
             _repository.Create(_create);
             _repository.SaveChanges();
             return result.Succedded();
@@ -35,7 +35,7 @@ namespace SecuritySystem.Application
             {
                 return result.Failed(ApplicationMessages.DuplicatedRecord);
             }
-            _c.Edit(editIpc.HostAddress, editIpc.UserName, editIpc.Password, editIpc.StreamAddress,editIpc.CameraName);
+            _c.Edit(editIpc.HostAddress, editIpc.UserName, editIpc.Password, editIpc.StreamAddress, editIpc.CameraName);
             _repository.SaveChanges();
             return result.Succedded();
 

@@ -1,5 +1,4 @@
 ﻿using _0_Framework.Domain;
-using System;
 
 namespace SecuritySystem.Domain.Client
 {

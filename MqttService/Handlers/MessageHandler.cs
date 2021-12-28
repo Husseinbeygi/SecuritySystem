@@ -1,8 +1,5 @@
 ﻿using EventService.HandlerEvent;
-using EventService.MessageEvent;
-using System;
 using System.Collections.Generic;
-using System.Linq;
 
 namespace MqttService.Handlers
 {
@@ -10,7 +7,7 @@ namespace MqttService.Handlers
     {
         private readonly HandlerInterceptorEvent _handlerInterceptorEvent;
         private readonly Handler _handler;
-        private static  List<string> _handlers;
+        private static List<string> _handlers;
         public MessageHandler()
         {
             _handler = new Handler();

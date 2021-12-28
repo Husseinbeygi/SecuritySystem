@@ -1,13 +1,11 @@
-﻿using System;
+﻿using RtspClientCore.RawFrames;
+using RtspClientCore.RawFrames.Video;
+using RtspClientCore.Utils;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
-using RtspClientCore.RawFrames;
-using RtspClientCore.RawFrames.Video;
-using RtspClientCore.Utils;
-using RtspClientCore.MediaParsers;
-using RtspClientCore.RawFrames.Video;
 
 namespace RtspClientCore.MediaParsers
 {

@@ -1,4 +1,13 @@
-﻿using System;
+﻿using RtspClientCore.Codecs.Audio;
+using RtspClientCore.Codecs.Video;
+using RtspClientCore.MediaParsers;
+using RtspClientCore.RawFrames;
+using RtspClientCore.Rtcp;
+using RtspClientCore.Rtp;
+using RtspClientCore.Sdp;
+using RtspClientCore.Tpkt;
+using RtspClientCore.Utils;
+using System;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -8,16 +17,6 @@ using System.Net;
 using System.Net.Sockets;
 using System.Threading;
 using System.Threading.Tasks;
-using RtspClientCore.Codecs.Audio;
-using RtspClientCore.Codecs.Video;
-using RtspClientCore.MediaParsers;
-using RtspClientCore.RawFrames;
-using RtspClientCore.Rtcp;
-using RtspClientCore.Rtp;
-using RtspClientCore.Sdp;
-using RtspClientCore.Tpkt;
-using RtspClientCore.Utils;
-using RtspClientCore.Rtsp;
 
 namespace RtspClientCore.Rtsp
 {
