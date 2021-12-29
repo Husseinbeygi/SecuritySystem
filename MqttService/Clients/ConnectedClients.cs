@@ -1,4 +1,5 @@
-﻿using MqttService.Clients.Dto;
+﻿using MQTTnet.Server;
+using MqttService.Clients.Model;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -7,41 +8,52 @@ namespace MqttService.Clients
 
     public static class ConnectedClients
     {
-        private static List<ClientConnectedDto> clients = new();
+        private static List<ClientConnected> clients = new();
 
 
-        public static void AddClient(string clientid, string endpoint, string username, string cleansession, string date)
+        public static void AddClient(string clientid, string endpoint, string username, string cleansession, string date, MQTTnet.Server.MqttConnectionValidatorContext context)
         {
             if (clients.FirstOrDefault(x => x.UserName == username) == null)
             {
-
-                clients.Add(new ClientConnectedDto
-                {
-                    ClientId = clientid,
-                    LastConnectedDate = date,
-                    Endpoint = endpoint,
-                    UserName = username,
-                    CleanSession = cleansession,
-                });
+                NewConnection(clientid, endpoint, username, cleansession, date, context);
             }
             else
             {
-                var _c = clients.FirstOrDefault(x => x.UserName == username);
-                clients.Remove(_c);
-                clients.Add(new ClientConnectedDto
-                {
-                    ClientId = clientid,
-                    LastConnectedDate = date,
-                    Endpoint = endpoint,
-                    UserName = username,
-                    CleanSession = cleansession,
-                });
+                ReplaceConnection(clientid, endpoint, username, cleansession, date, context);
 
             }
 
         }
 
-        public static List<ClientConnectedDto> GetClients()
+        private static void ReplaceConnection(string clientid, string endpoint, string username, string cleansession, string date, MqttConnectionValidatorContext context)
+        {
+            var _c = clients.FirstOrDefault(x => x.UserName == username);
+            clients.Remove(_c);
+            clients.Add(new ClientConnected
+            {
+                ClientId = clientid,
+                LastConnectedDate = date,
+                Endpoint = endpoint,
+                UserName = username,
+                CleanSession = cleansession,
+                context = context
+            });
+        }
+
+        private static void NewConnection(string clientid, string endpoint, string username, string cleansession, string date, MqttConnectionValidatorContext context)
+        {
+            clients.Add(new ClientConnected
+            {
+                ClientId = clientid,
+                LastConnectedDate = date,
+                Endpoint = endpoint,
+                UserName = username,
+                CleanSession = cleansession,
+                context = context
+            });
+        }
+
+        public static List<ClientConnected> GetClients()
         {
             return clients;
         }

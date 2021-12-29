@@ -1,4 +1,6 @@
-﻿namespace EventService.ConnectionEvent
+﻿using MQTTnet.Server;
+
+namespace EventService.ConnectionEvent
 {
     public class ConnectionInterceptorEventArgs
     {
@@ -7,5 +9,7 @@
         public string Username { get; set; }
         public bool? CleanSession { get; set; }
         public string Password { get; set; }
+        public MqttConnectionValidatorContext context { get; set; }
+
     }
 }

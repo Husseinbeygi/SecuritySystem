@@ -33,7 +33,7 @@ namespace UIService.Pages
         }
         private void _connectionInterceptorEvent_ClientConnected(object? sender, ConnectionInterceptorEventArgs e)
         {
-            ConnectedClients.AddClient(e.ClientId, e.Endpoint, e.Username, e.CleanSession.ToString(), DateTime.Now.ToFarsi());
+            ConnectedClients.AddClient(e.ClientId, e.Endpoint, e.Username, e.CleanSession.ToString(), DateTime.Now.ToFarsi(),e.context);
             this.InvokeAsync(() => this.StateHasChanged());
 
         }

@@ -12,7 +12,7 @@ namespace MqttService.Handlers
         {
             _handler = new Handler();
             _handlerInterceptorEvent = HandlerInterceptorEventBuild.Build();
-            _handlerInterceptorEvent.HandleIncoming += new System.EventHandler<HandlerInterceptorEventArgs>(_handlerInterceptorEvent_DisconnectRecevied);
+            _handlerInterceptorEvent.HandleIncoming += new System.EventHandler<HandlerInterceptorEventArgs>(_handlerInterceptorEvent_Disconnect);
             _handlers = InitialHandlers();
         }
 
@@ -35,7 +35,7 @@ namespace MqttService.Handlers
             return _handler;
         }
 
-        private void _handlerInterceptorEvent_DisconnectRecevied(object sender, HandlerInterceptorEventArgs e)
+        public void _handlerInterceptorEvent_Disconnect(object sender, HandlerInterceptorEventArgs e)
         {
             if (e.Topic.Contains("disconnect"))
             {

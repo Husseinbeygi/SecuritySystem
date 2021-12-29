@@ -5,8 +5,8 @@ namespace MqttService.Handlers
 {
     public class Handler
     {
-        private IHandler _handler;
-        public Handler(IHandler handler)
+        private IActionHandler _handler;
+        public Handler(IActionHandler handler)
         {
             _handler = handler;
         }
@@ -15,7 +15,7 @@ namespace MqttService.Handlers
         {
         }
 
-        public void setHandler(IHandler handler)
+        public void setHandler(IActionHandler handler)
         {
             _handler = handler;
         }

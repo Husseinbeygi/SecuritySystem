@@ -2,7 +2,7 @@
 
 namespace MqttService.Handlers
 {
-    public interface IHandler
+    public interface IActionHandler
     {
         public void Handle(HandlerInterceptorEventArgs e);
     }

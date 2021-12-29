@@ -1,6 +1,6 @@
-﻿namespace MqttService.Clients.Dto
+﻿namespace MqttService.Clients.Model
 {
-    public class MessageReceviedDto
+    public class MessageRecevied
     {
         public string Name { get; set; }
         public string Message { get; set; }
