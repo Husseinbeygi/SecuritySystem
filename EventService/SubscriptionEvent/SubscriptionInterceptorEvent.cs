@@ -12,7 +12,6 @@ namespace EventService.SubscriptionEvent
             e.ClientId = context.ClientId;
             e.TopicFilter = context.TopicFilter;
             OnClientSubscribed(e);
-
         }
 
         protected virtual void OnClientSubscribed(SubscriptionInterceptorEventArgs e)

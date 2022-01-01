@@ -21,7 +21,7 @@ builder.Host.UseSerilog((ctx, lc) => lc.WriteTo.Console());
 SecuritySystemBootstrapper.Configure(builder.Services, "Data Source=Database.db");
 
 #region MqttServices
-builder.Services.AddTransient<IMqttActions, MqttActions>();
+builder.Services.AddSingleton<IMqttActions, MqttActions>();
 builder.Services.AddHostedService<MqttBootstrapper>();
 #endregion
 

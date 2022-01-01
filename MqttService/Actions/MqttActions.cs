@@ -2,12 +2,15 @@
 using EventService.HandlerEvent;
 using EventService.MessageEvent;
 using EventService.SubscriptionEvent;
+using MQTTnet;
+using MQTTnet.Client.Options;
 using MQTTnet.Server;
 using MqttService.Handlers;
 using Serilog;
 using System;
 using System.Text;
-
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace MqttService.Actions
 {
@@ -19,7 +22,12 @@ namespace MqttService.Actions
         private readonly SubscriptionInterceptorEvent _subscribeInterceptorEvent;
         private readonly ConnectionInterceptorEvent _connectionInterceptorEvent;
         private readonly HandlerInterceptorEvent _handlerInterceptorEvent;
+        private IMqttServer _mqttServer;
+        private CancellationTokenSource cancelToken = new CancellationTokenSource();
+
         private static double ByteToKB => 1048576.0;
+
+        public IMqttServer mqttServer { get => _mqttServer; set => _mqttServer = value; }
 
         public MqttActions(ILogger logger)
         {
@@ -28,11 +36,23 @@ namespace MqttService.Actions
             _subscribeInterceptorEvent = SubscriptionInterceptorEventBuild.Build();
             _connectionInterceptorEvent = ConnectionInterceptorEventBuild.Build();
             _handlerInterceptorEvent = HandlerInterceptorEventBuild.Build();
+
         }
 
         public void SubscriptionAction(MqttSubscriptionInterceptorContext context, bool successful)
         {
             _subscribeInterceptorEvent.SendClientData(context);
+            if (context.TopicFilter.Topic == context.ClientId + "/server/notfications")
+            {
+                var message = new MqttApplicationMessageBuilder()
+                        .WithTopic(context.ClientId + "/server/notfications")
+                        .WithPayload("Hi!")
+                        .WithExactlyOnceQoS()
+                        .Build();
+
+                SendMessageActionAsync(message);
+            }
+
             _logger.Information(
                 successful
                     ? "New subscription: ClientId = {clientId}, TopicFilter = {topicFilter}"
@@ -40,9 +60,9 @@ namespace MqttService.Actions
                 context.ClientId,
                 context.TopicFilter);
         }
-        public void MessageAction(MqttApplicationMessageInterceptorContext context)
+        public void ReceiveMessageAction(MqttApplicationMessageInterceptorContext context)
         {
-            string payload = EncodeToString(context);
+            string payload = EncodeToString(context.ApplicationMessage.Payload);
 
             _messageInterceptorEvent.SendDataForMessage(context, payload);
 
@@ -51,20 +71,21 @@ namespace MqttService.Actions
                 _handlerInterceptorEvent.SendClientData(context, payload);
             }
 
+            
             _logger.Information(
-                        "Message: ClientId = {clientId}, Topic = {topic}, Payload = {payload}," +
-                        " QoS = {qos}, Retain-Flag = {retainFlag}",
-                        context.ClientId,
-                        context.ApplicationMessage?.Topic,
-                        payload,
-                        context.ApplicationMessage?.QualityOfServiceLevel,
-                        context.ApplicationMessage?.Retain);
+                         "Message: ClientId = {clientId}, Topic = {topic}, Payload = {payload}," +
+                         " QoS = {qos}, Retain-Flag = {retainFlag}",
+                         context.ClientId,
+                         context.ApplicationMessage?.Topic,
+                         payload,
+                         context.ApplicationMessage?.QualityOfServiceLevel,
+                         context.ApplicationMessage?.Retain);
 
         }
 
-        private static string EncodeToString(MqttApplicationMessageInterceptorContext context)
+        public static string EncodeToString(byte[] payload)
         {
-            return context.ApplicationMessage?.Payload == null ? null : Encoding.UTF8.GetString(context.ApplicationMessage.Payload);
+            return Encoding.UTF8.GetString(payload);
         }
 
         public void ClientValidatorAction(MqttConnectionValidatorContext context, bool showPassword)
@@ -116,8 +137,12 @@ namespace MqttService.Actions
                 $"{memoryInfo.MemoryLoadBytes / divider:N3}");
         }
 
+        public async Task SendMessageActionAsync(MqttApplicationMessage context)
+        {
+            await _mqttServer.PublishAsync(context, cancelToken.Token);
+            cancelToken.Cancel();
 
-
+        }
     }
 }
 

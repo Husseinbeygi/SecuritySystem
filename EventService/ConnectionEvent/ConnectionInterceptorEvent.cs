@@ -13,6 +13,7 @@ namespace EventService.ConnectionEvent
             e.Endpoint = context.Endpoint;
             e.Username = context.Username;
             e.Password = context.Password;
+            e.context = context;    
             OnClientConnected(e);
 
         }

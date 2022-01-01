@@ -1,4 +1,6 @@
-﻿using MQTTnet.Server;
+﻿using EventService.SubscriptionEvent;
+using MQTTnet.Server;
+using System.Collections.Generic;
 
 namespace MqttService.Clients.Model
 {
@@ -9,7 +11,8 @@ namespace MqttService.Clients.Model
         public string Endpoint { get; set; }
         public string UserName { get; set; }
         public string LastConnectedDate { get; set; }
-        public MqttConnectionValidatorContext context { get; set;  }
+        public MqttConnectionValidatorContext Context { get; set;  }
+        public List<SubscriptionInterceptorEventArgs> Subscriptions { get; set; }
 
     }
 }

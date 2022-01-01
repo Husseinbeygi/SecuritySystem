@@ -1,4 +1,5 @@
-﻿using MQTTnet.Server;
+﻿using EventService.SubscriptionEvent;
+using MQTTnet.Server;
 using MqttService.Clients.Model;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,7 +37,7 @@ namespace MqttService.Clients
                 Endpoint = endpoint,
                 UserName = username,
                 CleanSession = cleansession,
-                context = context
+                Context = context
             });
         }
 
@@ -49,7 +50,7 @@ namespace MqttService.Clients
                 Endpoint = endpoint,
                 UserName = username,
                 CleanSession = cleansession,
-                context = context
+                Context = context
             });
         }
 
@@ -57,6 +58,18 @@ namespace MqttService.Clients
         {
             return clients;
         }
+
+        public static ClientConnected GetClient(string clientid)
+        {
+            return clients.FirstOrDefault(x => x.ClientId == clientid);
+        }
+
+        public static void AddSubscription(SubscriptionInterceptorEventArgs args)
+        {
+            var c = clients.FirstOrDefault(x => x.ClientId == args.ClientId);
+            c.Subscriptions.Add(args);
+        }
+
 
         public static void RemoveClient(string clientid)
         {

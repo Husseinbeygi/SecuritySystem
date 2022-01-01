@@ -82,9 +82,10 @@ namespace MqttService
                 .WithSubscriptionInterceptor(SubscriptionInterceptor())
                 .WithApplicationMessageInterceptor(ApplicationMessageInterceptor());
 
-            var mqttServer = new MqttFactory().CreateMqttServer();
-            mqttServer.StartAsync(options.Build());
+            _action.mqttServer = new MqttFactory().CreateMqttServer();
+            _action.mqttServer.StartAsync(options.Build());
 
+            
         }
 
         private Action<MqttApplicationMessageInterceptorContext> ApplicationMessageInterceptor()
@@ -92,9 +93,7 @@ namespace MqttService
             return a =>
             {
                 a.AcceptPublish = true;
-                _action.MessageAction(a);
-
-
+                _action.ReceiveMessageAction(a);
             };
         }
 

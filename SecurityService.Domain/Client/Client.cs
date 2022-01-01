@@ -15,6 +15,12 @@ namespace SecuritySystem.Domain.Client
             ClientId = clientId;
             UserName = userName;
         }
+
+        public void ChangePassword (string Password)
+        {
+            this.Password = Password;    
+        }
+
         public string ClientId { get; private set; }
         public string UserName { get; private set; }
         public string Password { get; private set; }

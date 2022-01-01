@@ -10,5 +10,7 @@ namespace SecurityService.Application.Service.Client
         OperationResult Remove(long id);
         EditClient GetDetails(long id);
         OperationResult Edit(EditClient editClient);
+        OperationResult ChangePassword(ChangePassword changePassword);
+
     }
 }

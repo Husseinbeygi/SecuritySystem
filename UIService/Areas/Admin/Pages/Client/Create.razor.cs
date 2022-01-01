@@ -17,8 +17,12 @@ namespace UIService.Areas.Admin.Pages.Client
 
         private void HandleValidSubmit()
         {
-            _application.Create(_createClient);
-            NavManager.NavigateTo("/admin/client");
+            var op = _application.Create(_createClient);
+            if (op.IsSuccedded)
+            {
+               NavManager.NavigateTo("/admin/client");
+            }
+
         }
     }
 }

@@ -14,6 +14,19 @@ namespace SecuritySystem.Application
             _passwordhasher = passwordhasher;
         }
 
+        public OperationResult ChangePassword(ChangePassword command)
+        {
+            var result = new OperationResult();
+            var _c = _repository.Get(command.Id);
+            if (command.Password != command.RePassword)
+                return result.Failed(ApplicationMessages.PasswordsNotMatch);
+
+            var hashedPass = _passwordhasher.Hash(command.Password);
+            _c.ChangePassword(hashedPass);
+            _repository.SaveChanges();
+            return result.Succedded();
+        }
+
         public OperationResult Create(CreateClient command)
         {
             var result = new OperationResult();

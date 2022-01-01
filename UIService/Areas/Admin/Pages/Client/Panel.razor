@@ -1,0 +1,187 @@
+﻿@page "/client/panel/{clientid?}"
+@using MqttService.Actions
+<MudTabs dir="ltr" AlwaysShowScrollButtons="true" Elevation="4" Rounded="true" Centered="true" Color="MudBlazor.Color.Dark">
+    <MudTabPanel Text="مشخصات دستگاه">
+        <MudPaper Height="100%" Width="100%" Style="margin-top:20px">
+            <MudPaper Height="100%" Width="100%">
+                <MudContainer Fixed="true">
+                    <MudGrid>
+                        <Div Class="col-md-4 col-12 p-3">
+                            <MudList>
+                                <MudListItem Avatar="@Icons.Material.Filled.Fingerprint">
+                                    <Div Class="row">
+                                        <Span Class="col-md-6">ID</Span>
+                                        <Span Class="col-md-6">@clientConnected.ClientId</Span>
+                                    </Div>
+                                </MudListItem>
+                                <MudListItem Avatar="@Icons.Material.Filled.VerifiedUser">
+                                    <Div Class="row">
+                                        <Span Class="col-md-6">Username</Span>
+                                        <Span Class="col-md-6">@clientConnected.UserName</Span>
+                                    </Div>
+                                </MudListItem>
+                                <MudListItem Avatar="@Icons.Material.Filled.Umbrella">
+                                    <Div Class="row">
+                                        <Span Class="col-md-6">IP Address</Span>
+                                        <Span Class="col-md-6">@clientConnected.Endpoint</Span>
+                                    </Div>
+                                </MudListItem>
+                                <MudListItem Avatar="@Icons.Material.Filled.Umbrella">
+                                    <Div Class="row">
+                                        <Span Class="col-md-6">Protocol Version</Span>
+                                        <Span Class="col-md-6">@clientConnected.Context.ProtocolVersion</Span>
+                                    </Div>
+                                </MudListItem>
+                                <MudListItem Avatar="@Icons.Material.Filled.Umbrella">
+                                    <Div Class="row">
+                                        <Span Class="col-md-6">RequestProblemInformation</Span>
+                                        <Span Class="col-md-6">@clientConnected.Context.RequestProblemInformation</Span>
+                                    </Div>
+                                </MudListItem>
+                                <MudListItem Avatar="@Icons.Material.Filled.Umbrella">
+                                    <Div Class="row">
+                                        <Span Class="col-md-6">WillMessageTopic</Span>
+                                        <Span Class="col-md-6" Style="font-size:11px">@clientConnected.Context.WillMessage.Topic</Span>
+                                    </Div>
+                                </MudListItem>
+                                <MudListItem Avatar="@Icons.Material.Filled.Umbrella">
+                                    <Div Class="row">
+                                        <Span Class="col-md-6">WillMessagePayLoad</Span>
+                                        <Span Class="col-md-6" Style="font-size:11px">@MqttActions.EncodeToString(clientConnected.Context.WillMessage.Payload)</Span>
+                                    </Div>
+                                </MudListItem>
+
+
+                            </MudList>
+                        </Div>
+                        <Div Class="col-md-4 col-12  p-3">
+                            <MudList>
+                                <MudListItem Avatar="@Icons.Material.Filled.Image">
+                                    <Div Class="row">
+                                        <Span Class="col-md-6">CleanSession</Span>
+                                        <Span Class="col-md-6">@clientConnected.Context.CleanSession</Span>
+                                    </Div>
+                                </MudListItem>
+                                <MudListItem Avatar="@Icons.Material.Filled.Work">
+                                    <Div Class="row">
+                                        <Span Class="col-md-6">AuthenticationMethod</Span>
+                                        <Span Class="col-md-6">@clientConnected.Context.AuthenticationMethod</Span>
+                                    </Div>
+                                </MudListItem>
+                                <MudListItem Avatar="@Icons.Material.Filled.Umbrella">
+                                    <Div Class="row">
+                                        <Span Class="col-md-6">SecureConnection</Span>
+                                        <Span Class="col-md-6">@clientConnected.Context.IsSecureConnection</Span>
+                                    </Div>
+                                </MudListItem>
+                                <MudListItem Avatar="@Icons.Material.Filled.Umbrella">
+                                    <Div Class="row">
+                                        <Span Class="col-md-6">KeepAlivePeriod</Span>
+                                        <Span Class="col-md-6">@clientConnected.Context.KeepAlivePeriod</Span>
+                                    </Div>
+                                </MudListItem>
+                                <MudListItem Avatar="@Icons.Material.Filled.Umbrella">
+                                    <Div Class="row">
+                                        <Span Class="col-md-6">RequestResponseInformation</Span>
+                                        <Span Class="col-md-6">@clientConnected.Context.RequestResponseInformation</Span>
+                                    </Div>
+                                </MudListItem>
+                                <MudListItem Avatar="@Icons.Material.Filled.Umbrella">
+                                    <Div Class="row">
+                                        <Span Class="col-md-6">SessionExpiryInterval</Span>
+                                        <Span Class="col-md-6">@clientConnected.Context.SessionExpiryInterval</Span>
+                                    </Div>
+                                </MudListItem>
+
+
+                            </MudList>
+                        </Div>
+                        <Div Class="col-md-4 col-12  p-3">
+                            <MudList>
+                                <MudListItem Avatar="@Icons.Material.Filled.Image">
+                                    <Div Class="row">
+                                        <Span Class="col-md-6">ClientCertificate</Span>
+                                        <Span Class="col-md-6">@clientConnected.Context.ClientCertificate</Span>
+                                    </Div>
+                                </MudListItem>
+                                <MudListItem Avatar="@Icons.Material.Filled.Work">
+                                    <Div Class="row">
+                                        <Span Class="col-md-6">MaximumPacketSize</Span>
+                                        <Span Class="col-md-6">@clientConnected.Context.MaximumPacketSize</Span>
+                                    </Div>
+                                </MudListItem>
+                                <MudListItem Avatar="@Icons.Material.Filled.Umbrella">
+                                    <Div Class="row">
+                                        <Span Class="col-md-6">ReasonCode</Span>
+                                        <Span Class="col-md-6">@clientConnected.Context.ReasonCode</Span>
+                                    </Div>
+                                </MudListItem>
+                                <MudListItem Avatar="@Icons.Material.Filled.Umbrella">
+                                    <Div Class="row">
+                                        <Span Class="col-md-6">ReasonString</Span>
+                                        <Span Class="col-md-6">@clientConnected.Context.ReasonString</Span>
+                                    </Div>
+                                </MudListItem>
+                                <MudListItem Avatar="@Icons.Material.Filled.Umbrella">
+                                    <Div Class="row">
+                                        <Span Class="col-md-6">ResponseAuthenticationData</Span>
+                                        <Span Class="col-md-6">@clientConnected.Context.ResponseAuthenticationData</Span>
+                                    </Div>
+                                </MudListItem>
+                                <MudListItem Avatar="@Icons.Material.Filled.Umbrella">
+                                    <Div Class="row">
+                                        <Span Class="col-md-6">TopicAliasMaximum</Span>
+                                        <Span Class="col-md-6">@clientConnected.Context.TopicAliasMaximum</Span>
+                                    </Div>
+                                </MudListItem>
+
+                            </MudList>
+                        </Div>
+                    </MudGrid>
+                </MudContainer>
+            </MudPaper>
+        </MudPaper>
+    </MudTabPanel>
+    <MudTabPanel Text="Subscribed Topic">
+
+        <MudPaper Height="100%" Width="100%" Style="margin-top:20px">
+            <MudPaper Height="100%" Width="100%">
+                <MudContainer Fixed="true">
+                    <MudGrid>
+                        <Div Class="col-md-12 col-12 p-3">
+                            <MudTable Items="@Elements" FixedHeader="true" FixedFooter="true" Height="400px">
+                                <HeaderContent>
+                                    <MudTh>Nr</MudTh>
+                                    <MudTh>Sign</MudTh>
+                                    <MudTh>Name</MudTh>
+                                    <MudTh>Position</MudTh>
+                                    <MudTh>Molar mass</MudTh>
+                                </HeaderContent>
+                                <RowTemplate>
+                                    <MudTd DataLabel="Nr"></MudTd>
+                                    <MudTd DataLabel="Sign"></MudTd>
+                                    <MudTd DataLabel="Name"></MudTd>
+                                    <MudTd DataLabel="Position"></MudTd>
+                                    <MudTd DataLabel="Molar mass"></MudTd>
+                                </RowTemplate>
+                                <FooterContent>
+                                    <MudTd>Nr</MudTd>
+                                    <MudTd>Sign</MudTd>
+                                    <MudTd>Name</MudTd>
+                                    <MudTd>Position</MudTd>
+                                    <MudTd>Molar mass</MudTd>
+                                </FooterContent>
+                                <PagerContent>
+                                    <MudTablePager PageSizeOptions="new int[]{50, 100}" />
+                                </PagerContent>
+                            </MudTable>
+                        </Div>
+                    </MudGrid>
+                </MudContainer>
+            </MudPaper>
+        </MudPaper>
+
+
+    </MudTabPanel>
+    <MudTabPanel Text="داده های ارسال شده">3</MudTabPanel>
+</MudTabs>
