@@ -1,5 +1,6 @@
 ﻿@page "/client/panel/{clientid?}"
 @using MqttService.Actions
+@inject NavigationManager NavManager
 <MudTabs dir="ltr" AlwaysShowScrollButtons="true" Elevation="4" Rounded="true" Centered="true" Color="MudBlazor.Color.Dark">
     <MudTabPanel Text="مشخصات دستگاه">
         <MudPaper Height="100%" Width="100%" Style="margin-top:20px">
@@ -41,14 +42,14 @@
                                 <MudListItem Avatar="@Icons.Material.Filled.Umbrella">
                                     <Div Class="row">
                                         <Span Class="col-md-6">WillMessageTopic</Span>
-                                        <Span Class="col-md-6" Style="font-size:11px">@clientConnected.Context.WillMessage.Topic</Span>
-                                    </Div>
+                                        <Span Class="col-md-6" Style="font-size:11px">@(clientConnected.Context.WillMessage == null ? "" : clientConnected.Context.WillMessage.Topic)</Span>
+                                        </Div>
                                 </MudListItem>
                                 <MudListItem Avatar="@Icons.Material.Filled.Umbrella">
                                     <Div Class="row">
                                         <Span Class="col-md-6">WillMessagePayLoad</Span>
-                                        <Span Class="col-md-6" Style="font-size:11px">@MqttActions.EncodeToString(clientConnected.Context.WillMessage.Payload)</Span>
-                                    </Div>
+                                        <Span Class="col-md-6" Style="font-size:11px">@if (clientConnected.Context.WillMessage != null) { MqttActions.EncodeToString(clientConnected.Context.WillMessage.Payload); }</Span>
+                                        </Div>
                                 </MudListItem>
 
 
@@ -144,44 +145,56 @@
     </MudTabPanel>
     <MudTabPanel Text="Subscribed Topic">
 
-        <MudPaper Height="100%" Width="100%" Style="margin-top:20px">
-            <MudPaper Height="100%" Width="100%">
                 <MudContainer Fixed="true">
-                    <MudGrid>
                         <Div Class="col-md-12 col-12 p-3">
-                            <MudTable Items="@Elements" FixedHeader="true" FixedFooter="true" Height="400px">
+                            <MudTable Items="@Subscriptions" FixedHeader="true" FixedFooter="true" Height="400px">
                                 <HeaderContent>
-                                    <MudTh>Nr</MudTh>
-                                    <MudTh>Sign</MudTh>
                                     <MudTh>Name</MudTh>
-                                    <MudTh>Position</MudTh>
-                                    <MudTh>Molar mass</MudTh>
+                                    <MudTh>Qos</MudTh>
+                                    <MudTh>Retain</MudTh>
+                                    <MudTh>Topic</MudTh>
+                                    <MudTh>RetainHandling</MudTh>
                                 </HeaderContent>
                                 <RowTemplate>
-                                    <MudTd DataLabel="Nr"></MudTd>
-                                    <MudTd DataLabel="Sign"></MudTd>
-                                    <MudTd DataLabel="Name"></MudTd>
-                                    <MudTd DataLabel="Position"></MudTd>
-                                    <MudTd DataLabel="Molar mass"></MudTd>
+                                    <MudTd DataLabel="Name">@context.ClientId</MudTd>
+                                    <MudTd DataLabel="Qos">@context.TopicFilter.QualityOfServiceLevel</MudTd>
+                                    <MudTd DataLabel="Retain">@context.TopicFilter.RetainAsPublished</MudTd>
+                                    <MudTd DataLabel="Topic">@context.TopicFilter.Topic</MudTd>
+                                    <MudTd DataLabel="RetainHandling">@context.TopicFilter.RetainHandling</MudTd>
                                 </RowTemplate>
-                                <FooterContent>
-                                    <MudTd>Nr</MudTd>
-                                    <MudTd>Sign</MudTd>
-                                    <MudTd>Name</MudTd>
-                                    <MudTd>Position</MudTd>
-                                    <MudTd>Molar mass</MudTd>
-                                </FooterContent>
                                 <PagerContent>
                                     <MudTablePager PageSizeOptions="new int[]{50, 100}" />
                                 </PagerContent>
                             </MudTable>
                         </Div>
-                    </MudGrid>
                 </MudContainer>
-            </MudPaper>
-        </MudPaper>
+    </MudTabPanel>
+    <MudTabPanel Text="داده های ارسال شده">
+
+                        <MudContainer Fixed="true">
+                        <Div Class="col-md-12 col-12 p-3">
+                            <MudTable Items="@receviedmessage" FixedHeader="true" FixedFooter="true" Height="400px">
+                                <HeaderContent>
+                                    <MudTh>Name</MudTh>
+                                    <MudTh>Topic</MudTh>
+                                    <MudTh>PayLoad</MudTh>
+                                    <MudTh>Qos</MudTh>
+                                    <MudTh>Retain</MudTh>
+                                </HeaderContent>
+                                <RowTemplate>
+                                    <MudTd DataLabel="Name">@context.ClientId</MudTd>
+                                    <MudTd DataLabel="Retain">@context.Topic</MudTd>
+                                    <MudTd DataLabel="Qos">@context.PayLoad</MudTd>
+                                    <MudTd DataLabel="Topic">@context.Qos</MudTd>
+                                    <MudTd DataLabel="RetainHandling">@context.RetainFlag</MudTd>
+                                </RowTemplate>
+                                <PagerContent>
+                                    <MudTablePager PageSizeOptions="new int[]{50, 100}" />
+                                </PagerContent>
+                            </MudTable>
+                        </Div>
+                </MudContainer>
 
 
     </MudTabPanel>
-    <MudTabPanel Text="داده های ارسال شده">3</MudTabPanel>
 </MudTabs>

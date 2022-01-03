@@ -6,13 +6,13 @@ namespace MqttService.Clients.Model
 {
     public class ClientConnected
     {
-        public string ClientId { get; set; }
-        public string CleanSession { get; set; }
-        public string Endpoint { get; set; }
-        public string UserName { get; set; }
-        public string LastConnectedDate { get; set; }
-        public MqttConnectionValidatorContext Context { get; set;  }
-        public List<SubscriptionInterceptorEventArgs> Subscriptions { get; set; }
+        public string ClientId { get; set; } = string.Empty;
+        public string CleanSession { get; set; } = string.Empty;
+        public string Endpoint { get; set; } = string.Empty;
+        public string UserName { get; set; } = string.Empty;
+        public string LastConnectedDate { get; set; } = string.Empty;
+        public MqttConnectionValidatorContext Context { get; set; }
+        public List<SubscriptionInterceptorEventArgs> Subscriptions { get; set; } = new();
 
     }
 }

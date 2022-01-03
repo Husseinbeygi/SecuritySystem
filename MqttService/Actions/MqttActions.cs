@@ -1,10 +1,12 @@
-﻿using EventService.ConnectionEvent;
+﻿using _0_Framework.Application;
+using EventService.ConnectionEvent;
 using EventService.HandlerEvent;
 using EventService.MessageEvent;
 using EventService.SubscriptionEvent;
 using MQTTnet;
 using MQTTnet.Client.Options;
 using MQTTnet.Server;
+using MqttService.Clients;
 using MqttService.Handlers;
 using Serilog;
 using System;
@@ -41,6 +43,7 @@ namespace MqttService.Actions
 
         public void SubscriptionAction(MqttSubscriptionInterceptorContext context, bool successful)
         {
+            ConnectedClients.AddSubscription(context.ClientId, context.TopicFilter);
             _subscribeInterceptorEvent.SendClientData(context);
             if (context.TopicFilter.Topic == context.ClientId + "/server/notfications")
             {
@@ -71,27 +74,30 @@ namespace MqttService.Actions
                 _handlerInterceptorEvent.SendClientData(context, payload);
             }
 
-            
-            _logger.Information(
-                         "Message: ClientId = {clientId}, Topic = {topic}, Payload = {payload}," +
-                         " QoS = {qos}, Retain-Flag = {retainFlag}",
-                         context.ClientId,
-                         context.ApplicationMessage?.Topic,
-                         payload,
-                         context.ApplicationMessage?.QualityOfServiceLevel,
-                         context.ApplicationMessage?.Retain);
+
+            //_logger.Information(
+            //             "Message: ClientId = {clientId}, Topic = {topic}, Payload = {payload}," +
+            //             " QoS = {qos}, Retain-Flag = {retainFlag}",
+            //             context.ClientId,
+            //             context.ApplicationMessage?.Topic,
+            //             payload,
+            //             context.ApplicationMessage?.QualityOfServiceLevel,
+            //             context.ApplicationMessage?.Retain);
 
         }
 
         public static string EncodeToString(byte[] payload)
         {
+            if(payload == null) return "";
             return Encoding.UTF8.GetString(payload);
         }
 
         public void ClientValidatorAction(MqttConnectionValidatorContext context, bool showPassword)
         {
 
+            ConnectedClients.AddClient(context.ClientId, context.Endpoint, context.Username, context.CleanSession.ToString(), DateTime.Now.ToFarsi(), context);
             _connectionInterceptorEvent.SendClientData(context);
+
             if (showPassword)
             {
                 LogInformationWithPassword(context);

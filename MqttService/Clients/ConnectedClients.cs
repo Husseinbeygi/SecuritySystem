@@ -1,4 +1,5 @@
 ﻿using EventService.SubscriptionEvent;
+using MQTTnet;
 using MQTTnet.Server;
 using MqttService.Clients.Model;
 using System.Collections.Generic;
@@ -64,10 +65,20 @@ namespace MqttService.Clients
             return clients.FirstOrDefault(x => x.ClientId == clientid);
         }
 
-        public static void AddSubscription(SubscriptionInterceptorEventArgs args)
+        public static void AddSubscription(string clientId, MqttTopicFilter TopicFilter)
         {
-            var c = clients.FirstOrDefault(x => x.ClientId == args.ClientId);
-            c.Subscriptions.Add(args);
+            var c = clients.FirstOrDefault(x => x.ClientId == clientId);
+            var t = new SubscriptionInterceptorEventArgs()
+            {
+                ClientId = clientId,
+                TopicFilter = TopicFilter,
+            };
+            c.Subscriptions.Add(t);
+        }
+
+        public static List<SubscriptionInterceptorEventArgs> GetSubscription(string clientId)
+        {
+            return clients.FirstOrDefault(x => x.ClientId == clientId).Subscriptions;
         }
 
 

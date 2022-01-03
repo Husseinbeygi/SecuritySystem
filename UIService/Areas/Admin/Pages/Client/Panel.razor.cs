@@ -1,4 +1,5 @@
-﻿using EventService.SubscriptionEvent;
+﻿using EventService.MessageEvent;
+using EventService.SubscriptionEvent;
 using Microsoft.AspNetCore.Components;
 using MqttService.Clients;
 using MqttService.Clients.Model;
@@ -7,21 +8,48 @@ namespace UIService.Areas.Admin.Pages.Client
     public partial class Panel
     {
         [Parameter]
-        public string clientid { get; set; }
+        public string clientid { get; set; } = string.Empty;
 
-        public ClientConnected clientConnected;
+        public ClientConnected clientConnected = new();
+        public List<SubscriptionInterceptorEventArgs> Subscriptions { get; set; } = new();   
         private IEnumerable<SubscriptionInterceptorEventArgs> Elements = new List<SubscriptionInterceptorEventArgs>();
 
-        protected override async Task OnInitializedAsync()
+        private SubscriptionInterceptorEvent subscriptionInterceptorEvent;
+        private readonly MessageInterceptorEvent messageInterceptorEvent;
+
+        public List<MessageInterceptorEventArgs> receviedmessage = new();
+
+        public Panel()
         {
+            subscriptionInterceptorEvent = SubscriptionInterceptorEventBuild.Build();
+            messageInterceptorEvent = MessageInterceptorEventBuild.Build();
         }
 
-        protected override void OnParametersSet()
+        protected override void OnInitialized()
         {
-            base.OnParametersSet();
             clientConnected = ConnectedClients.GetClient(clientid);
-            
+            if(clientid == null || clientConnected == null)
+                NavManager.NavigateTo("/");
+            else
+            {
+
+                Subscriptions = clientConnected.Subscriptions;
+                subscriptionInterceptorEvent.ClientSubscribed += SubscriptionInterceptorEvent_ClientSubscribed;
+                messageInterceptorEvent.MessageRecevied += MessageInterceptorEvent_MessageRecevied;
+            }
+            base.OnInitialized();
         }
 
+        private void MessageInterceptorEvent_MessageRecevied(object? sender, MessageInterceptorEventArgs e)
+        {
+            receviedmessage.Add(e);
+            this.InvokeAsync(() => this.StateHasChanged());
+        }
+
+        private void SubscriptionInterceptorEvent_ClientSubscribed(object? sender, SubscriptionInterceptorEventArgs e)
+        {
+            this.InvokeAsync(() => this.StateHasChanged());
+
+        }
     }
 }

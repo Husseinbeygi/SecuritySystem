@@ -126,6 +126,7 @@ namespace MqttService
 
                     v.ReasonCode = MqttConnectReasonCode.Success;
                     _action.ClientValidatorAction(v, false);
+
                 }
 
             };
