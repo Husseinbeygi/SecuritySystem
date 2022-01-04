@@ -11,7 +11,7 @@
 
     <img class="rounded mx-auto d-block img-fluid" src="@String.Format("data:image/png;base64,{0}", Convert.ToBase64String(ByteData))" />
     <div class="icon-container">
-        <a @onclick="TakeVideoAsync"><a style="background-color:red" class="icon icon-expand"><i class="fa fa-file-video"></i></a></a>
+        <a href="@FilesAddress" style="background-color:red" class="icon icon-expand"><i class="fa fa-file-video"></i></a>
         <a style="background-color:brown" class="icon icon-expand" @onclick="TakeImage"><i class="fas fa-camera"></i></a>
         <a @onclick="TakeVideoAsync"><a style="background-color:red" class="icon icon-expand"> @if(videoStream.IsRecording){<i class="fa fa-stop"></i>}else{<i class="fa fa-circle"></i>} </a></a>
     </div>

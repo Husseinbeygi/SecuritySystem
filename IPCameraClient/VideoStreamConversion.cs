@@ -31,16 +31,18 @@ namespace IPCameraClient
             await TakeVideo(_recPath, RecordcancellationToken.Token);
 
         }
+
         private async Task TakeVideo(string filename, CancellationToken token)
         {
             await Task.Run(() => OpencvRecord(filename), token);
         }
+
         private void OpencvRecord(string filename)
         {
             OpenCvSharp.Size dsize = new Size(streamWidth, streamHeight);
 
             using (VideoCapture capture = new VideoCapture(urlToCamera))
-            using (VideoWriter writer = new VideoWriter(filename, FourCC.MP4V, capture.Fps, dsize))
+            using (VideoWriter writer = new VideoWriter(filename, FourCC.H264, capture.Fps, dsize))
             using (Mat frame = new Mat())
             {
                 Console.WriteLine("Recording...");

@@ -1,0 +1,37 @@
+﻿@page "/admin/camera/gallery/{hostaddress}"
+@inject IWebHostEnvironment Environment
+@inject NavigationManager navmanager
+@using Blazored.Video
+@using Blazored.Video.Support
+
+<style>
+    #thumnail-size {
+        height: 150px;
+        width: 266px;
+        margin: 10px;
+    }
+</style>
+
+<div class="row">
+
+    @foreach (var item in filesModelImage)
+    {
+        <div class="col-md-3 col-sm-12">
+            <Image id="thumnail-size" src="@item.FileName" />
+        </div>
+    }
+</div>
+
+<hr />
+
+<div class="row">
+
+    @foreach (var item in filesModelVideo)
+    {
+        <div class="col-md-3 col-sm-12">
+            <BlazoredVideo id="thumnail-size" controls="controls">
+                <source src="@item.FileName" type="video/mp4" />
+            </BlazoredVideo>
+        </div>
+    }
+</div>

@@ -51,15 +51,6 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-var provider = new FileExtensionContentTypeProvider();
-provider.Mappings[".m3u8"] = "application/x-mpegURL";
-
-
-app.UseStaticFiles(new StaticFileOptions
-{
-    ServeUnknownFileTypes = true
-});
-
 app.UseStaticFiles();
 
 app.UseRouting();

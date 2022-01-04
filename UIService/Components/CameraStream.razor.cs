@@ -16,6 +16,8 @@ namespace UIService.Components
 
         [Parameter]
         public EditIPCamera Camera { get; set; } = new();
+        [Parameter]
+        public string  FilesAddress { get; set; }
 
         private string urlToCamera = String.Empty;
         private const int streamWidth = 1280;
@@ -36,8 +38,8 @@ namespace UIService.Components
         {
             base.OnInitialized();
             var camUrl = _rtspgenerator.GenerateUrl(Camera.HostAddress, Camera.UserName, Camera.Password, Camera.StreamAddress);
-            CameraVideoPath = Path.Combine(_webHostEnvironment.WebRootPath, "Livevideos", Camera.HostAddress);
-            CameraImagePath = Path.Combine(_webHostEnvironment.WebRootPath, "pictures", Camera.HostAddress);
+            CameraVideoPath = Path.Combine(_webHostEnvironment.WebRootPath, Camera.HostAddress, "videos");
+            CameraImagePath = Path.Combine(_webHostEnvironment.WebRootPath, Camera.HostAddress, "pictures");
             urlToCamera = camUrl;
             videoStream = new(camUrl, streamWidth, streamHeight);
 
@@ -130,7 +132,7 @@ namespace UIService.Components
         public void TakeImage()
         {
             Console.WriteLine("TakeImage!");
-            var filename = DateTime.Now.ToString();
+            var filename = DateTime.Now.ToFarsiWithoutSlash();
             SaveImageOnServer(filename);
             SaveImageOnClient(filename);
 
@@ -147,7 +149,17 @@ namespace UIService.Components
         }
         private string PathPictures(string filename)
         {
-            return Path.Combine(CameraImagePath, filename, ".jpg");
+            if (Directory.Exists(CameraImagePath))
+            {
+
+                return Path.Combine(CameraImagePath, filename + ".jpg");
+            }
+            else
+            {
+                Directory.CreateDirectory(CameraImagePath);
+                return Path.Combine(CameraImagePath, filename + ".jpg");
+
+            }
         }
         public async Task TakeVideoAsync()
         {

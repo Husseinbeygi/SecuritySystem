@@ -19,6 +19,7 @@
     <PackageReference Include="Blazored.Video" Version="1.0.0" />
     <PackageReference Include="Blazorise.Bootstrap" Version="0.9.5.2" />
     <PackageReference Include="Blazorise.Icons.FontAwesome" Version="0.9.5.2" />
+    <PackageReference Include="BlazorVideoPlayer" Version="1.1.2" />
     <PackageReference Include="Microsoft.AspNetCore.SignalR.Client" Version="6.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.0">
       <PrivateAssets>all</PrivateAssets>
