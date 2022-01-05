@@ -1,7 +1,7 @@
 ﻿using OnvifDiscovery;
 using OnvifDiscovery.Models;
 
-namespace FFmpegService
+namespace IPCameraClient
 {
     public class DiscoverCamera
     {
@@ -11,6 +11,7 @@ namespace FFmpegService
             var onvifDevices = await onvifDiscovery.Discover(1);
             return onvifDevices;
         }
-    }
+
+   }
 
 }

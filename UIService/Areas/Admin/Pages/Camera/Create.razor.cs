@@ -1,4 +1,4 @@
-﻿using FFmpegService;
+﻿using IPCameraClient;
 using OnvifDiscovery.Models;
 using SecurityService.Application.Service.Camera.IPCamera;
 
@@ -38,7 +38,9 @@ namespace UIService.Areas.Admin.Pages.Camera
 
         public async Task<IEnumerable<string>> GetRTSPAddressAsync(string value)
         {
-            return _rtspgenerator.returnlist();
+            if (string.IsNullOrEmpty(value))
+                return _rtspgenerator.returnlist();
+
         }
 
         public string GenerateRTSPUrl()

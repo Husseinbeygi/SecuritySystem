@@ -20,7 +20,9 @@
                 </div>
                 <div class="form-group col-md-12">
                     <label for="inputEmail4">آدرس شبکه کلاینت</label>
-                    <MudAutocomplete Style="border-color:'#d2d6da'" T="string" @bind-Value="createIPcamera.HostAddress" Margin="MudBlazor.Margin.Dense" SearchFunc="@SearchAsync" Dense="true" Variant="Variant.Outlined" />
+                    <MudAutocomplete Style="border-color:'#d2d6da'" T="string" OpenIcon="@Icons.Material.Filled.Search" CoerceValue="true" CoerceText="false"
+                    Immediate="true" @bind-Value="createIPcamera.HostAddress" Margin="MudBlazor.Margin.Dense" SearchFunc="@SearchAsync" Dense="true" 
+                    Variant="Variant.Outlined" />
                 </div>
                 <div class="form-group col-md-12">
                     <label for="inputPassword4">نام کاربری</label>
@@ -32,7 +34,8 @@
                 </div>
                 <div class="form-group col-md-12">
                     <label for="inputAddress">آدرس تصویر زنده(RTSP)</label>
-                    <MudAutocomplete T="string" @bind-Value="createIPcamera.StreamAddress" Margin="MudBlazor.Margin.Dense" SearchFunc="@GetRTSPAddressAsync" Dense="true" Variant="Variant.Outlined" />
+                    <MudAutocomplete T="string" @bind-Value="createIPcamera.StreamAddress" OpenIcon="@Icons.Material.Filled.Search" CoerceValue="true"  
+                    Immediate="true"  CoerceText="false" Margin="MudBlazor.Margin.Dense" SearchFunc="@GetRTSPAddressAsync" Dense="true" Variant="Variant.Outlined" />
 
 
                     <label for="inputAddress">آدرس  پیشنهادی تصویر زنده(RTSP)</label>
