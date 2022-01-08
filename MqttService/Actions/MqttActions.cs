@@ -147,7 +147,7 @@ namespace MqttService.Actions
         {
             await _mqttServer.PublishAsync(context, cancelToken.Token);
             cancelToken.Cancel();
-
+            Console.WriteLine("Message Sent!");
         }
     }
 }

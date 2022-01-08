@@ -17,7 +17,13 @@
     @foreach (var item in filesModelImage)
     {
         <div class="col-md-3 col-sm-12">
-            <Image id="thumnail-size" src="@item.FileName" />
+            <figure>
+
+            <Image id="thumnail-size" src="@item.FileName"/>
+            <figcaption dir="rtl">@Path.GetFileName(@item.FileName)</figcaption>
+            <figcaption dir="rtl">@item.FileCreationTime</figcaption>
+
+            </figure>
         </div>
     }
 </div>

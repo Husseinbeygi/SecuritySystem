@@ -4,7 +4,7 @@
 @inject IIPCameraApplication _application
 @inject IRtspUrlGenerator _rtspgenerator
 @inject NavigationManager navigationmanager
-
+@inject ISnackbar Snackbar
 
 <h3>ثبت دوربین جدید</h3>
 <Div Class="container">
@@ -21,8 +21,8 @@
                 <div class="form-group col-md-12">
                     <label for="inputEmail4">آدرس شبکه کلاینت</label>
                     <MudAutocomplete Style="border-color:'#d2d6da'" T="string" OpenIcon="@Icons.Material.Filled.Search" CoerceValue="true" CoerceText="false"
-                    Immediate="true" @bind-Value="createIPcamera.HostAddress" Margin="MudBlazor.Margin.Dense" SearchFunc="@SearchAsync" Dense="true" 
-                    Variant="Variant.Outlined" />
+                                     Immediate="true" @bind-Value="createIPcamera.HostAddress" Margin="MudBlazor.Margin.Dense" SearchFunc="@SearchAsync" Dense="true"
+                                     Variant="Variant.Outlined" />
                 </div>
                 <div class="form-group col-md-12">
                     <label for="inputPassword4">نام کاربری</label>
@@ -34,14 +34,18 @@
                 </div>
                 <div class="form-group col-md-12">
                     <label for="inputAddress">آدرس تصویر زنده(RTSP)</label>
-                    <MudAutocomplete T="string" @bind-Value="createIPcamera.StreamAddress" OpenIcon="@Icons.Material.Filled.Search" CoerceValue="true"  
-                    Immediate="true"  CoerceText="false" Margin="MudBlazor.Margin.Dense" SearchFunc="@GetRTSPAddressAsync" Dense="true" Variant="Variant.Outlined" />
+                    <div class="row">
+                        <div class="col-md-10 col-sm-12">
+                            <InputText type="text" class="form-control" @bind-Value="createIPcamera.StreamAddress" />
+                        </div>
+                        <div class="col-md-2 col-sm-12">
 
-
+                            <Button @onclick="FindRtspAddress" Class="btn btn-primary">بیاب</Button>
+                        </div>
+                    </div>
                     <label for="inputAddress">آدرس  پیشنهادی تصویر زنده(RTSP)</label>
                     <div class="alert alert-warning" style="text-align:center">
                         <Span>@GenerateRTSPUrl()</Span>
-
                     </div>
                 </div>
                 <br />
@@ -51,5 +55,7 @@
         </div>
     </EditForm>
 
-
 </Div>
+<MudOverlay Visible="isVisible" DarkBackground="true" AutoClose="true">
+    <MudProgressCircular Color="MudBlazor.Color.Primary" Indeterminate="true" />
+</MudOverlay>

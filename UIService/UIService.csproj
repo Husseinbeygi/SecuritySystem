@@ -34,6 +34,7 @@
     <ProjectReference Include="..\FrameDecoderCore\FrameDecoderCore.csproj" />
     <ProjectReference Include="..\IPCameraClient\IPCameraClient.csproj" />
     <ProjectReference Include="..\MqttService\MqttService.csproj" />
+    <ProjectReference Include="..\OnvifService\OnvifService.csproj" />
     <ProjectReference Include="..\SecurityService.Infrastructre\SecuritySystem.Infrastructre.csproj" />
   </ItemGroup>
 

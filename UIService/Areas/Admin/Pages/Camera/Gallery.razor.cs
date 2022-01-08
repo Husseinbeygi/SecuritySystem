@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Components;
+﻿using _0_Framework.Application;
+using Microsoft.AspNetCore.Components;
 using UIService.Model;
 
 namespace UIService.Areas.Admin.Pages.Camera
@@ -27,7 +28,12 @@ namespace UIService.Areas.Admin.Pages.Camera
 
             foreach (string filePath in ImgPaths)
             {
-                filesModelImage.Add(new FileModel { FileName = $"{hostaddress}/pictures/" + Path.GetFileName(filePath) });
+                filesModelImage.Add(new FileModel
+                {
+                    FileName = $"{hostaddress}/pictures/" + Path.GetFileName(filePath),
+                    FileCreationTime = File.GetCreationTime(filePath).ToFarsi(),
+
+                });
             }
             foreach (string filePath in VideoPaths)
             {
