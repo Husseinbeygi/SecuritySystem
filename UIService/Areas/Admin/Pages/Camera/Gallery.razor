@@ -14,16 +14,16 @@
 
 <div class="row">
 
-    @foreach (var item in filesModelImage)
+    @foreach (var item in SelectedfilesModelImage)
     {
         <div class="col-md-3 col-sm-12">
 
 
-            <div class="card">
+            <div class="card m-3">
                 <img class="card-img-top" src="@item.FileName" alt="Card image cap">
                 <div class="card-body">
                     <p class="card-text">@Path.GetFileName(@item.FileName)</p>
-                    <p class="card-text">@item.FileCreationTime</p>
+                    <p class="card-text">@item.FasriFileCreationTime</p>
 
                 </div>
             </div>
@@ -31,22 +31,25 @@
         </div>
     }
 </div>
-
+<center dir="ltr">
+    <br />
+    <MudPagination ShowFirstButton="true"  Variant="Variant.Outlined" ShowLastButton="true" Count="_countPageImg"  SelectedChanged="GetPagedImageAddress"/>
+</center>
 <hr />
 
 <div class="row">
 
-    @foreach (var item in filesModelVideo)
+    @foreach (var item in SelectedfilesModelVideo)
     {
 
         <div class="col-md-3 col-sm-12">
-            <div class="card">
+            <div class="card m-3">
                 <BlazoredVideo class="card-img-top" controls="controls">
                     <source src="@item.FileName" type="video/mp4" />
-                </BlazoredVideo>
+                </BlazoredVideo> 
                 <div class="card-body">
                     <p class="card-text">@Path.GetFileName(@item.FileName)</p>
-                    <p class="card-text">@item.FileCreationTime</p>
+                    <p class="card-text">@item.FasriFileCreationTime</p>
 
                 </div>
             </div>
@@ -55,3 +58,7 @@
 
     }
 </div>
+<center  dir="ltr">
+        <br />
+    <MudPagination ShowFirstButton="true"  Variant="Variant.Outlined" ShowLastButton="true" Count="_countPageVideo"  SelectedChanged="GetPagedVideoAddress"/>
+</center>

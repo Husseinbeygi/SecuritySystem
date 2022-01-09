@@ -7,39 +7,82 @@ namespace UIService.Areas.Admin.Pages.Camera
     public partial class Gallery
     {
 
+        [Parameter]
+        public string hostaddress { get; set; } = string.Empty;
+
+        public List<FileModel> AllfilesModelImage { get; set; } = new();
+        public List<FileModel> AllfilesModelVideo { get; set; } = new();
+
+        public List<FileModel> SelectedfilesModelImage { get; set; } = new();
+        public List<FileModel> SelectedfilesModelVideo { get; set; } = new();
+
+
+        private int _countPageImg;
+        private int _countPageVideo;
         public Gallery()
         {
         }
 
-        [Parameter]
-        public string hostaddress { get; set; } = string.Empty;
-
-        public List<FileModel> filesModelImage { get; set; } = new();
-        public List<FileModel> filesModelVideo { get; set; } = new();
-
-
         protected override void OnInitialized()
+        {
+            HostNullGuard();
+            GetImageAndVideosAddress();
+            GetPagedImageAddress(1);
+            GetPagedVideoAddress(1);
+            base.OnInitialized();
+        }
+
+
+        protected override bool ShouldRender()
+        {
+            return base.ShouldRender();
+        }
+
+
+        private void HostNullGuard()
         {
             if (string.IsNullOrEmpty(hostaddress))
                 navmanager.NavigateTo("/admin/camera");
-
+        }
+        private void GetImageAndVideosAddress()
+        {
             string[] ImgPaths = Directory.GetFiles(Path.Combine(this.Environment.WebRootPath, $"{hostaddress}/pictures"));
             string[] VideoPaths = Directory.GetFiles(Path.Combine(this.Environment.WebRootPath, $"{hostaddress}/videos"));
 
             foreach (string filePath in ImgPaths)
             {
-                filesModelImage.Add(new FileModel
+                AllfilesModelImage.Add(new FileModel
                 {
                     FileName = $"{hostaddress}/pictures/" + Path.GetFileName(filePath),
-                    FileCreationTime = File.GetCreationTime(filePath).ToFarsi(),
+                    FasriFileCreationTime = File.GetCreationTime(filePath).ToFarsiFull(),
+                    FileCreationTime = File.GetCreationTime(filePath),
+
 
                 });
             }
+            _countPageImg = (AllfilesModelImage.Count() % 8 ) > 0 ? (AllfilesModelImage.Count() / 8) + 1 : (AllfilesModelImage.Count() / 8);
             foreach (string filePath in VideoPaths)
             {
-                filesModelVideo.Add(new FileModel { FileName = $"{hostaddress}/videos/" + Path.GetFileName(filePath) });
+                AllfilesModelVideo.Add(new FileModel { 
+                    FileName = $"{hostaddress}/videos/" + Path.GetFileName(filePath) ,
+                    FasriFileCreationTime = File.GetCreationTime(filePath).ToFarsiFull(),
+                    FileCreationTime = File.GetCreationTime(filePath),
+
+
+                });
             }
-            base.OnInitialized();
+            _countPageVideo = (AllfilesModelVideo.Count() % 8) > 0 ? (AllfilesModelVideo.Count() / 8) + 1 : (AllfilesModelVideo.Count() / 8);
+
         }
+        private void GetPagedImageAddress(int page)
+        {
+            SelectedfilesModelImage = AllfilesModelImage.Skip((page - 1) * 8).Take(8).OrderByDescending(x => x.FileCreationTime).ToList();
+        }
+
+        private void GetPagedVideoAddress(int page)
+        {
+            SelectedfilesModelVideo = AllfilesModelVideo.Skip((page - 1) * 8).Take(8).OrderByDescending(x => x.FileCreationTime).ToList();
+        }
+
     }
 }

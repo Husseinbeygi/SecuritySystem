@@ -17,12 +17,11 @@ namespace UIService.Components
         [Parameter]
         public EditIPCamera Camera { get; set; } = new();
         [Parameter]
-        public string  FilesAddress { get; set; }
+        public string FilesAddress { get; set; }
 
         private string urlToCamera = String.Empty;
         private const int streamWidth = 1280;
         private const int streamHeight = 720;
-
         private static readonly FrameDecoderCore.FrameDecoder FrameDecoder = new FrameDecoderCore.FrameDecoder();
         private static readonly FrameDecoderCore.FrameTransformer FrameTransformer = new FrameDecoderCore.FrameTransformer(streamWidth, streamHeight);
         private Task? connectTask;
@@ -32,7 +31,40 @@ namespace UIService.Components
         VideoStreamConversion? videoStream;
         string CameraVideoPath = String.Empty;
         string CameraImagePath = String.Empty;
+        string boderRecord = "";
+        public void TakeImage()
+        {
+            Console.WriteLine("TakeImage!");
+            var filename = DateTime.Now.ToFarsiWithoutSlash();
+            SaveImageOnServer(filename);
+            SaveImageOnClient(filename);
 
+        }
+        public async Task TakeVideoAsync()
+        {
+            if (videoStream.IsRecording)
+            {
+                boderRecord = "";
+                videoStream.Dispose();
+
+            }
+            else
+            {
+                using (videoStream)
+                {
+                    var filename = DateTime.Now.ToFarsiWithoutSlash();
+                    boderRecord = "border:solid;border-color:red;border-radius:10px;";
+                    await videoStream.RecordStream(CameraVideoPath, filename.Trim());
+                }
+            }
+        }
+        public void Dispose()
+        {
+            cancellationTokenSource.Cancel();
+            Console.WriteLine("Canceling");
+            connectTask.WaitAsync(CancellationToken.None);
+
+        }
 
         protected override void OnInitialized()
         {
@@ -49,6 +81,7 @@ namespace UIService.Components
             ConnectToCamera(connectionParameters);
 
         }
+
         private void ConnectToCamera(ConnectionParameters connectionParameters)
         {
             cancellationTokenSource = new CancellationTokenSource();
@@ -111,31 +144,20 @@ namespace UIService.Components
             StateHasChanged();
 
         }
-
         private void PutImageOnByteArray()
         {
             Image watermark = Image.FromFile(@"D:\Projects\Dotnet\DotnetProjects\SecuritySystem\UIService\wwwroot\logo.png");
             bitmapFrame = bitmapFrame.PutImage(watermark, 100, 100, 100, 100);
         }
-
         private void PutTextOnByteArray()
         {
             bitmapFrame = bitmapFrame.PutText("Copyright © 2022 Eram", new Font("TimeNewsRoman", 40, FontStyle.Bold), bitmapFrame.Width / 2, (bitmapFrame.Height - bitmapFrame.Height / 6));
         }
-
         private void ConvertBitmapToShowOnHtml()
         {
             using MemoryStream stream = new MemoryStream();
             bitmapFrame.Save(stream, System.Drawing.Imaging.ImageFormat.Jpeg);
             ByteData = stream.ToArray();
-        }
-        public void TakeImage()
-        {
-            Console.WriteLine("TakeImage!");
-            var filename = DateTime.Now.ToFarsiWithoutSlash();
-            SaveImageOnServer(filename);
-            SaveImageOnClient(filename);
-
         }
         private void SaveImageOnClient(string filename)
         {
@@ -145,9 +167,9 @@ namespace UIService.Components
         private void SaveImageOnServer(string filename)
         {
             MemoryStream stream = new MemoryStream();
-            bitmapFrame.Save(PathPictures(filename), System.Drawing.Imaging.ImageFormat.Jpeg);
+            bitmapFrame.Save(PicturesPath(filename), System.Drawing.Imaging.ImageFormat.Jpeg);
         }
-        private string PathPictures(string filename)
+        private string PicturesPath(string filename)
         {
             if (Directory.Exists(CameraImagePath))
             {
@@ -160,29 +182,6 @@ namespace UIService.Components
                 return Path.Combine(CameraImagePath, filename + ".jpg");
 
             }
-        }
-        public async Task TakeVideoAsync()
-        {
-            if (videoStream.IsRecording)
-            {
-                videoStream.Dispose();
-
-            }
-            else
-            {
-                using (videoStream)
-                {
-                    var filename = DateTime.Now.ToFarsiWithoutSlash();
-                    await videoStream.RecordStream(CameraVideoPath, filename.Trim());
-                }
-            }
-        }
-        public void Dispose()
-        {
-            cancellationTokenSource.Cancel();
-            Console.WriteLine("Canceling");
-            connectTask.WaitAsync(CancellationToken.None);
-
         }
 
     }
