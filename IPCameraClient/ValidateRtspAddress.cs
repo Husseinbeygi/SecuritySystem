@@ -23,7 +23,7 @@ namespace IPCameraClient
         {
             try
             {
-                var delay = TimeSpan.FromSeconds(3);
+                var delay = TimeSpan.FromSeconds(5);
 
                 using (var rtspClient = new RtspClient(connectionParameters))
                 {

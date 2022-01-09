@@ -6,8 +6,8 @@ namespace SecurityService.Application.Service.Client
     {
         OperationResult Create(CreateClient command);
         List<ClientViewModel> Search(ClientSearchModel command);
-        bool IsClientValidate(string clientId, string username, string password);
         OperationResult Remove(long id);
+        bool IsClientValidate(string clientId, string username, string password);
         EditClient GetDetails(long id);
         OperationResult Edit(EditClient editClient);
         OperationResult ChangePassword(ChangePassword changePassword);

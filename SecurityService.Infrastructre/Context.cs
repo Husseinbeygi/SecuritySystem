@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SecuritySystem.Domain.Camera;
 using SecuritySystem.Domain.Client;
+using SecuritySystem.Domain.RtspHostPathAgg;
 using SecuritySystem.Infrastructre.Maps;
 
 namespace SecuritySystem.Infrastructre
@@ -9,6 +10,7 @@ namespace SecuritySystem.Infrastructre
     {
         public DbSet<Client> Client { get; set; }
         public DbSet<IPCamera> IPCamera { get; set; }
+        public DbSet<RtspHostPath> RtspHostPath { get; set; }
         public Context(DbContextOptions<Context> options) : base(options)
         {
         }

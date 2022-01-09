@@ -17,13 +17,17 @@
     @foreach (var item in filesModelImage)
     {
         <div class="col-md-3 col-sm-12">
-            <figure>
 
-            <Image id="thumnail-size" src="@item.FileName"/>
-            <figcaption dir="rtl">@Path.GetFileName(@item.FileName)</figcaption>
-            <figcaption dir="rtl">@item.FileCreationTime</figcaption>
 
-            </figure>
+            <div class="card">
+                <img class="card-img-top" src="@item.FileName" alt="Card image cap">
+                <div class="card-body">
+                    <p class="card-text">@Path.GetFileName(@item.FileName)</p>
+                    <p class="card-text">@item.FileCreationTime</p>
+
+                </div>
+            </div>
+
         </div>
     }
 </div>
@@ -34,10 +38,20 @@
 
     @foreach (var item in filesModelVideo)
     {
+
         <div class="col-md-3 col-sm-12">
-            <BlazoredVideo id="thumnail-size" controls="controls">
-                <source src="@item.FileName" type="video/mp4" />
-            </BlazoredVideo>
+            <div class="card">
+                <BlazoredVideo class="card-img-top" controls="controls">
+                    <source src="@item.FileName" type="video/mp4" />
+                </BlazoredVideo>
+                <div class="card-body">
+                    <p class="card-text">@Path.GetFileName(@item.FileName)</p>
+                    <p class="card-text">@item.FileCreationTime</p>
+
+                </div>
+            </div>
+
         </div>
+
     }
 </div>

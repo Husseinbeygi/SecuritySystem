@@ -1,7 +1,7 @@
 ﻿@page "/admin/camera/edit/{id:long}"
+@using IPCameraClient.Helper
 @using OnvifService
 @using SecurityService.Application.Service.Camera.IPCamera
-@using _0_Framework.Helper
 @using OnvifDiscovery.Models
 @inject IIPCameraApplication _application
 @inject NavigationManager navigationmanager
@@ -35,7 +35,7 @@
                 </div>
                 <div class="form-group col-md-12">
                     <label for="inputAddress">آدرس تصویر زنده(RTSP)</label>
-                    <MudAutocomplete T="string" @bind-Value="editIPcamera.StreamAddress" Margin="MudBlazor.Margin.Dense" SearchFunc="@GetRTSPAddressAsync" Dense="true" Variant="Variant.Outlined" />
+                    <InputText type="text" class="form-control" @bind-Value="editIPcamera.StreamAddress" />
                     <label for="inputAddress">آدرس  پیشنهادی تصویر زنده(RTSP)</label>
                     <div class="alert alert-warning" style="text-align:center">
                         <Span>@GenerateRTSPUrl()</Span>
@@ -81,10 +81,7 @@
 
         return cameraList.Where(x => x.Address.Contains(value)).Select(u => u.Address);
     }
-    public async Task<IEnumerable<string>> GetRTSPAddressAsync(string value)
-    {
-        return _rtspgenerator.returnlist();
-    }
+
 
     public string GenerateRTSPUrl()
     {

@@ -31,11 +31,11 @@ namespace UIService.Areas.Admin.Pages.Camera
                 string rtspAddress = "rtsp://" + createIPcamera.UserName + ":"+ createIPcamera.Password + "@" + createIPcamera.HostAddress + ":8554";
                 foreach (var item in rtspList)
                 {
-                    var address = rtspAddress + item;
+                    var address = rtspAddress + item.Address;
                     var res = await ValidateRtspAddress.IsConnectionValidAsync(address);
                     if (res == 1)
                     {
-                        createIPcamera.StreamAddress = item;
+                        createIPcamera.StreamAddress = item.Address;
                         Snackbar.Add("دوربین پیدا شد", Severity.Success);
                         break;
                     }
@@ -50,12 +50,10 @@ namespace UIService.Areas.Admin.Pages.Camera
                         break;
 
                     }
-                    else if (res == 4)
-                    {
-                        Snackbar.Add("خطایی رخ داده ، قادر به دریافت اطلاعات نمی باشیم", Severity.Error);
-                        break;
-
-                    }
+                }
+                if (string.IsNullOrWhiteSpace(createIPcamera.StreamAddress))
+                {
+                    Snackbar.Add("دوربین را پیدا نکردم.لطفا آدرس را دستی ثبت نمایید ", Severity.Error);
                 }
                 isVisible = false;
             }
@@ -81,12 +79,6 @@ namespace UIService.Areas.Admin.Pages.Camera
             return cameraList.Where(x => x.Address.Contains(value)).Select(u => u.Address);
         }
 
-
-        public async Task<IEnumerable<string>> GetRTSPAddressAsync(string value)
-        {
-                return _rtspgenerator.returnlist();
-
-        }
 
         public string GenerateRTSPUrl()
         {

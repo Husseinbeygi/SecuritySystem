@@ -13,6 +13,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\FrameDecoderCore\FrameDecoderCore.csproj" />
+    <ProjectReference Include="..\SecurityService.Domain\SecuritySystem.Domain.csproj" />
   </ItemGroup>
 
   <ItemGroup>
