@@ -11,7 +11,6 @@ namespace IPCameraClient
             Graphics grPhoto = Graphics.FromImage(img);
 
             grPhoto.SmoothingMode = SmoothingMode.AntiAlias;
-            SizeF crSize = grPhoto.MeasureString(Text, font);
             float yPosFromBottom = y;
             float xCenterOfImg = x;
             StringFormat StrFormat = new StringFormat();
