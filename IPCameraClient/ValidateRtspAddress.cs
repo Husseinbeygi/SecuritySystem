@@ -16,8 +16,8 @@ namespace IPCameraClient
 
         private static async Task<byte> ConnectToCamera(ConnectionParameters connectionParameters)
         {
-           var cancellationTokenSource = new CancellationTokenSource();
-           return await ConnectAsync(connectionParameters, cancellationTokenSource.Token);
+            var cancellationTokenSource = new CancellationTokenSource();
+            return await ConnectAsync(connectionParameters, cancellationTokenSource.Token);
         }
         private static async Task<byte> ConnectAsync(ConnectionParameters connectionParameters, CancellationToken token)
         {
@@ -38,7 +38,7 @@ namespace IPCameraClient
                         return 2;
 
                     }
-                    catch(InvalidCredentialException e)
+                    catch (InvalidCredentialException e)
                     {
                         Console.WriteLine(e.ToString());
                         return 3;
@@ -49,12 +49,12 @@ namespace IPCameraClient
                         await Task.Delay(delay, token);
                         return 4;
                     }
-                    
+
                 }
             }
             catch (OperationCanceledException)
             {
-                return 2; 
+                return 2;
             }
         }
 

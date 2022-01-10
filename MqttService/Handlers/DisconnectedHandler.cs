@@ -8,7 +8,7 @@ namespace MqttService.Handlers
         public void Handle(HandlerInterceptorEventArgs e)
         {
             ConnectedClients.RemoveClient(e.ClientId);
-            e.Context.CloseConnection = true;   
+            e.Context.CloseConnection = true;
 
         }
     }

@@ -11,7 +11,7 @@ namespace UIService.Areas.Admin.Pages.Client
         public string clientid { get; set; } = string.Empty;
 
         public ClientConnected clientConnected = new();
-        public List<SubscriptionInterceptorEventArgs> Subscriptions { get; set; } = new();   
+        public List<SubscriptionInterceptorEventArgs> Subscriptions { get; set; } = new();
         private IEnumerable<SubscriptionInterceptorEventArgs> Elements = new List<SubscriptionInterceptorEventArgs>();
 
         private SubscriptionInterceptorEvent subscriptionInterceptorEvent;
@@ -28,7 +28,7 @@ namespace UIService.Areas.Admin.Pages.Client
         protected override void OnInitialized()
         {
             clientConnected = ConnectedClients.GetClient(clientid);
-            if(clientid == null || clientConnected == null)
+            if (clientid == null || clientConnected == null)
                 NavManager.NavigateTo("/");
             else
             {

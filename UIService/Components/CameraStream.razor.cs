@@ -32,6 +32,23 @@ namespace UIService.Components
         string CameraVideoPath = String.Empty;
         string CameraImagePath = String.Empty;
         string boderRecord = "";
+        protected override void OnInitialized()
+        {
+            base.OnInitialized();
+            var camUrl = _rtspgenerator.GenerateUrl(Camera.HostAddress, Camera.UserName, Camera.Password, Camera.StreamAddress);
+            CameraVideoPath = Path.Combine(_webHostEnvironment.WebRootPath, Camera.HostAddress, "videos");
+            CameraImagePath = Path.Combine(_webHostEnvironment.WebRootPath, Camera.HostAddress, "pictures");
+            urlToCamera = camUrl;
+            videoStream = new(camUrl, streamWidth, streamHeight);
+
+            var serverUri = new Uri(urlToCamera);
+
+            var connectionParameters = new ConnectionParameters(serverUri/*, credentials*/);
+            ConnectToCamera(connectionParameters);
+
+        }
+
+
         public void TakeImage()
         {
             Console.WriteLine("TakeImage!");
@@ -40,6 +57,7 @@ namespace UIService.Components
             SaveImageOnClient(filename);
 
         }
+
         public async Task TakeVideoAsync()
         {
             if (videoStream.IsRecording)
@@ -63,22 +81,6 @@ namespace UIService.Components
             cancellationTokenSource.Cancel();
             Console.WriteLine("Canceling");
             connectTask.WaitAsync(CancellationToken.None);
-
-        }
-
-        protected override void OnInitialized()
-        {
-            base.OnInitialized();
-            var camUrl = _rtspgenerator.GenerateUrl(Camera.HostAddress, Camera.UserName, Camera.Password, Camera.StreamAddress);
-            CameraVideoPath = Path.Combine(_webHostEnvironment.WebRootPath, Camera.HostAddress, "videos");
-            CameraImagePath = Path.Combine(_webHostEnvironment.WebRootPath, Camera.HostAddress, "pictures");
-            urlToCamera = camUrl;
-            videoStream = new(camUrl, streamWidth, streamHeight);
-
-            var serverUri = new Uri(urlToCamera);
-
-            var connectionParameters = new ConnectionParameters(serverUri/*, credentials*/);
-            ConnectToCamera(connectionParameters);
 
         }
 

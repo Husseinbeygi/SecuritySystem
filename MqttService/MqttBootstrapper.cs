@@ -85,7 +85,7 @@ namespace MqttService
             _action.mqttServer = new MqttFactory().CreateMqttServer();
             _action.mqttServer.StartAsync(options.Build());
 
-            
+
         }
 
         private Action<MqttApplicationMessageInterceptorContext> ApplicationMessageInterceptor()

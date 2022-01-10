@@ -1,5 +1,4 @@
 ﻿using SecurityService.Application.Service.RtspHostPath;
-using System.Collections.Generic;
 
 namespace IPCameraClient.Helper
 {

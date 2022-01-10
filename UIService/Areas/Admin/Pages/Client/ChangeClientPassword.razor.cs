@@ -16,7 +16,7 @@ namespace UIService.Areas.Admin.Pages.Client
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            _changePassword = new ChangePassword(); 
+            _changePassword = new ChangePassword();
         }
 
         public void HandleValidSubmit()

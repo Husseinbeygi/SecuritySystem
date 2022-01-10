@@ -8,7 +8,7 @@ namespace MqttService.Actions
     public interface IMqttActions
     {
         public IMqttServer mqttServer { get; set; }
-        
+
         public void SubscriptionAction(MqttSubscriptionInterceptorContext context, bool successful);
         public void ReceiveMessageAction(MqttApplicationMessageInterceptorContext context);
         public void ClientValidatorAction(MqttConnectionValidatorContext context, bool showPassword);

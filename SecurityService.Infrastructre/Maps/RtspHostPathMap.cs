@@ -9,10 +9,10 @@ namespace SecuritySystem.Infrastructre.Maps
         public void Configure(EntityTypeBuilder<RtspHostPath> builder)
         {
             builder.ToTable("RtspHostPath");
-            builder.HasKey(x => x.Id);  
+            builder.HasKey(x => x.Id);
 
             builder.Property(x => x.Address).HasMaxLength(30);
-            
+
         }
     }
 }

@@ -13,7 +13,7 @@ namespace EventService.HandlerEvent
             args.Qos = context.ApplicationMessage.QualityOfServiceLevel.ToString();
             args.Topic = context.ApplicationMessage.Topic;
             args.RetainFlag = context.ApplicationMessage.Retain.ToString();
-            args.Context = context; 
+            args.Context = context;
             OnHandleIncoming(args);
 
         }

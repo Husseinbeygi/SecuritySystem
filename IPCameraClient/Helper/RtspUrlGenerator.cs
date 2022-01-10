@@ -38,7 +38,7 @@ namespace IPCameraClient.Helper
 
         public List<RtspHostPathViewModel> returnlist()
         {
-           return rtspHostPathApplication.List();
+            return rtspHostPathApplication.List();
         }
 
         public string GenerateUrl(string host, string username, string password, string liveaddress)

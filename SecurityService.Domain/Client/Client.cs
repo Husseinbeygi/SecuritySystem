@@ -16,9 +16,9 @@ namespace SecuritySystem.Domain.Client
             UserName = userName;
         }
 
-        public void ChangePassword (string Password)
+        public void ChangePassword(string Password)
         {
-            this.Password = Password;    
+            this.Password = Password;
         }
 
         public string ClientId { get; private set; }

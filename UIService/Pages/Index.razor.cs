@@ -1,6 +1,5 @@
 ﻿using EventService.ConnectionEvent;
 using EventService.HandlerEvent;
-using EventService.MessageEvent;
 using MqttService.Clients;
 using MqttService.Clients.Model;
 

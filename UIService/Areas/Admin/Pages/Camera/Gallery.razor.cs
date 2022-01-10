@@ -60,11 +60,12 @@ namespace UIService.Areas.Admin.Pages.Camera
 
                 });
             }
-            _countPageImg = (AllfilesModelImage.Count() % 8 ) > 0 ? (AllfilesModelImage.Count() / 8) + 1 : (AllfilesModelImage.Count() / 8);
+            _countPageImg = (AllfilesModelImage.Count() % 8) > 0 ? (AllfilesModelImage.Count() / 8) + 1 : (AllfilesModelImage.Count() / 8);
             foreach (string filePath in VideoPaths)
             {
-                AllfilesModelVideo.Add(new FileModel { 
-                    FileName = $"{hostaddress}/videos/" + Path.GetFileName(filePath) ,
+                AllfilesModelVideo.Add(new FileModel
+                {
+                    FileName = $"{hostaddress}/videos/" + Path.GetFileName(filePath),
                     FasriFileCreationTime = File.GetCreationTime(filePath).ToFarsiFull(),
                     FileCreationTime = File.GetCreationTime(filePath),
 

@@ -4,7 +4,6 @@ using EventService.HandlerEvent;
 using EventService.MessageEvent;
 using EventService.SubscriptionEvent;
 using MQTTnet;
-using MQTTnet.Client.Options;
 using MQTTnet.Server;
 using MqttService.Clients;
 using MqttService.Handlers;
@@ -88,7 +87,7 @@ namespace MqttService.Actions
 
         public static string EncodeToString(byte[] payload)
         {
-            if(payload == null) return "";
+            if (payload == null) return "";
             return Encoding.UTF8.GetString(payload);
         }
 

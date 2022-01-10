@@ -17,7 +17,8 @@ namespace SecuritySystem.Infrastructre.Repository
 
         public List<RtspHostPathViewModel> List()
         {
-            return _context.RtspHostPath.Select(x => new RtspHostPathViewModel{
+            return _context.RtspHostPath.Select(x => new RtspHostPathViewModel
+            {
                 Address = x.Address,
             }).ToList();
         }

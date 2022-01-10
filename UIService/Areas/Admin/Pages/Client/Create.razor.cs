@@ -20,7 +20,7 @@ namespace UIService.Areas.Admin.Pages.Client
             var op = _application.Create(_createClient);
             if (op.IsSuccedded)
             {
-               NavManager.NavigateTo("/admin/client");
+                NavManager.NavigateTo("/admin/client");
             }
 
         }
