@@ -47,8 +47,6 @@ namespace UIService.Components
             ConnectToCamera(connectionParameters);
 
         }
-
-
         public void TakeImage()
         {
             Console.WriteLine("TakeImage!");
@@ -83,7 +81,6 @@ namespace UIService.Components
             connectTask.WaitAsync(CancellationToken.None);
 
         }
-
         private void ConnectToCamera(ConnectionParameters connectionParameters)
         {
             cancellationTokenSource = new CancellationTokenSource();
