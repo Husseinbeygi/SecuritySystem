@@ -39,6 +39,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "RtspClientCore", "RtspClien
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "OnvifService", "OnvifService\OnvifService.csproj", "{9E6CC3AF-C37D-4976-B807-62D03DA5E0AC}"
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "FFMediaToolkit", "FFMediaToolkit\FFMediaToolkit.csproj", "{F11897E1-4ACC-4473-BBFF-3215B84D66D0}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -151,6 +153,14 @@ Global
 		{9E6CC3AF-C37D-4976-B807-62D03DA5E0AC}.Release|Any CPU.Build.0 = Release|Any CPU
 		{9E6CC3AF-C37D-4976-B807-62D03DA5E0AC}.Release|x64.ActiveCfg = Release|Any CPU
 		{9E6CC3AF-C37D-4976-B807-62D03DA5E0AC}.Release|x64.Build.0 = Release|Any CPU
+		{F11897E1-4ACC-4473-BBFF-3215B84D66D0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F11897E1-4ACC-4473-BBFF-3215B84D66D0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F11897E1-4ACC-4473-BBFF-3215B84D66D0}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{F11897E1-4ACC-4473-BBFF-3215B84D66D0}.Debug|x64.Build.0 = Debug|Any CPU
+		{F11897E1-4ACC-4473-BBFF-3215B84D66D0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F11897E1-4ACC-4473-BBFF-3215B84D66D0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F11897E1-4ACC-4473-BBFF-3215B84D66D0}.Release|x64.ActiveCfg = Release|Any CPU
+		{F11897E1-4ACC-4473-BBFF-3215B84D66D0}.Release|x64.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -168,6 +178,7 @@ Global
 		{9AC9B0E9-C1A5-4DDF-95AB-EC9103A00C46} = {D85BA43B-65A9-48F3-92D8-93A15F1F9168}
 		{D3ABC984-E7A2-411F-B447-C598A41FF162} = {D85BA43B-65A9-48F3-92D8-93A15F1F9168}
 		{9E6CC3AF-C37D-4976-B807-62D03DA5E0AC} = {D85BA43B-65A9-48F3-92D8-93A15F1F9168}
+		{F11897E1-4ACC-4473-BBFF-3215B84D66D0} = {9CD7AB90-0416-4DA8-8E8C-E1C2DDC0F0C2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {96E93882-9B4A-47EA-82B8-EDB3E1908FF2}
