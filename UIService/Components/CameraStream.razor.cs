@@ -185,22 +185,6 @@ namespace UIService.Components
 
             }
         }
-
-        private void Take()
-        {
-            if (!File.Exists("D:/example.mp4"))
-            {
-                File.Create("D:/example.mp4");
-            }
-            // You can set there codec, bitrate, frame rate and many other options.
-            var settings = new VideoEncoderSettings(width: streamWidth, height: streamHeight, framerate: 30, codec: VideoCodec.H264);
-            settings.EncoderPreset = EncoderPreset.Fast;
-            settings.CRF = 17;
-            var file = MediaBuilder.CreateContainer("D:/example.mp4").WithVideo(settings).Create();
-            file.Video.AddFrame(ImageData.FromArray(ByteData,ImagePixelFormat.Yuv420,streamWidth,streamHeight));
-            file.Dispose(); 
-
-        }
     }
 
 
