@@ -1,6 +1,4 @@
 ﻿using _0_Framework.Application;
-using FFMediaToolkit.Encoding;
-using FFMediaToolkit.Graphics;
 using IPCameraClient;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
@@ -142,7 +140,6 @@ namespace UIService.Components
             PutTextOnByteArray();
             PutImageOnByteArray();
             ConvertBitmapToShowOnHtml();
-            Take();
             StateHasChanged();
 
         }
