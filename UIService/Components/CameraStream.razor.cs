@@ -2,6 +2,7 @@
 using IPCameraClient;
 using Microsoft.AspNetCore.Components;
 using Microsoft.JSInterop;
+using OpenCvSharp;
 using RtspClientCore;
 using RtspClientCore.RawFrames;
 using RtspClientCore.RawFrames.Video;
@@ -150,7 +151,7 @@ namespace UIService.Components
         }
         private void PutTextOnByteArray()
         {
-            bitmapFrame = bitmapFrame.PutText("Copyright © 2022 Eram", new Font("TimeNewsRoman", 40, FontStyle.Bold), bitmapFrame.Width / 2, (bitmapFrame.Height - bitmapFrame.Height / 6));
+            bitmapFrame = bitmapFrame.PutText("Copyright © 2022 Eram", new Font(new FontFamily("Times New Roman"), 40, FontStyle.Regular), bitmapFrame.Width / 2, (bitmapFrame.Height - bitmapFrame.Height / 6));
         }
         private void ConvertBitmapToShowOnHtml()
         {
@@ -182,6 +183,8 @@ namespace UIService.Components
 
             }
         }
+
+
     }
 
 

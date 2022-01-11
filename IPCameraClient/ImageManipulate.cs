@@ -1,5 +1,7 @@
-﻿using System.Drawing;
+﻿using OpenCvSharp;
+using System.Drawing;
 using System.Drawing.Drawing2D;
+using System.Runtime.InteropServices;
 
 namespace IPCameraClient
 {
@@ -16,7 +18,7 @@ namespace IPCameraClient
             StringFormat StrFormat = new StringFormat();
             StrFormat.Alignment = StringAlignment.Center;
 
-            SolidBrush semiTransBrush2 = new SolidBrush(Color.FromArgb(153, 0, 0, 0));
+            SolidBrush semiTransBrush2 = new SolidBrush(Color.FromArgb(255, 255, 255, 255));
 
             grPhoto.DrawString(Text,
                 font,
@@ -47,6 +49,8 @@ namespace IPCameraClient
             }
             return img;
         }
+
+
 
     }
 }

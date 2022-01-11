@@ -1,6 +1,7 @@
 ﻿using _0_Framework.Application;
 using Microsoft.AspNetCore.Components;
 using UIService.Model;
+using System.Linq;
 
 namespace UIService.Areas.Admin.Pages.Camera
 {
@@ -48,41 +49,51 @@ namespace UIService.Areas.Admin.Pages.Camera
         {
             string[] ImgPaths = Directory.GetFiles(Path.Combine(this.Environment.WebRootPath, $"{hostaddress}/pictures"));
             string[] VideoPaths = Directory.GetFiles(Path.Combine(this.Environment.WebRootPath, $"{hostaddress}/videos"));
-
-            foreach (string filePath in ImgPaths)
-            {
-                AllfilesModelImage.Add(new FileModel
-                {
-                    FileName = $"{hostaddress}/pictures/" + Path.GetFileName(filePath),
-                    FasriFileCreationTime = File.GetCreationTime(filePath).ToFarsiFull(),
-                    FileCreationTime = File.GetCreationTime(filePath),
-
-
-                });
-            }
+            GetListOfPictureFiles(ImgPaths);
+            GetListOfVideoFiles(VideoPaths);
             _countPageImg = (AllfilesModelImage.Count() % 8) > 0 ? (AllfilesModelImage.Count() / 8) + 1 : (AllfilesModelImage.Count() / 8);
-            foreach (string filePath in VideoPaths)
-            {
-                AllfilesModelVideo.Add(new FileModel
-                {
-                    FileName = $"{hostaddress}/videos/" + Path.GetFileName(filePath),
-                    FasriFileCreationTime = File.GetCreationTime(filePath).ToFarsiFull(),
-                    FileCreationTime = File.GetCreationTime(filePath),
-
-
-                });
-            }
             _countPageVideo = (AllfilesModelVideo.Count() % 8) > 0 ? (AllfilesModelVideo.Count() / 8) + 1 : (AllfilesModelVideo.Count() / 8);
 
         }
+
+        private void GetListOfPictureFiles(string[] ImgPaths)
+        {
+            AllfilesModelImage.AddRange(from string filePath in ImgPaths
+                                        select new FileModel
+                                        {
+                                            FileName = $"{hostaddress}/pictures/" + Path.GetFileName(filePath),
+                                            FasriFileCreationTime = File.GetCreationTime(filePath).ToFarsiFull(),
+                                            FileCreationTime = File.GetCreationTime(filePath),
+
+
+                                        });
+            AllfilesModelImage =  AllfilesModelImage.OrderByDescending(x => x.FileCreationTime).ToList();
+            
+        }
+
+        private void GetListOfVideoFiles(string[] VideoPaths)
+        {
+            AllfilesModelVideo.AddRange(from string filePath in VideoPaths
+                                        select new FileModel
+                                        {
+                                            FileName = $"{hostaddress}/videos/" + Path.GetFileName(filePath),
+                                            FasriFileCreationTime = File.GetCreationTime(filePath).ToFarsiFull(),
+                                            FileCreationTime = File.GetCreationTime(filePath),
+
+
+                                        });
+            AllfilesModelVideo = AllfilesModelVideo.OrderByDescending(x => x.FileCreationTime).ToList();
+
+        }
+
         private void GetPagedImageAddress(int page)
         {
-            SelectedfilesModelImage = AllfilesModelImage.Skip((page - 1) * 8).Take(8).OrderByDescending(x => x.FileCreationTime).ToList();
+            SelectedfilesModelImage = AllfilesModelImage.Skip((page - 1) * 8).Take(8).ToList();
         }
 
         private void GetPagedVideoAddress(int page)
         {
-            SelectedfilesModelVideo = AllfilesModelVideo.Skip((page - 1) * 8).Take(8).OrderByDescending(x => x.FileCreationTime).ToList();
+            SelectedfilesModelVideo = AllfilesModelVideo.Skip((page - 1) * 8).Take(8).ToList();
         }
 
     }
