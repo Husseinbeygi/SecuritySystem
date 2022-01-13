@@ -1,9 +1,9 @@
-﻿using RtspClientCore.RawFrames;
-using RtspClientCore.Rtsp;
-using System;
+﻿using System;
 using System.Security.Authentication;
 using System.Threading;
 using System.Threading.Tasks;
+using RtspClientCore.RawFrames;
+using RtspClientCore.Rtsp;
 
 namespace RtspClientCore
 {

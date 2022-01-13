@@ -1,11 +1,12 @@
-﻿using RtspClientCore.RawFrames;
-using RtspClientCore.RawFrames.Video;
-using RtspClientCore.Utils;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using RtspClientCore.RawFrames;
+using RtspClientCore.RawFrames.Video;
+using RtspClientCore.Utils;
+using RtspClientCore.RawFrames.Video;
 
 namespace RtspClientCore.MediaParsers
 {
@@ -99,7 +100,6 @@ namespace RtspClientCore.MediaParsers
         {
             _frameStream.Position = 0;
             _sliceType = -1;
-            _waitForIFrame = true;
         }
 
         private void SlicerOnNalUnitFound(ArraySegment<byte> byteSegment)

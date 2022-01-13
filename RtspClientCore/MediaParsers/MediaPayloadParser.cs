@@ -2,13 +2,14 @@
 using RtspClientCore.Codecs.Audio;
 using RtspClientCore.Codecs.Video;
 using RtspClientCore.RawFrames;
+using RtspClientCore.MediaParsers;
 using System;
 
 namespace RtspClientCore.MediaParsers
 {
     abstract class MediaPayloadParser : IMediaPayloadParser
     {
-        private DateTime _baseTime = DateTime.MinValue;
+        public DateTime BaseTime { get; set; }
 
         public Action<RawFrame> FrameGenerated { get; set; }
 
@@ -18,13 +19,13 @@ namespace RtspClientCore.MediaParsers
 
         protected DateTime GetFrameTimestamp(TimeSpan timeOffset)
         {
+            if (BaseTime == default)
+                BaseTime = DateTime.UtcNow;
+
             if (timeOffset == TimeSpan.MinValue)
-                return DateTime.UtcNow;
+                return BaseTime;
 
-            if (_baseTime == DateTime.MinValue)
-                _baseTime = DateTime.UtcNow;
-
-            return _baseTime + timeOffset;
+            return BaseTime + timeOffset;
         }
 
         protected virtual void OnFrameGenerated(RawFrame e)
@@ -38,6 +39,8 @@ namespace RtspClientCore.MediaParsers
             {
                 case H264CodecInfo h264CodecInfo:
                     return new H264VideoPayloadParser(h264CodecInfo);
+                case H265CodecInfo h265CodecInfo:
+                    return new H265VideoPayloadParser(h265CodecInfo);
                 case MJPEGCodecInfo _:
                     return new MJPEGVideoPayloadParser();
                 case AACCodecInfo aacCodecInfo:

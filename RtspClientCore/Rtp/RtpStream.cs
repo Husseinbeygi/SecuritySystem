@@ -9,7 +9,7 @@ namespace RtspClientCore.Rtp
         private readonly IMediaPayloadParser _mediaPayloadParser;
         private readonly int _samplesFrequency;
 
-        private ulong _samplesSum;
+        private long _samplesSum;
         private ushort _previousSeqNumber;
         private uint _previousTimestamp;
         private bool _isFirstPacket = true;
@@ -73,7 +73,11 @@ namespace RtspClientCore.Rtp
                 if (rtpPacket.SeqNumber < HighestSequenceNumberReceived)
                     ++SequenceCycles;
 
-                _samplesSum += rtpPacket.Timestamp - _previousTimestamp;
+                if (rtpPacket.Timestamp > _previousTimestamp)
+                    _samplesSum += rtpPacket.Timestamp - _previousTimestamp;
+                else
+                    _samplesSum += _previousTimestamp - rtpPacket.Timestamp;
+
             }
 
             HighestSequenceNumberReceived = rtpPacket.SeqNumber;
@@ -87,7 +91,7 @@ namespace RtspClientCore.Rtp
                 return;
 
             TimeSpan timeOffset = _samplesFrequency != 0
-                ? new TimeSpan((long)(_samplesSum * 1000 / (uint)_samplesFrequency * TimeSpan.TicksPerMillisecond))
+                ? new TimeSpan(_samplesSum * 1000 / (uint)_samplesFrequency * TimeSpan.TicksPerMillisecond)
                 : TimeSpan.MinValue;
 
             _mediaPayloadParser.Parse(timeOffset, rtpPacket.PayloadSegment, rtpPacket.MarkerBit);

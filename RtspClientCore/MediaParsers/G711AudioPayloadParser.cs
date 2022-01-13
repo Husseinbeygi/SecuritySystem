@@ -1,6 +1,7 @@
-﻿using RtspClientCore.Codecs.Audio;
+﻿using System;
+using RtspClientCore.Codecs.Audio;
 using RtspClientCore.RawFrames.Audio;
-using System;
+using RtspClientCore.RawFrames.Audio;
 
 namespace RtspClientCore.MediaParsers
 {

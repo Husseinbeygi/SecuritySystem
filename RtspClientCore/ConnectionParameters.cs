@@ -1,12 +1,12 @@
-﻿using RtspClientCore.Rtsp;
-using System;
+﻿using System;
 using System.Net;
+using RtspClientCore.Rtsp;
 
 namespace RtspClientCore
 {
     public class ConnectionParameters
     {
-        private const string DefaultUserAgent = "RtspClientSharp";
+        private const string DefaultUserAgent = "RtspClientCore";
         private Uri _fixedRtspUri;
 
         /// <summary>

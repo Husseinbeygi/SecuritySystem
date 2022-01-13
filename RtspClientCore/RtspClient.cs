@@ -1,11 +1,11 @@
-﻿using RtspClientCore.RawFrames;
-using RtspClientCore.Rtsp;
-using RtspClientCore.Utils;
-using System;
+﻿using System;
 using System.Net;
 using System.Security.Authentication;
 using System.Threading;
 using System.Threading.Tasks;
+using RtspClientCore.RawFrames;
+using RtspClientCore.Rtsp;
+using RtspClientCore.Utils;
 
 namespace RtspClientCore
 {
@@ -48,13 +48,24 @@ namespace RtspClientCore
         /// <exception cref="RtspClientException"></exception>
         public async Task ConnectAsync(CancellationToken token)
         {
+            await ConnectAsync(default, token);
+        }
+
+        /// <summary>
+        /// Connect to endpoint and start RTSP session
+        /// </summary>
+        /// <exception cref="OperationCanceledException"></exception>
+        /// <exception cref="InvalidCredentialException"></exception>
+        /// <exception cref="RtspClientException"></exception>
+        public async Task ConnectAsync(DateTime initialTimestamp, CancellationToken token)
+        {
             await Task.Run(async () =>
             {
                 _rtspClientInternal = CreateRtspClientInternal(ConnectionParameters, _transportClientProvider);
 
                 try
                 {
-                    Task connectionTask = _rtspClientInternal.ConnectAsync(token);
+                    Task connectionTask = _rtspClientInternal.ConnectAsync(initialTimestamp, token);
 
                     if (connectionTask.IsCompleted)
                     {

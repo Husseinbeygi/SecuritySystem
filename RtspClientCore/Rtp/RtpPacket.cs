@@ -1,6 +1,6 @@
-﻿using RtspClientCore.Utils;
-using System;
+﻿using System;
 using System.Diagnostics;
+using RtspClientCore.Utils;
 
 namespace RtspClientCore.Rtp
 {
@@ -55,10 +55,12 @@ namespace RtspClientCore.Rtp
 
             rtpPacket.PaddingFlag = (byteSegment.Array[offset] >> 5 & 1) != 0;
             rtpPacket.ExtensionFlag = (byteSegment.Array[offset] >> 4 & 1) != 0;
-            rtpPacket.CsrcCount = byteSegment.Array[offset++] & 0xF;
+            rtpPacket.CsrcCount = byteSegment.Array[offset] & 0xF;
+            offset++;
 
             rtpPacket.MarkerBit = byteSegment.Array[offset] >> 7 != 0;
-            rtpPacket.PayloadType = byteSegment.Array[offset++] & 0x7F;
+            rtpPacket.PayloadType = byteSegment.Array[offset] & 0x7F;
+            offset++;
 
             rtpPacket.SeqNumber = (ushort)BigEndianConverter.ReadUInt16(byteSegment.Array, offset);
             offset += 2;
