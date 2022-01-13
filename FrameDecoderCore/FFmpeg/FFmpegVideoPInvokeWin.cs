@@ -6,7 +6,7 @@ namespace FrameDecoderCore.FFmpeg
     static class FFmpegVideoPInvokeWin
     {
 
-        private const string LibraryName = "libs\\ffmpeg\\libffmpeghelper.dll";
+        private const string LibraryName = "libffmpeghelper.dll";
 
         [DllImport(LibraryName, EntryPoint = "create_video_decoder", CallingConvention = CallingConvention.Cdecl)]
         public static extern int CreateVideoDecoder(FFmpegVideoCodecId videoCodecId, out IntPtr handle);

@@ -41,7 +41,7 @@ namespace FrameDecoderCore
             if (videoFrame is RawH264Frame)
                 return FFmpegVideoCodecId.H264;
             if (videoFrame is RawH265Frame)
-                return FFmpegVideoCodecId.H265;
+                return FFmpegVideoCodecId.HEVC;
 
             throw new ArgumentOutOfRangeException(nameof(videoFrame));
         }

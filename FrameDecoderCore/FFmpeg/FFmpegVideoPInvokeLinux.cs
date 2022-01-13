@@ -6,7 +6,7 @@ namespace FrameDecoderCore.FFmpeg
 
     static class FFmpegVideoPInvokeLinux
     {
-        private const string LibraryName = "libs\\ffmpeg\\libffmpeghelper.so";
+        private const string LibraryName = "libffmpeghelper.so";
 
 
         [DllImport(LibraryName, EntryPoint = "create_video_decoder", CallingConvention = CallingConvention.Cdecl)]
