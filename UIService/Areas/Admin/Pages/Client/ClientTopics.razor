@@ -1,0 +1,97 @@
+﻿@page "/admin/client/topics/{clientid}"
+@using SecurityService.Application.Service.Client
+@inject IClientApplication _application
+@inject NavigationManager NavManager
+
+<h3>ثبت تاپیک جدید</h3>
+<Div Class="container">
+    <EditForm Model="@createClientTopic" OnValidSubmit="@HandleValidSubmit">
+        <div class="row input-group input-group-outline">
+            <div class="form-group col-md-4">
+                <label for="inputEmail4">نام کلاینت</label>
+                <InputText type="text" class="form-control" disable="disable" @bind-Value="createClientTopic.ClientId" />
+            </div>
+            <div class="form-group col-md-4">
+                <label for="inputPassword4">آدرس تاپیک</label>
+                <InputText type="text" class="form-control" dir="ltr" @bind-Value="createClientTopic.Topic" />
+            </div>
+
+            <div class="form-group col-md-4">
+                <label for="inputAddress">عنوان تاپیک</label>
+                <InputText type="text" class="form-control" @bind-Value="createClientTopic.Caption" />
+            </div>
+        </div>
+        <br />
+        <Blazorise.Button Type="Blazorise.ButtonType.Submit" Color="Blazorise.Color.Primary">افزودن تاپیک</Blazorise.Button>
+        <a class="btn btn-danger" href="/admin/client">بازگشت</a>
+    </EditForm>
+</Div>
+
+
+<Table dir="rtl" Bordered="true"
+       Striped="true"
+       FixedHeader
+       FixedHeaderTableHeight="600px"
+       Resizable
+       ResizeMode="TableResizeMode.Columns">
+    <TableHeader>
+        <TableRow>
+            <TableHeaderCell>#</TableHeaderCell>
+            <TableHeaderCell>نام کلاینت</TableHeaderCell>
+            <TableHeaderCell>عنوان تاپیک</TableHeaderCell>
+            <TableHeaderCell>آدرس تاپیک</TableHeaderCell>
+            <TableHeaderCell>عملیات</TableHeaderCell>
+        </TableRow>
+    </TableHeader>
+    <TableBody>
+        @foreach (var item in clientTopicViewModel)
+        {
+            <TableRow>
+                <TableRowCell>@item.Id</TableRowCell>
+                <TableRowCell>@item.ClientId</TableRowCell>
+                <TableRowCell>@item.Caption</TableRowCell>
+                <TableRowCell>@item.Topic</TableRowCell>
+                <TableRowCell>
+                    <a class="btn btn-outline-danger" @onclick="@(() => OnDeleteClientTopic(item.Id))">حذف</a>
+
+                </TableRowCell>
+            </TableRow>
+        }
+    </TableBody>
+</Table>
+
+
+@code {
+
+    [Parameter]
+    public string clientid { get; set; }
+
+    public CreateClientTopic createClientTopic { get; set; }
+    public HashSet<ClientTopicViewModel> clientTopicViewModel { get; set; }
+
+    protected override void OnInitialized()
+    {
+        createClientTopic = new CreateClientTopic();
+        createClientTopic.ClientId = clientid;
+        clientTopicViewModel = _application.GetClientTopics(clientid);
+        base.OnInitialized();
+    }
+
+    private void HandleValidSubmit()
+    {
+        var op = _application.Create(createClientTopic);
+        StateHasChanged();
+        OnInitialized();
+
+    }
+
+
+    public void OnDeleteClientTopic(int id)
+    {
+        _application.Remove(clientid, id);
+        StateHasChanged();
+        OnInitialized();
+
+    }
+
+}

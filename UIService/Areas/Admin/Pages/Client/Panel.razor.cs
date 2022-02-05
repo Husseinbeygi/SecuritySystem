@@ -42,6 +42,7 @@ namespace UIService.Areas.Admin.Pages.Client
 
         private void MessageInterceptorEvent_MessageRecevied(object? sender, MessageInterceptorEventArgs e)
         {
+            e.Topic = _application.GetTopicCaption(e.ClientId, e.Topic);
             receviedmessage.Add(e);
             this.InvokeAsync(() => this.StateHasChanged());
         }

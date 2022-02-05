@@ -6,7 +6,7 @@ using SecurityService.Application.Service.Client;
 using SecurityService.Application.Service.RtspHostPath;
 using SecuritySystem.Application;
 using SecuritySystem.Domain.Camera;
-using SecuritySystem.Domain.Client;
+using SecuritySystem.Domain.ClientAgg;
 using SecuritySystem.Domain.RtspHostPathAgg;
 using SecuritySystem.Infrastructre.Repository;
 

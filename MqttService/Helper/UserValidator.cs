@@ -1,4 +1,4 @@
-﻿using SecuritySystem.Domain.Client;
+﻿using SecuritySystem.Domain.ClientAgg;
 
 namespace MqttService.Helper
 {

@@ -1,6 +1,6 @@
 ﻿using _0_Framework.Application;
 using SecurityService.Application.Service.Client;
-using SecuritySystem.Domain.Client;
+using SecuritySystem.Domain.ClientAgg;
 
 namespace SecuritySystem.Application
 {
@@ -41,6 +41,20 @@ namespace SecuritySystem.Application
             return result.Succedded();
         }
 
+        public OperationResult Create(CreateClientTopic command)
+        {
+            var result = new OperationResult();
+            var _c = _repository.GetBy(command.ClientId);
+            if (_c == null)
+            {
+                return result.Failed(ApplicationMessages.RecordNotFound);
+            }
+
+            _c.AddTopic(command.Topic,command.ClientId,command.Caption);
+            _repository.SaveChanges();
+            return result.Succedded();
+        }
+
         public OperationResult Edit(EditClient editClient)
         {
             var result = new OperationResult();
@@ -56,9 +70,33 @@ namespace SecuritySystem.Application
 
         }
 
+        public OperationResult Edit(EditClientTopic command)
+        {
+            var result = new OperationResult();
+            var _c = _repository.GetBy(command.ClientId);
+            if (_c.ClientId == "0")
+            {
+                return result.Failed(ApplicationMessages.RecordNotFound);
+            }
+
+            _c.EditTopic(command.Id, command.Topic, command.Caption);
+            _repository.SaveChanges();
+            return result.Succedded();
+        }
+
+        public HashSet<ClientTopicViewModel> GetClientTopics(string clientId)
+        {
+            return _repository.GetTpoicsDetails(clientId);
+        }
+
         public EditClient GetDetails(long id)
         {
             return _repository.GetDetails(id);
+        }
+
+        public string GetTopicCaption(string clientId, string topic)
+        {
+            return _repository.GetTopicCaption( clientId, topic);
         }
 
         public bool IsClientValidate(string clientId, string username, string password)
@@ -89,6 +127,14 @@ namespace SecuritySystem.Application
                 return result.Succedded();
             }
             return result.Failed(ApplicationMessages.RecordNotFound);
+
+        }
+
+        public void Remove(string clientid, int id)
+
+        {
+            _repository.Remove(clientid,id);
+            _repository.SaveChanges();
 
         }
 

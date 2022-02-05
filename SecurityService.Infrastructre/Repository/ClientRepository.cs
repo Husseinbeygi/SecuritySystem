@@ -1,7 +1,8 @@
 ﻿using _0_Framework.Application;
 using _0_Framework.Infrastructure;
 using SecurityService.Application.Service.Client;
-using SecuritySystem.Domain.Client;
+using SecuritySystem.Domain.ClientAgg;
+using System.Collections.Generic;
 
 namespace SecuritySystem.Infrastructre.Repository
 {
@@ -11,6 +12,13 @@ namespace SecuritySystem.Infrastructre.Repository
         public ClientRepository(Context context) : base(context)
         {
             _context = context;
+
+
+        }
+
+        public Client GetBy(string clientId)
+        {
+            return _context.Client.FirstOrDefault(x => x.ClientId == clientId);
         }
 
         public ClientValidation GetClientCredentials(string clientId)
@@ -31,12 +39,43 @@ namespace SecuritySystem.Infrastructre.Repository
                 ClientId = x.ClientId,
                 Id = x.Id,
                 UserName = x.UserName,
-                Password = x.Password,
-
-
+                Password = x.Password
             }).FirstOrDefault(x => x.Id == id);
         }
 
+        public string? GetTopicCaption(string clientId, string topic)
+        {
+            var c = _context.Client.FirstOrDefault(x => x.ClientId == clientId);
+            if (c == null)
+                return "";
+            return c.ClientTopics.FirstOrDefault(x => x.Topic == topic)?.Caption
+                ?? topic;
+        }
+
+        public HashSet<ClientTopicViewModel> GetTpoicsDetails(long id)
+        {
+            var c =  _context.Client.FirstOrDefault(x => x.Id == id);
+            if (c == null)
+                return new HashSet<ClientTopicViewModel>();
+            return c.ClientTopics.Select(x => new ClientTopicViewModel
+            {
+                Caption = x.Caption,
+                Id = x.Id,
+                ClientId = x.ClientId,
+                Topic = x.Topic,
+            }).ToHashSet();
+        }
+        public HashSet<ClientTopicViewModel> GetTpoicsDetails(string clientid)
+        {
+            var c = _context.Client.FirstOrDefault(x => x.ClientId == clientid);
+            return c.ClientTopics.Select(x => new ClientTopicViewModel
+            {
+                Caption = x.Caption,
+                Id = x.Id,
+                ClientId = x.ClientId,
+                Topic = x.Topic,
+            }).ToHashSet();
+        }
         public void Remove(long id)
         {
             var client = _context.Client.FirstOrDefault(x => x.Id == id);
@@ -44,6 +83,13 @@ namespace SecuritySystem.Infrastructre.Repository
             {
                 _context.Remove(client);
             }
+        }
+
+        public void Remove(string clientid,int id)
+        {
+            var c = _context.Client.FirstOrDefault(x => x.ClientId == clientid);
+            var topic = c.ClientTopics.FirstOrDefault(x => x.Id ==id);
+            c.ClientTopics.Remove(topic);
         }
 
         public List<ClientViewModel> Search(ClientSearchModel command)

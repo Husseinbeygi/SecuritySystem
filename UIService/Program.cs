@@ -10,6 +10,7 @@ using SecuritySystem.Infrastructre;
 using Serilog;
 using UIService.Hubs;
 
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -36,10 +37,13 @@ builder.Services.AddBlazorise(options =>
 #endregion
 
 
+
+
 builder.Services.AddTransient<MessageHandler>();
 builder.Services.AddTransient<IRtspUrlGenerator, RtspUrlGenerator>();
 
 var app = builder.Build();
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())

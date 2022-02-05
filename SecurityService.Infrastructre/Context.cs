@@ -1,6 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SecuritySystem.Domain.Camera;
-using SecuritySystem.Domain.Client;
+using SecuritySystem.Domain.ClientAgg;
 using SecuritySystem.Domain.RtspHostPathAgg;
 using SecuritySystem.Infrastructre.Maps;
 
