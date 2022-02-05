@@ -16,7 +16,7 @@ namespace SecuritySystem.Application
         public OperationResult Create(CreateIPCamera command)
         {
             var result = new OperationResult();
-            if (_repository.Exists(x => x.HostAddress == command.HostAddress))
+            if (_repository.Exists(x => x.HostAddress == command.HostAddress && x.StreamAddress == command.StreamAddress))
             {
                 return result.Failed(ApplicationMessages.RecordNotFound);
             }

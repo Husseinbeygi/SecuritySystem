@@ -11,8 +11,8 @@ namespace UIService.Areas.Admin.Pages.Camera
         protected override void OnInitialized()
         {
             base.OnInitialized();
-            cam = _camApplication.GetDetails(7);
-            cam1 = _camApplication.GetDetails(12);
+            cam = _camApplication.GetDetails(13);
+            cam1 = _camApplication.GetDetails(14);
 
         }
     }

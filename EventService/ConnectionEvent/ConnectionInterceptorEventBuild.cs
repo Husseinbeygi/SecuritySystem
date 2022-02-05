@@ -2,15 +2,10 @@
 {
     public class ConnectionInterceptorEventBuild
     {
-        private static ConnectionInterceptorEvent _instance;
+        private static Lazy<ConnectionInterceptorEvent> _instance = new Lazy<ConnectionInterceptorEvent>(() => new ConnectionInterceptorEvent());
         public static ConnectionInterceptorEvent Build()
         {
-            if (_instance == null)
-            {
-                _instance = new ConnectionInterceptorEvent();
-                return _instance;
-            }
-            return _instance;
+            return _instance.Value;
         }
 
     }

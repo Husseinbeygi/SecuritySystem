@@ -15,7 +15,7 @@ namespace MqttService.Clients
 
         public static void AddClient(string clientid, string endpoint, string username, string cleansession, string date, MQTTnet.Server.MqttConnectionValidatorContext context)
         {
-            if (clients.FirstOrDefault(x => x.UserName == username) == null)
+            if (clients.FirstOrDefault(x => x.ClientId == clientid) == null)
             {
                 NewConnection(clientid, endpoint, username, cleansession, date, context);
             }
@@ -29,7 +29,7 @@ namespace MqttService.Clients
 
         private static void ReplaceConnection(string clientid, string endpoint, string username, string cleansession, string date, MqttConnectionValidatorContext context)
         {
-            var _c = clients.FirstOrDefault(x => x.UserName == username);
+            var _c = clients.FirstOrDefault(x => x.ClientId == clientid);
             clients.Remove(_c);
             clients.Add(new ClientConnected
             {
